@@ -1,0 +1,245 @@
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "japan",
+      "icons": {
+        "large": "nation_flags/large/flag_Japan_dc7a62826070d782f60b959d0b00fa9548d97a3893f08824d2e2dece8df3ce78.png",
+        "default": "nation_flags/small/flag_Japan_e342ec07b9df580383a85abc178ac050901763e92607376b50a093c02b3abed0.png",
+        "local_large": "gui/nation_flags/big/flag_Japan.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_Japan.png",
+        "small": "nation_flags/small/flag_Japan_e342ec07b9df580383a85abc178ac050901763e92607376b50a093c02b3abed0.png",
+        "local_small": "gui/nation_flags/small/flag_Japan.png",
+        "tiny": "nation_flags/tiny/flag_Japan_afff8f2e1e23cdf6b9314f80cca4fb85af40cfbe7812a9ccc707fd24ed207557.png"
+      },
+      "color": 13752795,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "Япония",
+          "fr": "Japon",
+          "en": "Japan",
+          "nl": "Japan",
+          "uk": "Японія",
+          "pt_br": "Japão",
+          "zh_cn": "R系",
+          "tr": "Japonya",
+          "de": "Japan",
+          "ko": "일본",
+          "it": "Giappone",
+          "pl": "Japonia",
+          "th": "ญี่ปุ่น",
+          "cs": "Japonsko",
+          "es_mx": "Japón",
+          "zh_sg": "日本",
+          "ja": "日本",
+          "es": "Japón",
+          "zh_tw": "日本"
+        }
+      },
+      "id": 1
+    },
+    {
+      "name": "usa",
+      "icons": {
+        "large": "nation_flags/large/flag_USA_bfe874dbd91cdd9e7b77e378d7efeb221931b9b25d24e79a138fe4801050966c.png",
+        "default": "nation_flags/small/flag_USA_1b4b2220fa11809cdd5179fa188ef7651382714b66cbbe12d49a0744dff52495.png",
+        "local_large": "gui/nation_flags/big/flag_USA.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_USA.png",
+        "small": "nation_flags/small/flag_USA_1b4b2220fa11809cdd5179fa188ef7651382714b66cbbe12d49a0744dff52495.png",
+        "local_small": "gui/nation_flags/small/flag_USA.png",
+        "tiny": "nation_flags/tiny/flag_USA_a608afcc194232095536ebc93508eb7b4b68cf46bc3600cd28b4afd0ad9a38b3.png"
+      },
+      "color": 5549009,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "США",
+          "fr": "USA",
+          "en": "U.S.A.",
+          "nl": "V.S.",
+          "uk": "США",
+          "pt_br": "EUA",
+          "zh_cn": "M系",
+          "tr": "ABD",
+          "de": "USA",
+          "ko": "미국",
+          "it": "U.S.A.",
+          "pl": "U.S.A.",
+          "th": "สหรัฐอเมริกา",
+          "cs": "USA",
+          "es_mx": "EE. UU.",
+          "zh_sg": "美国",
+          "ja": "アメリカ",
+          "es": "EE. UU.",
+          "zh_tw": "美國"
+        }
+      },
+      "id": 2
+    },
+    {
+      "name": "uk",
+      "icons": {
+        "large": "nation_flags/large/flag_United_Kingdom_a1656b0242541a0e42ecb717150f626c90a4847a097a1088de38409527787636.png",
+        "default": "nation_flags/small/flag_United_Kingdom_447115c659293c9d4cc8f2714d27704a35ba98f17ff4b92b3761f03936c05e1a.png",
+        "local_large": "gui/nation_flags/big/flag_United_Kingdom.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_United_Kingdom.png",
+        "small": "nation_flags/small/flag_United_Kingdom_447115c659293c9d4cc8f2714d27704a35ba98f17ff4b92b3761f03936c05e1a.png",
+        "local_small": "gui/nation_flags/small/flag_United_Kingdom.png",
+        "tiny": "nation_flags/tiny/flag_United_Kingdom_d6308791bceab9314e41018c12d68f2f809d8f92296e77459708373cd6a94113.png"
+      },
+      "color": 2719672,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "Великобритания",
+          "fr": "Royaume-Uni",
+          "en": "U.K.",
+          "nl": "V.K.",
+          "uk": "Велика Британія",
+          "pt_br": "Reino Unido",
+          "zh_cn": "Y系",
+          "tr": "İngiltere",
+          "de": "GB",
+          "ko": "영국",
+          "it": "U.K.",
+          "pl": "Zjedn. Królestwo",
+          "th": "สหราชอาณาจักร",
+          "cs": "Británie",
+          "es_mx": "Reino Unido",
+          "zh_sg": "英国",
+          "ja": "イギリス",
+          "es": "Reino Unido",
+          "zh_tw": "英國"
+        }
+      },
+      "id": 3
+    },
+    {
+      "name": "germany",
+      "icons": {
+        "large": "nation_flags/large/flag_Germany_6ebc035001d082f9cc22317e1184be7806ecf34c7b2857ed65fececc36ec624e.png",
+        "default": "nation_flags/small/flag_Germany_35d04fe7e0bf9b85a2ae507a4d4539bcbe9ea250d04480345156825398edcff8.png",
+        "local_large": "gui/nation_flags/big/flag_Germany.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_Germany.png",
+        "small": "nation_flags/small/flag_Germany_35d04fe7e0bf9b85a2ae507a4d4539bcbe9ea250d04480345156825398edcff8.png",
+        "local_small": "gui/nation_flags/small/flag_Germany.png",
+        "tiny": "nation_flags/tiny/flag_Germany_8f3e3f4bb152e80cc8fb2cc34d426c6d85d57b72014c768883384055a2c2f3f7.png"
+      },
+      "color": 8358796,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "Германия",
+          "fr": "Allemagne",
+          "en": "Germany",
+          "nl": "Duitsland",
+          "uk": "Німеччина",
+          "pt_br": "Alemanha",
+          "zh_cn": "D系",
+          "tr": "Almanya",
+          "de": "Deutschland",
+          "ko": "독일",
+          "it": "Germania",
+          "pl": "Niemcy",
+          "th": "เยอรมนี",
+          "cs": "Německo",
+          "es_mx": "Alemania",
+          "zh_sg": "德国",
+          "ja": "ドイツ",
+          "es": "Alemania",
+          "zh_tw": "德國"
+        }
+      },
+      "id": 4
+    },
+    {
+      "name": "italy",
+      "icons": {
+        "large": "nation_flags/large/flag_Italy_1c3ee585f3132d89f71ffadfbbf529b23cb7acade1c1d5b6f9be5687b7770dc8.png",
+        "default": "nation_flags/small/flag_Italy_56198e82a47ece71c1a79662a246de425f605033b41cd0bd1cd50b71b41676f4.png",
+        "local_large": "gui/nation_flags/big/flag_Italy.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_Italy.png",
+        "small": "nation_flags/small/flag_Italy_56198e82a47ece71c1a79662a246de425f605033b41cd0bd1cd50b71b41676f4.png",
+        "local_small": "gui/nation_flags/small/flag_Italy.png",
+        "tiny": "nation_flags/tiny/flag_Italy_52727a3d376751ca3c4547750d0330100c08052581a387a7acadde7503a76463.png"
+      },
+      "color": 4176426,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "Италия",
+          "fr": "Italie",
+          "en": "Italy",
+          "nl": "Italië",
+          "uk": "Італія",
+          "pt_br": "Itália",
+          "zh_cn": "I系",
+          "tr": "İtalya",
+          "de": "Italien",
+          "ko": "이탈리아",
+          "it": "Italia",
+          "pl": "Włochy",
+          "th": "อิตาลี",
+          "cs": "Itálie",
+          "es_mx": "Italia",
+          "zh_sg": "意大利",
+          "ja": "イタリア",
+          "es": "Italia",
+          "zh_tw": "義大利"
+        }
+      },
+      "id": 6
+    },
+    {
+      "name": "europe",
+      "icons": {
+        "large": "nation_flags/large/flag_Europe_f0cc09a6c46f35f01c16395f2e57e67441930ee06a9b3ad57763620493c58054.png",
+        "default": "nation_flags/small/flag_Europe_8faa587e2808905b00609fe38106b8faa37695ee1df9130e767c740f76046b85.png",
+        "local_large": "gui/nation_flags/big/flag_Europe.png",
+        "local_tiny": "gui/nation_flags/tiny/flag_Europe.png",
+        "small": "nation_flags/small/flag_Europe_8faa587e2808905b00609fe38106b8faa37695ee1df9130e767c740f76046b85.png",
+        "local_small": "gui/nation_flags/small/flag_Europe.png",
+        "tiny": "nation_flags/tiny/flag_Europe_66b735f7c63b1fbc05c33f9f6289a5c5151eb9f7829f407ed4a9966188f19ff4.png"
+      },
+      "color": 16763904,
+      "tags": [
+        "inTree"
+      ],
+      "localization": {
+        "mark": {
+          "ru": "Европа",
+          "fr": "Europe",
+          "en": "Europe",
+          "nl": "Europa",
+          "uk": "Європа",
+          "pt_br": "Europa",
+          "zh_cn": "E系",
+          "tr": "Avrupa",
+          "de": "Europa",
+          "ko": "유럽",
+          "it": "Europa",
+          "pl": "Europa",
+          "th": "ยุโรป",
+          "cs": "Evropa",
+          "es_mx": "Europa",
+          "zh_sg": "欧洲",
+          "ja": "ヨーロッパ",
+          "es": "Europa",
+          "zh_tw": "歐洲"
+        }
+      },
+      "id": 7
+    }
+  ]
+}
