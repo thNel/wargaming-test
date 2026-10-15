@@ -2,11 +2,11 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 import type { RootState } from "../index";
 import { loadCatalog } from "./catalogThunks";
-import type { CatalogShip } from "./catalog.types";
+import type { CatalogVehicle } from "./catalog.types";
 
 export type CatalogStatus = "idle" | "loading" | "succeeded" | "failed";
 
-const catalogAdapter = createEntityAdapter<CatalogShip>();
+const catalogAdapter = createEntityAdapter<CatalogVehicle>();
 
 const initialState = catalogAdapter.getInitialState({
   status: "idle" as CatalogStatus,
@@ -35,8 +35,9 @@ const catalogSlice = createSlice({
 });
 
 export const catalogReducer = catalogSlice.reducer;
-export const { selectAll: selectAllCatalogShips, selectById: selectCatalogShipById } =
-  catalogAdapter.getSelectors<RootState>((state) => state.catalog);
+export const { selectAll: selectAllCatalogVehicles } = catalogAdapter.getSelectors<RootState>(
+  (state) => state.catalog,
+);
 
 export function selectCatalogStatus(state: RootState): CatalogStatus {
   return state.catalog.status;

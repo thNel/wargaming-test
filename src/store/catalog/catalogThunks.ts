@@ -5,11 +5,11 @@ import { nationsApi } from "@/services/nationsApi";
 import { vehicleTypesApi } from "../../services/vehicleTypesApi.ts";
 import { vehiclesApi } from "../../services/vehiclesApi.ts";
 import type { RootState } from "../index";
-import { normalizeCatalogShips } from "./normalizeCatalogShips";
-import type { CatalogShipCollection } from "./catalog.types";
+import { normalizeCatalogVehicles } from "./normalizeCatalogVehicles";
+import type { CatalogVehicleCollection } from "./catalog.types";
 
 export const loadCatalog = createAsyncThunk<
-  CatalogShipCollection,
+  CatalogVehicleCollection,
   void,
   { state: RootState; rejectValue: string }
 >(
@@ -31,7 +31,7 @@ export const loadCatalog = createAsyncThunk<
         ).unwrap(),
       ]);
 
-      return normalizeCatalogShips({
+      return normalizeCatalogVehicles({
         vehicles: vehicles.data,
         nations: nations.data,
         vehicleTypes: vehicleTypes.data,

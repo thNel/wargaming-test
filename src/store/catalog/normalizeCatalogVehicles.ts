@@ -1,11 +1,5 @@
-import type {
-  CatalogNation,
-  CatalogShipClass,
-  CatalogShipCollection,
-  CatalogSources,
-} from "./catalog.types";
-import type { NationDto } from "@/services/nations.dto";
-import type { VehicleTypeDto } from "@/services/vehicle-types.dto";
+import type { CatalogNation, CatalogVehicleType, CatalogVehicleCollection } from "./catalog.types";
+import type { CatalogVehicleSources } from "./normalizeCatalogVehicles.types";
 
 function buildIconUrls(icons: Record<string, string>, mediaPath: string): Record<string, string> {
   const normalizedBase = mediaPath.replace(/\/+$/, "");
@@ -17,7 +11,10 @@ function buildIconUrls(icons: Record<string, string>, mediaPath: string): Record
   );
 }
 
-function createCatalogNation(nation: NationDto, mediaPath: string): CatalogNation {
+function createCatalogNation(
+  nation: CatalogVehicleSources["nations"][number],
+  mediaPath: string,
+): CatalogNation {
   const { icons, localization, ...nationData } = nation;
 
   return Object.freeze({
@@ -29,9 +26,9 @@ function createCatalogNation(nation: NationDto, mediaPath: string): CatalogNatio
 
 function createCatalogVehicleType(
   key: string,
-  vehicleType: VehicleTypeDto,
+  vehicleType: CatalogVehicleSources["vehicleTypes"][string],
   mediaPath: string,
-): CatalogShipClass {
+): CatalogVehicleType {
   const { icons, localization, ...vehicleTypeData } = vehicleType;
 
   return Object.freeze({
@@ -45,12 +42,12 @@ function createCatalogVehicleType(
   });
 }
 
-export function normalizeCatalogShips({
+export function normalizeCatalogVehicles({
   vehicles,
   nations,
   vehicleTypes,
   mediaPath,
-}: CatalogSources): CatalogShipCollection {
+}: CatalogVehicleSources): CatalogVehicleCollection {
   const nationsByName = new Map(
     nations.map((nation) => [nation.name, createCatalogNation(nation, mediaPath)]),
   );
@@ -64,20 +61,20 @@ export function normalizeCatalogShips({
   return Object.freeze(
     Object.entries(vehicles).map(([id, vehicle]) => {
       const { icons, localization, nation: nationKey, tags, ...vehicleData } = vehicle;
-      const shipClassKey = tags[0];
-      const shipClass = shipClassKey ? (vehicleTypesByKey.get(shipClassKey) ?? null) : null;
+      const vehicleTypeKey = tags[0];
+      const vehicleType = vehicleTypeKey ? (vehicleTypesByKey.get(vehicleTypeKey) ?? null) : null;
 
       return Object.freeze({
         ...vehicleData,
         id,
-        tags: Object.freeze(shipClass ? tags.slice(1) : [...tags]),
+        tags: Object.freeze(vehicleType ? tags.slice(1) : [...tags]),
         locales: Object.freeze({
           name: localization.mark,
           shortName: localization.shortmark,
           description: localization.description,
         }),
         nation: nationsByName.get(nationKey) ?? null,
-        class: shipClass,
+        class: vehicleType,
         icons: Object.freeze(buildIconUrls(icons, mediaPath)),
       });
     }),

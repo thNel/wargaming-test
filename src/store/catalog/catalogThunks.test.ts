@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { selectAllCatalogShips } from "./catalogSlice";
+import { selectAllCatalogVehicles } from "./catalogSlice";
 import { loadCatalog } from "./catalogThunks";
 import { createAppStore } from "../index";
 
@@ -12,7 +12,7 @@ const successfulResponses: Record<string, unknown> = {
   vehicles: {
     status: "ok",
     data: {
-      "ship-1": {
+      "vehicle-1": {
         level: 10,
         name: "JPNB110_Yamato",
         nation: "japan",
@@ -104,10 +104,10 @@ describe("loadCatalog", () => {
     await loadPromise;
 
     expect(store.getState().catalog.status).toBe("succeeded");
-    expect(store.getState().catalog.ids).toEqual(["ship-1"]);
-    expect(selectAllCatalogShips(store.getState())).toMatchObject([
+    expect(store.getState().catalog.ids).toEqual(["vehicle-1"]);
+    expect(selectAllCatalogVehicles(store.getState())).toMatchObject([
       {
-        id: "ship-1",
+        id: "vehicle-1",
         locales: {
           name: { en: "Yamato", ru: "Ямато" },
           description: { en: "Yamato description", ru: "Описание Ямато" },
@@ -133,6 +133,6 @@ describe("loadCatalog", () => {
 
     expect(store.getState().catalog.status).toBe("succeeded");
     expect(getNationRequests()).toBe(2);
-    expect(store.getState().catalog.ids).toEqual(["ship-1"]);
+    expect(store.getState().catalog.ids).toEqual(["vehicle-1"]);
   });
 });

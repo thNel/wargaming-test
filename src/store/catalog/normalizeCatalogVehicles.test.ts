@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { normalizeCatalogShips } from "./normalizeCatalogShips";
+import { normalizeCatalogVehicles } from "./normalizeCatalogVehicles";
 
-describe("normalizeCatalogShips", () => {
-  it("joins each ship with its nation, class, localized labels, and media URLs", () => {
-    const ships = normalizeCatalogShips({
+describe("normalizeCatalogVehicles", () => {
+  it("joins each vehicle with its nation, class, localized labels, and media URLs", () => {
+    const vehicles = normalizeCatalogVehicles({
       vehicles: {
-        "ship-1": {
+        "vehicle-1": {
           level: 10,
           name: "JPNB110_Yamato",
           nation: "japan",
@@ -52,10 +52,10 @@ describe("normalizeCatalogShips", () => {
       mediaPath: "https://cdn.example.test/icons/",
     });
 
-    const ship = ships.find(({ id }) => id === "ship-1");
+    const vehicle = vehicles.find(({ id }) => id === "vehicle-1");
 
-    expect(ship).toMatchObject({
-      id: "ship-1",
+    expect(vehicle).toMatchObject({
+      id: "vehicle-1",
       level: 10,
       name: "JPNB110_Yamato",
       tags: ["special"],
@@ -89,21 +89,21 @@ describe("normalizeCatalogShips", () => {
       },
     });
 
-    expect(ship?.nation?.locales.ru).toBe("Япония");
-    expect(ship?.class?.locales.name.ru).toBe("Линкор");
-    expect(ship).not.toHaveProperty("localization");
-    expect(ship).not.toHaveProperty("nationInfo");
-    expect(ship).not.toHaveProperty("shipTypeInfo");
-    expect(Object.isFrozen(ships)).toBe(true);
-    expect(Object.isFrozen(ship)).toBe(true);
-    expect(Object.isFrozen(ship?.nation)).toBe(true);
-    expect(Object.isFrozen(ship?.class)).toBe(true);
+    expect(vehicle?.nation?.locales.ru).toBe("Япония");
+    expect(vehicle?.class?.locales.name.ru).toBe("Линкор");
+    expect(vehicle).not.toHaveProperty("localization");
+    expect(vehicle).not.toHaveProperty("nationInfo");
+    expect(vehicle).not.toHaveProperty("shipTypeInfo");
+    expect(Object.isFrozen(vehicles)).toBe(true);
+    expect(Object.isFrozen(vehicle)).toBe(true);
+    expect(Object.isFrozen(vehicle?.nation)).toBe(true);
+    expect(Object.isFrozen(vehicle?.class)).toBe(true);
   });
 
   it("preserves available language dictionaries and missing reference data", () => {
-    const ships = normalizeCatalogShips({
+    const vehicles = normalizeCatalogVehicles({
       vehicles: {
-        "ship-2": {
+        "vehicle-2": {
           level: 3,
           name: "USSB003_InternalName",
           nation: "missing-nation",
@@ -127,21 +127,21 @@ describe("normalizeCatalogShips", () => {
       mediaPath: "/icons",
     });
 
-    const ship = ships.find(({ id }) => id === "ship-2");
+    const vehicle = vehicles.find(({ id }) => id === "vehicle-2");
 
-    expect(ship?.locales).toEqual({
+    expect(vehicle?.locales).toEqual({
       name: { en: "English name" },
       shortName: {},
       description: { en: "English description" },
     });
-    expect(ship?.class?.locales.name).toEqual({ en: "Cruiser" });
-    expect(ship?.nation).toBeNull();
+    expect(vehicle?.class?.locales.name).toEqual({ en: "Cruiser" });
+    expect(vehicle?.nation).toBeNull();
   });
 
-  it("keeps ships whose nation or class reference is unavailable", () => {
-    const ships = normalizeCatalogShips({
+  it("keeps vehicles whose nation or class reference is unavailable", () => {
+    const vehicles = normalizeCatalogVehicles({
       vehicles: {
-        "ship-3": {
+        "vehicle-3": {
           level: 1,
           name: "UnknownShip",
           nation: "unknown",
@@ -155,8 +155,8 @@ describe("normalizeCatalogShips", () => {
       mediaPath: "/icons/",
     });
 
-    expect(ships.find(({ id }) => id === "ship-3")).toMatchObject({
-      id: "ship-3",
+    expect(vehicles.find(({ id }) => id === "vehicle-3")).toMatchObject({
+      id: "vehicle-3",
       locales: { name: {}, shortName: {}, description: {} },
       nation: null,
       class: null,
@@ -164,10 +164,10 @@ describe("normalizeCatalogShips", () => {
     });
   });
 
-  it("shares frozen nation and class objects between ships", () => {
+  it("shares frozen nation and class objects between vehicles", () => {
     const sources = {
       vehicles: {
-        "ship-1": {
+        "vehicle-1": {
           level: 10,
           name: "Ship One",
           nation: "japan",
@@ -175,7 +175,7 @@ describe("normalizeCatalogShips", () => {
           icons: {},
           localization: { mark: {}, shortmark: {}, description: {} },
         },
-        "ship-2": {
+        "vehicle-2": {
           level: 9,
           name: "Ship Two",
           nation: "japan",
@@ -203,9 +203,9 @@ describe("normalizeCatalogShips", () => {
       },
       mediaPath: "/icons",
     };
-    const ships = normalizeCatalogShips(sources);
+    const vehicles = normalizeCatalogVehicles(sources);
 
-    expect(ships[0]?.nation).toBe(ships[1]?.nation);
-    expect(ships[0]?.class).toBe(ships[1]?.class);
+    expect(vehicles[0]?.nation).toBe(vehicles[1]?.nation);
+    expect(vehicles[0]?.class).toBe(vehicles[1]?.class);
   });
 });
