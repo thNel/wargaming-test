@@ -72,7 +72,7 @@ async function downloadImage(iconPath) {
 const [vehicles, nations, vehicleTypes] = await Promise.all([
   readMock("vehicles.json"),
   readMock("nations.json"),
-  readMock("vehicle-types-common.json"),
+  readMock("vehicle_types_common.json"),
 ]);
 
 const allPaths = collectIconPaths(

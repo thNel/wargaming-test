@@ -28,8 +28,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local Codex attachments
+# Local attachments
 .codex-remote-attachments/
+/memory-bank/
 
 # Local environment files
 .env

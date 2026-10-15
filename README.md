@@ -5,8 +5,8 @@ A React, TypeScript, and Vite starter for the World of Warships home task.
 ## Application foundations
 
 - i18next initialization is under `src/shared/i18n/`; dictionary placement and locale rules are documented in [the code style guide](docs/code-style.md#localization).
-- Redux Toolkit and RTK Query are configured in `src/app/store.ts` and `src/shared/api/vortexApi.ts`.
-- RTK Query uses the live Vortex API in normal development and production modes, and local snapshots in mock mode.
+- Redux Toolkit and RTK Query are configured in `src/store/` and `src/services/`.
+- RTK Query services always request same-origin `/api/...` URLs. During development, Vite proxies them to Vortex or rewrites them to local snapshots in mock mode.
 - Vite serves files from `public/` in development. The regular production build removes `dist/mocks/` after bundling while keeping the brand logos; the mock build keeps the snapshots.
 
 ## Development
@@ -22,7 +22,7 @@ The default `development` and `production` modes use the live Vortex API. To wor
 npm run dev:mock
 ```
 
-To build the app with snapshots, run `npm run build:mock`. The regular `npm run build` continues to build against the live API. Vite selects and injects the endpoint configuration in `vite.config.ts`; the snapshots are in `public/mocks/vortex/`.
+The mock URL rewrite applies to the Vite development server. Build and deployment routing are outside this local development proxy setup. Snapshot files are in `public/mocks/vortex/`.
 
 ## Available scripts
 

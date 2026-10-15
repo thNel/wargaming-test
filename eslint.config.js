@@ -71,20 +71,33 @@ const moduleConstantCaseRule = {
   meta: {
     type: "suggestion",
     docs: {
-      description: "Use UPPER_SNAKE_CASE for module-level constants and frozen objects",
+      description: "Use UPPER_SNAKE_CASE for primitive constants and frozen values",
     },
     schema: [],
     messages: {
-      useUpperSnakeCase:
-        "Use UPPER_SNAKE_CASE for module-level constants and Object.freeze values.",
+      useUpperSnakeCase: "Use UPPER_SNAKE_CASE for primitive constants and Object.freeze values.",
       reserveUpperSnakeCase:
-        "UPPER_SNAKE_CASE is reserved for module-level constants and Object.freeze values.",
+        "UPPER_SNAKE_CASE is reserved for primitive constants and Object.freeze values.",
     },
   },
   create(context) {
     const isUpperSnakeCase = (name) => /^[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)*$/.test(name);
-    const isFunctionValue = (initializer) =>
-      initializer?.type === "ArrowFunctionExpression" || initializer?.type === "FunctionExpression";
+    const isPrimitiveValue = (initializer) => {
+      if (initializer?.type === "Literal") {
+        return initializer.value === null || typeof initializer.value !== "object";
+      }
+
+      if (initializer?.type === "TemplateLiteral") {
+        return initializer.expressions.length === 0;
+      }
+
+      return (
+        initializer?.type === "UnaryExpression" &&
+        (initializer.operator === "-" || initializer.operator === "+") &&
+        initializer.argument.type === "Literal" &&
+        typeof initializer.argument.value === "number"
+      );
+    };
     const isFrozenValue = (initializer) =>
       initializer?.type === "CallExpression" &&
       initializer.callee.type === "MemberExpression" &&
@@ -104,7 +117,7 @@ const moduleConstantCaseRule = {
 
     return {
       VariableDeclarator(node) {
-        if (node.id.type !== "Identifier") {
+        if (node.id.type !== "Identifier" || !node.init) {
           return;
         }
 
@@ -116,19 +129,19 @@ const moduleConstantCaseRule = {
         }
 
         const declaration = node.parent;
-        const isModuleConstant =
+        const isModuleLevel = isModuleLevelDeclaration(declaration);
+        const isConstantValue =
           declaration.kind === "const" &&
-          isModuleLevelDeclaration(declaration) &&
-          !isFunctionValue(node.init);
-        const isFrozenObject = isFrozenValue(node.init);
+          isModuleLevel &&
+          (isPrimitiveValue(node.init) || isFrozenValue(node.init));
         const isConstantName = isUpperSnakeCase(name);
 
-        if ((isModuleConstant || isFrozenObject) && !isConstantName) {
+        if (isConstantValue && !isConstantName) {
           context.report({ node: node.id, messageId: "useUpperSnakeCase" });
           return;
         }
 
-        if (isConstantName && !isModuleConstant && !isFrozenObject) {
+        if (isConstantName && (!isModuleLevel || !isConstantValue)) {
           context.report({ node: node.id, messageId: "reserveUpperSnakeCase" });
         }
       },

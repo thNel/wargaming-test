@@ -6,8 +6,8 @@ These files are local fixtures based on the four Vortex Encyclopedia API respons
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------: |
 | [`vehicles.json`](../public/mocks/vortex/vehicles.json)                         | [`vehicles/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicles/)                         |             25 |
 | [`nations.json`](../public/mocks/vortex/nations.json)                           | [`nations/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/nations/)                           |              6 |
-| [`vehicle-types-common.json`](../public/mocks/vortex/vehicle-types-common.json) | [`vehicle_types_common/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicle_types_common/) |              5 |
-| [`media-path.json`](../public/mocks/vortex/media-path.json)                     | [`media_path/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/media_path/)                     |   Scalar value |
+| [`vehicle_types_common.json`](../public/mocks/vortex/vehicle_types_common.json) | [`vehicle_types_common/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicle_types_common/) |              5 |
+| [`media_path.json`](../public/mocks/vortex/media_path.json)                     | [`media_path/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/media_path/)                     |   Scalar value |
 
 The files and downloaded web icons are under Vite's `public` directory, so they can be loaded locally without importing fixture data into the JavaScript bundle. The nations fixture contains only the six nations represented by the selected ships. The mock `media_path.json` points to `/mocks/vortex/images/`, where the downloaded image files preserve the relative paths from the API. Run `npm run mocks:images` after cloning to download the ignored image files.
 
@@ -18,8 +18,8 @@ Once the Vite app is present, the corresponding data paths are:
 ```text
 /mocks/vortex/vehicles.json
 /mocks/vortex/nations.json
-/mocks/vortex/vehicle-types-common.json
-/mocks/vortex/media-path.json
+/mocks/vortex/vehicle_types_common.json
+/mocks/vortex/media_path.json
 ```
 
 ## Runtime mode
@@ -33,7 +33,7 @@ The default Vite `development` and `production` modes request data from the live
 | `npm run dev:mock`   | Local snapshots |
 | `npm run build:mock` | Local snapshots |
 
-The endpoint mapping is selected in `vite.config.ts` and injected into the app at build time. Vite serves all files under `public/` during development, regardless of mode; the app requests these snapshots only when configured for `mock` mode. The regular `npm run build` uses npm's `postbuild` lifecycle script to remove `dist/mocks/` after bundling. The `npm run build:mock` command does not run that cleanup and retains the snapshots.
+Every API service requests the same-origin `/api/...` path. In live development mode, Vite proxies that path to the Vortex API. In `mock` development mode, Vite rewrites it to the matching file under `public/mocks/vortex/`. This routing applies to the Vite development server; build and deployment routing are configured separately.
 
 Example:
 

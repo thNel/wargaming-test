@@ -15,7 +15,7 @@ This document describes conventions that are useful for review but are not fully
 - Interfaces and type aliases use PascalCase. Do not prefix interface names with `I`.
 - Enum members use PascalCase.
 - Variables and functions use camelCase. Do not use PascalCase for variables.
-- Module-level constants and frozen objects use UPPER_SNAKE_CASE. Constants should be declared outside component bodies, before the component, or moved into shared constants when reused.
+- Primitive constants and frozen values use UPPER_SNAKE_CASE. Mutable objects and instances use camelCase. Constants should be declared outside component bodies, before the component, or moved into shared constants when reused.
 - A leading underscore is reserved for values that are intentionally unused for now. Other leading and trailing underscores are not allowed.
 - Hooks begin with `use` and use camelCase after that prefix. Every hook must declare its return type.
 - Component files and component names use PascalCase.
@@ -37,6 +37,7 @@ This document describes conventions that are useful for review but are not fully
 - Separate component presentation from feature logic by moving state, effects, data access, and handlers into hooks when that improves clarity.
 - Do not pass inline functions or `.bind()` expressions to JSX props. Define a named handler and pass it to the component.
 - Prefer semantic HTML elements and ensure interactive controls work with keyboard and assistive technology.
+- Keep components and functions focused on their product or domain responsibility. Avoid mixing them with development/runtime infrastructure such as API contracts, service setup, store wiring, or configuration; move that infrastructure into dedicated modules and keep component and function bodies free of unrelated setup details.
 
 ## Localization
 
@@ -54,6 +55,7 @@ This document describes conventions that are useful for review but are not fully
 ## API types and data transformation
 
 - DTOs are TypeScript interfaces describing API request and response contracts.
+- Keep API request and response DTOs in a sibling `*.dto.ts` file rather than declaring them in the service module (for example, `shipsApi.ts` and `ships.dto.ts`). Use `*.types.ts` for other module-specific types that are not API DTOs.
 - If data transformation is needed, use a clearly named mapper, adapter, or parser. Do not call transformation code a DTO.
 - Preserve API field names in API contract types. Convert to local naming only when creating a separate application model.
 
