@@ -1,5 +1,7 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto Condensed", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-kerning: none;
+  font-size: 16px;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,6 +18,7 @@ body,
   min-width: 320px;
   min-height: 100%;
   margin: 0;
+  user-select: none;
 }
 
 body {

@@ -55,7 +55,7 @@ This document describes conventions that are useful for review but are not fully
 ## API types and data transformation
 
 - DTOs are TypeScript interfaces describing API request and response contracts.
-- Keep API request and response DTOs in a sibling `*.dto.ts` file rather than declaring them in the service module (for example, `shipsApi.ts` and `ships.dto.ts`). Use `*.types.ts` for other module-specific types that are not API DTOs.
+- Keep API request and response DTOs in a sibling `*.dto.ts` file rather than declaring them in the service module (for example, `vehiclesApi.ts` and `vehicles.dto.ts`). Use `*.types.ts` for other module-specific types that are not API DTOs.
 - If data transformation is needed, use a clearly named mapper, adapter, or parser. Do not call transformation code a DTO.
 - Preserve API field names in API contract types. Convert to local naming only when creating a separate application model.
 

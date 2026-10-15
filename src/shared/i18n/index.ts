@@ -2,10 +2,10 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import { CATALOG_DICTIONARIES } from "@/features/catalog/locales";
+import { SUPPORTED_LOCALES } from "./supportedLocales";
 
 const LANGUAGE_STORAGE_KEY = "wows-language";
-const SUPPORTED_LOCALES = Object.keys(CATALOG_DICTIONARIES);
-const INITIAL_LOCALE = getInitialLocale();
+const initialLocale = getInitialLocale();
 
 function normalizeLocale(locale: string): string {
   return locale.replaceAll("-", "_").toLowerCase();
@@ -37,13 +37,20 @@ function getInitialLocale(): string {
   return browserLocales.map(findSupportedLocale).find(Boolean) ?? "en";
 }
 
-export const I18N = i18n.use(initReactI18next);
+function persistLocale(locale: string): void {
+  try {
+    globalThis.localStorage?.setItem?.(LANGUAGE_STORAGE_KEY, findSupportedLocale(locale) ?? "en");
+  } catch {
+    // Language selection still works when storage is unavailable.
+  }
+}
 
-void I18N.init({
-  lng: INITIAL_LOCALE,
+export const i18nInstance = i18n.use(initReactI18next);
+
+void i18nInstance.init({
+  lng: initialLocale,
   fallbackLng: "en",
   supportedLngs: SUPPORTED_LOCALES,
-  defaultNS: "catalog",
   resources: Object.fromEntries(
     Object.entries(CATALOG_DICTIONARIES).map(([locale, dictionary]) => [
       locale,
@@ -55,16 +62,8 @@ void I18N.init({
   },
 });
 
-try {
-  localStorage.setItem(LANGUAGE_STORAGE_KEY, INITIAL_LOCALE);
-} catch {
-  // Language selection still works when storage is unavailable.
-}
+persistLocale(initialLocale);
 
-I18N.on("languageChanged", (locale) => {
-  try {
-    localStorage.setItem(LANGUAGE_STORAGE_KEY, findSupportedLocale(locale) ?? "en");
-  } catch {
-    // Language selection still works when storage is unavailable.
-  }
+i18nInstance.on("languageChanged", (locale) => {
+  persistLocale(locale);
 });
