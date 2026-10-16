@@ -1,0 +1,33 @@
+.root {
+  --panel-line: rgb(154 194 211 / 12%);
+  --field-height: 36px;
+  --field-wide-height: 42px;
+  --short-field-width: 72%;
+
+  display: grid;
+  gap: 19px;
+  min-height: 340px;
+  padding: 24px 20px;
+  border: 1px solid var(--panel-line);
+  background: linear-gradient(145deg, rgb(17 43 58 / 85%), rgb(8 29 43 / 88%));
+}
+
+@media (max-width: 960px) {
+  .root {
+    gap: 15px;
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 700px) {
+  .root {
+    --field-height: 32px;
+    --field-wide-height: 32px;
+    --short-field-width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    min-height: 0;
+    padding: 14px;
+  }
+}

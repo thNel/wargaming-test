@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import { CATALOG_DICTIONARIES } from "@/features/catalog/locales";
+import { MAIN_DICTIONARIES } from "@/pages/main/locales";
 import { SUPPORTED_LOCALES } from "./supportedLocales";
 
 const LANGUAGE_STORAGE_KEY = "wows-language";
@@ -52,10 +52,7 @@ void i18nInstance.init({
   fallbackLng: "en",
   supportedLngs: SUPPORTED_LOCALES,
   resources: Object.fromEntries(
-    Object.entries(CATALOG_DICTIONARIES).map(([locale, dictionary]) => [
-      locale,
-      { catalog: dictionary },
-    ]),
+    Object.entries(MAIN_DICTIONARIES).map(([locale, dictionary]) => [locale, { main: dictionary }]),
   ),
   interpolation: {
     escapeValue: false,

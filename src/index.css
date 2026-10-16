@@ -1,4 +1,12 @@
 :root {
+  --page-gutter: clamp(20px, 4vw, 48px);
+  --content-inset: clamp(16px, 1.2vw, 24px);
+  --content-width: 1440px;
+  --color-ink: #e8eef3;
+  --color-muted: #91a5b5;
+  --scrollbar-thumb: rgb(195 216 227 / 38%);
+  --scrollbar-thumb-hover: rgb(216 231 238 / 58%);
+
   font-family: "Roboto Condensed", Arial, "Helvetica Neue", Helvetica, sans-serif;
   font-kerning: none;
   font-size: 16px;
@@ -10,6 +18,43 @@
 
 * {
   box-sizing: border-box;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  background-clip: content-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-button,
+*::-webkit-scrollbar-button:single-button,
+*::-webkit-scrollbar-button:vertical:decrement,
+*::-webkit-scrollbar-button:vertical:increment,
+*::-webkit-scrollbar-button:horizontal:decrement,
+*::-webkit-scrollbar-button:horizontal:increment,
+*::-webkit-scrollbar-button:start:decrement,
+*::-webkit-scrollbar-button:end:increment {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 html,
@@ -21,6 +66,53 @@ body,
   user-select: none;
 }
 
+html {
+  background:
+    linear-gradient(rgb(7 26 40 / 28%), rgb(6 21 33 / 50%)),
+    url("/images/background.png") center top / cover no-repeat fixed;
+  background-color: #061521;
+}
+
+@media (max-width: 700px) {
+  html {
+    background-image: linear-gradient(rgb(7 26 40 / 28%), rgb(6 21 33 / 50%));
+    background-attachment: scroll;
+  }
+}
+
 body {
   min-height: 100vh;
+  min-height: 100svh;
+}
+
+#root {
+  min-height: 100svh;
+  color: var(--color-ink);
+}
+
+@media (min-width: 2200px) {
+  :root {
+    --content-width: 1600px;
+  }
+}
+
+@media (min-width: 2800px) {
+  :root {
+    --content-width: 1760px;
+  }
+}
+
+@media (max-width: 380px) {
+  :root {
+    --page-gutter: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

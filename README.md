@@ -4,7 +4,7 @@ A React, TypeScript, and Vite starter for the World of Warships home task.
 
 ## Application foundations
 
-- i18next initialization is under `src/shared/i18n/`; dictionary placement and locale rules are documented in [the code style guide](docs/code-style.md#localization).
+- i18next initialization is under `src/shared/i18n/`; page and feature dictionaries live beside the code that owns their text, and language selection persists in `localStorage`. Dictionary placement and locale rules are documented in [the code style guide](docs/code-style.md#localization).
 - Redux Toolkit and RTK Query are configured in `src/store/` and `src/services/`.
 - RTK Query services always request same-origin `/api/...` URLs. During development, Vite proxies them to Vortex or rewrites them to local snapshots in mock mode.
 - Vite serves files from `public/` in development. The regular production build removes `dist/mocks/` after bundling while keeping the brand logos; the mock build keeps the snapshots.

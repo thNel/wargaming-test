@@ -1,0 +1,45 @@
+.languageList {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.languageOption {
+  display: flex;
+  width: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.625rem 0.75rem;
+  color: #f0f4f6;
+  text-align: start;
+  cursor: pointer;
+  background: #111;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 2px;
+}
+
+.languageOption:hover {
+  background: #1c1c1c;
+  border-color: rgb(115 217 229 / 38%);
+}
+
+.languageOption[aria-pressed="true"] {
+  background: #202020;
+  border-color: rgb(115 217 229 / 58%);
+}
+
+.languageOption:focus-visible {
+  outline: 2px solid #94d7ee;
+  outline-offset: 2px;
+}
+
+.languageCode {
+  flex: 0 0 auto;
+  color: #9daab1;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}

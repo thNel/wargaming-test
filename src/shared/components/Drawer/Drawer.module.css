@@ -1,0 +1,130 @@
+.drawer {
+  position: fixed;
+  inset-block: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: min(26rem, calc(100vw - 1rem));
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 1.25rem;
+  overflow: auto;
+  color: #f0f4f6;
+  background: #050505;
+  border: 1px solid rgb(255 255 255 / 12%);
+  box-shadow: 0 0 3rem rgb(0 0 0 / 38%);
+  transition: transform 220ms ease;
+}
+
+.drawer::-webkit-scrollbar-button,
+.drawer::-webkit-scrollbar-button:single-button,
+.content::-webkit-scrollbar-button,
+.content::-webkit-scrollbar-button:single-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+.drawer:not([open]) {
+  display: none;
+}
+
+.drawer[data-placement="right"] {
+  inset-inline-end: 0;
+  inset-inline-start: auto;
+  border-inline-start-color: rgb(255 255 255 / 16%);
+  transform: translateX(0);
+}
+
+.drawer[data-placement="left"] {
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+  border-inline-end-color: rgb(255 255 255 / 16%);
+  transform: translateX(0);
+}
+
+.drawer::backdrop {
+  background: rgb(0 0 0 / 64%);
+  transition: background-color 220ms ease;
+}
+
+@starting-style {
+  .drawer[data-placement="right"][open] {
+    transform: translateX(100%);
+  }
+
+  .drawer[data-placement="left"][open] {
+    transform: translateX(-100%);
+  }
+
+  .drawer[open]::backdrop {
+    background: rgb(0 0 0 / 0%);
+  }
+}
+
+.header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block-end: 1rem;
+  border-block-end: 1px solid rgb(255 255 255 / 14%);
+}
+
+.title {
+  margin: 0;
+  color: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.closeButton {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  place-items: center;
+  color: inherit;
+  font: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 3px;
+}
+
+.closeButton:hover {
+  background: rgb(255 255 255 / 8%);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid #94d7ee;
+  outline-offset: 2px;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-block-start: 1rem;
+  overflow: auto;
+}
+
+@media (max-width: 30rem) {
+  .drawer {
+    width: min(100vw, 26rem);
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer::backdrop {
+    transition-duration: 0.01ms;
+  }
+}

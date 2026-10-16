@@ -1,29 +1,39 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Trans } from "react-i18next";
+import { Skeleton } from "@/shared/components/Skeleton/Skeleton";
 
-import type { AppDispatch } from "@/store";
-import { loadCatalog } from "@/store/catalog/catalogThunks";
+import styles from "./Catalog.module.css";
+
+const PLACEHOLDER_CARD_IDS = Object.freeze([
+  "ship-1",
+  "ship-2",
+  "ship-3",
+  "ship-4",
+  "ship-5",
+  "ship-6",
+]);
 
 export function Catalog() {
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    void dispatch(loadCatalog());
-  }, [dispatch]);
-
   return (
-    <section aria-labelledby="catalog-heading">
-      <h1 id="catalog-heading">
-        <Trans ns="catalog" i18nKey="title">
-          World of Warships ship catalog
-        </Trans>
-      </h1>
-      <p>
-        <Trans ns="catalog" i18nKey="description">
-          The ship catalog is being prepared.
-        </Trans>
-      </p>
-    </section>
+    <div className={styles.root}>
+      <div className={styles.toolbar} aria-hidden="true">
+        <Skeleton w="min(100%, 320px)" h="var(--toolbar-field-height)" />
+        <Skeleton
+          className={styles.sortField}
+          w="var(--sort-field-width)"
+          h="var(--toolbar-field-height)"
+        />
+      </div>
+
+      <div className={styles.grid} aria-hidden="true">
+        {PLACEHOLDER_CARD_IDS.map((cardId) => (
+          <div className={styles.card} key={cardId}>
+            <Skeleton className={styles.cardArt} h="var(--card-art-height)" />
+            <div className={styles.cardCopy}>
+              <Skeleton w="64%" h={8} />
+              <Skeleton w="38%" h={6} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

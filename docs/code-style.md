@@ -42,11 +42,12 @@ This document describes conventions that are useful for review but are not fully
 ## Localization
 
 - Use one shared i18next instance for the application.
-- Keep each feature's translation files in a `locales/` directory beside that feature's root, for example `src/features/catalog/locales/`.
+- Keep translation files beside the feature or page that owns the text, for example `src/features/catalog/locales/` or `src/pages/main/locales/`. Page headings and shell copy belong to the page namespace, not to a feature merely displayed on that page.
 - Give each large feature or page its own namespace and provide a dictionary for every supported locale in that feature's `locales/` directory.
 - Supported locales follow the Vortex API codes: `cs`, `de`, `en`, `es`, `es_mx`, `fr`, `it`, `ja`, `ko`, `nl`, `pl`, `pt_br`, `ru`, `th`, `tr`, `uk`, `zh_cn`, `zh_sg`, and `zh_tw`.
-- Register feature dictionaries in the shared i18next resource store, keyed by locale and namespace. The central registry imports feature-owned dictionaries; it does not contain their translation text. Keep namespaces unique so registering one feature does not replace another feature's resources.
-- Set a feature's namespace as the default namespace for its React subtree using the shared i18next instance. Descendant components inherit that namespace unless they explicitly request another one.
+- Register page and feature dictionaries in the shared i18next resource store, keyed by locale and namespace. The central registry imports dictionaries from their owning page or feature; it does not contain their translation text. Keep namespaces unique so registering one owner does not replace another owner's resources.
+- Request the owning page or feature namespace explicitly with `useTranslation(namespace)` when a component needs translated values. A subtree provider may set that namespace as the default; descendants inherit it only when configured.
+- A React component that must rerender when the language changes should subscribe with `useTranslation(namespace)` and render translated values with `t(...)`. Do not depend on unrelated state updates to refresh translated text.
 - Shared components should receive user-facing text through props when practical. If a shared component owns fixed labels, keep its dictionaries beside that component under its own `locales/` directory and use its namespace explicitly.
 - On startup, prefer a supported locale saved in `localStorage`. If none is available, map the browser's preferred locale to a supported Vortex locale and fall back to English when there is no match. Save the resolved locale, including an automatically detected locale, and persist later manual language changes to `localStorage`.
 - Use the active locale for both UI translations and localized Vortex fields. Normalize browser locale formats such as `pt-BR` to Vortex codes such as `pt_br`.
