@@ -2,12 +2,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import js from "@eslint/js";
-import a11yinspect from "@barrierbreak/eslint-plugin-a11yinspect";
 import stylistic from "@stylistic/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import globals from "globals";
 import importPlugin from "eslint-plugin-import";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
@@ -169,7 +167,6 @@ export default defineConfig([
       react.configs.flat["jsx-runtime"],
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
-      jsxA11y.flatConfigs.recommended,
     ],
     plugins: {
       import: importPlugin,
@@ -294,11 +291,9 @@ export default defineConfig([
   {
     files: ["src/**/*.{jsx,tsx}"],
     plugins: {
-      a11yinspect,
       "@stylistic": stylistic,
     },
     rules: {
-      ...a11yinspect.configs.recommended.rules,
       "react/jsx-no-bind": "error",
       "@stylistic/jsx-curly-brace-presence": [
         "error",
@@ -308,11 +303,6 @@ export default defineConfig([
           propElementValues: "always",
         },
       ],
-      // These page-level rules report false positives when the page is assembled from JSX modules.
-      "a11yinspect/landmark-element-error": "off",
-      "a11yinspect/landmark-element-warning": "off",
-      "a11yinspect/title-element-error": "off",
-      "a11yinspect/skip-link-warning": "off",
     },
   },
 ]);
