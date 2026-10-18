@@ -32,15 +32,21 @@
 }
 
 .drawer[data-placement="right"] {
+  inset-block-start: 0;
+  inset-block-end: 0;
   inset-inline-end: 0;
   inset-inline-start: auto;
+  margin-inline-start: auto;
   border-inline-start-color: rgb(255 255 255 / 16%);
   transform: translateX(0);
 }
 
 .drawer[data-placement="left"] {
+  inset-block-start: 0;
+  inset-block-end: 0;
   inset-inline-start: 0;
   inset-inline-end: auto;
+  margin-inline-end: auto;
   border-inline-end-color: rgb(255 255 255 / 16%);
   transform: translateX(0);
 }

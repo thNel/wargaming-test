@@ -40,6 +40,6 @@ const mainDictionaries = {
   zh_cn,
   zh_sg,
   zh_tw,
-} satisfies Record<SupportedLocale, Record<string, string>>;
+} satisfies Record<SupportedLocale, typeof en>;
 
 export const MAIN_DICTIONARIES = Object.freeze(mainDictionaries);

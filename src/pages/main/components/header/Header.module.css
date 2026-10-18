@@ -65,14 +65,16 @@
 
 .brand {
   display: inline-flex;
+  width: 274px;
   min-width: 0;
   align-items: center;
   outline-offset: 5px;
 }
 
-.brand img {
-  display: block;
-  height: 32px;
+.brandImage {
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: transparent;
 }
 
 .languageButton {
@@ -120,7 +122,7 @@
     height: 48px;
   }
 
-  .brand img {
+  .brand {
     width: 100px;
   }
 

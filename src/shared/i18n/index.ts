@@ -2,25 +2,13 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import { MAIN_DICTIONARIES } from "@/pages/main/locales";
-import { SUPPORTED_LOCALES } from "./supportedLocales";
+import { SUPPORTED_LOCALES, type SupportedLocale } from "./supportedLocales";
+import { findSupportedLocale, getLanguageTag } from "./locale.utils";
 
 const LANGUAGE_STORAGE_KEY = "wows-language";
 const initialLocale = getInitialLocale();
 
-function normalizeLocale(locale: string): string {
-  return locale.replaceAll("-", "_").toLowerCase();
-}
-
-function findSupportedLocale(locale: string): string | undefined {
-  const normalizedLocale = normalizeLocale(locale);
-
-  return SUPPORTED_LOCALES.find(
-    (supportedLocale) =>
-      normalizedLocale === supportedLocale || normalizedLocale.startsWith(`${supportedLocale}_`),
-  );
-}
-
-function getInitialLocale(): string {
+function getInitialLocale(): SupportedLocale {
   try {
     const savedLocale = localStorage.getItem(LANGUAGE_STORAGE_KEY);
     const supportedSavedLocale = savedLocale ? findSupportedLocale(savedLocale) : undefined;
@@ -37,15 +25,21 @@ function getInitialLocale(): string {
   return browserLocales.map(findSupportedLocale).find(Boolean) ?? "en";
 }
 
-function persistLocale(locale: string): void {
+function syncLocale(locale: string): void {
+  const supportedLocale = findSupportedLocale(locale) ?? "en";
+
+  document.documentElement.lang = getLanguageTag(supportedLocale);
+
   try {
-    globalThis.localStorage?.setItem?.(LANGUAGE_STORAGE_KEY, findSupportedLocale(locale) ?? "en");
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, supportedLocale);
   } catch {
     // Language selection still works when storage is unavailable.
   }
 }
 
 export const i18nInstance = i18n.use(initReactI18next);
+
+i18nInstance.on("languageChanged", syncLocale);
 
 void i18nInstance.init({
   lng: initialLocale,
@@ -57,10 +51,4 @@ void i18nInstance.init({
   interpolation: {
     escapeValue: false,
   },
-});
-
-persistLocale(initialLocale);
-
-i18nInstance.on("languageChanged", (locale) => {
-  persistLocale(locale);
 });

@@ -1,10 +1,11 @@
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { Image } from "@/shared/components/Image/Image";
+
 import { LanguageDrawer } from "../language-drawer/LanguageDrawer";
 import styles from "./Header.module.css";
 
-/* eslint-disable a11yinspect/button-element-error -- The translated language label is present for every supported locale. */
 export function Header() {
   const { i18n, t } = useTranslation("main");
   const [isLanguageDrawerOpen, setIsLanguageDrawerOpen] = useState(false);
@@ -22,8 +23,15 @@ export function Header() {
     <>
       <header className={styles.header}>
         <div className={styles.inner}>
-          <a className={styles.brand} href="/" aria-label="Fleet Catalog home">
-            <img src="/images/logo-wows-long-raster.webp" alt="World of Warships" />
+          <a className={styles.brand} href="/" aria-label={t("title")}>
+            <Image
+              alt="World of Warships"
+              className={styles.brandImage}
+              fit="contain"
+              h={32}
+              loading="lazy"
+              src="/images/logo-wows-long-raster.webp"
+            />
           </a>
 
           <button

@@ -2,7 +2,14 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 type NativeDialogProps = Omit<
   ComponentPropsWithoutRef<"dialog">,
-  "aria-label" | "aria-labelledby" | "children" | "className" | "onCancel" | "onClose" | "open"
+  | "aria-label"
+  | "aria-labelledby"
+  | "children"
+  | "className"
+  | "onCancel"
+  | "onClick"
+  | "onClose"
+  | "open"
 >;
 
 export type DrawerProps = NativeDialogProps & {

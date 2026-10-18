@@ -1,4 +1,10 @@
-import { useCallback, useLayoutEffect, useRef, type ComponentPropsWithoutRef } from "react";
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  type ComponentPropsWithoutRef,
+  type MouseEvent,
+} from "react";
 import classNames from "classnames";
 
 import type { DrawerProps } from "./Drawer.types";
@@ -22,6 +28,25 @@ export function Drawer({
     },
     [onClose],
   );
+  const handleBackdropClick = useCallback(
+    (event: MouseEvent<HTMLDialogElement>) => {
+      if (event.target !== event.currentTarget) {
+        return;
+      }
+
+      const { bottom, left, right, top } = event.currentTarget.getBoundingClientRect();
+      const isOutside =
+        event.clientX < left ||
+        event.clientX > right ||
+        event.clientY < top ||
+        event.clientY > bottom;
+
+      if (isOutside) {
+        onClose();
+      }
+    },
+    [onClose],
+  );
 
   useLayoutEffect(() => {
     const dialog = dialogRef.current;
@@ -37,6 +62,7 @@ export function Drawer({
     }
   }, [open]);
 
+  // The native dialog's backdrop click is the equivalent of a dismiss control; Escape remains available through onCancel.
   return (
     <dialog
       {...dialogProps}
@@ -45,6 +71,7 @@ export function Drawer({
       className={classNames(styles.drawer, className)}
       data-placement={placement}
       onCancel={handleCancel}
+      onClick={handleBackdropClick}
     >
       <header className={styles.header}>
         <div className={styles.title}>{title}</div>
