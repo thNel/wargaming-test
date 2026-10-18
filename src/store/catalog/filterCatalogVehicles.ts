@@ -2,13 +2,7 @@ import type { SupportedLocale } from "@/shared/i18n/supportedLocales";
 
 import type { PreparedCatalogFilters } from "../filters/filters.types";
 import type { CatalogVehicle, CatalogVehicleCollection } from "./catalog.types";
-
-function getSearchableText(vehicle: CatalogVehicle, locale: SupportedLocale): string[] {
-  return [
-    vehicle.locales.name[locale] ?? vehicle.locales.name.en,
-    vehicle.locales.shortName[locale] ?? vehicle.locales.shortName.en,
-  ].filter((value): value is string => Boolean(value));
-}
+import { getCatalogVehicleName } from "./getCatalogVehicleName";
 
 function matchesSearch(
   vehicle: CatalogVehicle,
@@ -19,9 +13,7 @@ function matchesSearch(
     return true;
   }
 
-  return getSearchableText(vehicle, locale).some((value) =>
-    value.toLowerCase().includes(searchTerm),
-  );
+  return getCatalogVehicleName(vehicle, locale).toLowerCase().includes(searchTerm);
 }
 
 export function filterCatalogVehicles(
@@ -51,14 +43,6 @@ export function filterCatalogVehicles(
     }
 
     if (filters.tiers.length > 0 && !filters.tiers.some((tier) => tier === vehicle.level)) {
-      return false;
-    }
-
-    if (!filters.showHidden && vehicle.tags.includes("catalogueHidden")) {
-      return false;
-    }
-
-    if (!filters.showMissing && vehicle.tags.includes("catalogueHiddenIfMissing")) {
       return false;
     }
 

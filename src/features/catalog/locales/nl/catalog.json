@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "De catalogus met vaartuigen kon niet worden geladen.",
+  "catalogEmpty": "Geen vaartuigen voldoen aan de geselecteerde filters.",
+  "catalogCount_zero": "{{count}} vaartuigen",
+  "catalogCount_one": "{{count}} vaartuig",
+  "catalogCount_few": "{{count}} vaartuigen",
+  "catalogCount_many": "{{count}} vaartuigen",
+  "catalogCount_other": "{{count}} vaartuigen",
+  "sortDefault": "Standaard",
+  "sortByName": "Op naam",
+  "sortByLevel": "Op niveau",
+  "sortAscending": "Oplopend",
+  "sortDescending": "Aflopend",
+  "sortBy": "Sorteren op",
+  "sortLabel": "Sorteren",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "Premium {{className}}",
+  "specialVehicleClass": "Speciale {{className}}",
+  "specialSubmarineClass": "Speciale {{className}}",
+  "vehicleListLabel": "Vlootcatalogus",
+  "retry": "Opnieuw proberen"
+}

@@ -1,0 +1,92 @@
+.grid,
+.skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skeletonCard {
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid rgb(154 194 211 / 10%);
+  border-radius: 5px;
+  background: rgb(3 20 31 / 42%);
+}
+
+.skeletonArt {
+  border-radius: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.skeletonCopy {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+}
+
+.message {
+  display: grid;
+  min-height: 220px;
+  margin: 0;
+  padding: 24px;
+  color: var(--color-muted);
+  text-align: center;
+  place-content: center;
+  gap: 14px;
+}
+
+.message p {
+  margin: 0;
+}
+
+.retryButton {
+  justify-self: center;
+  padding: 8px 14px;
+  border: 1px solid rgb(127 204 219 / 42%);
+  border-radius: 3px;
+  color: #d8f1f4;
+  background: rgb(29 83 99 / 32%);
+  font: inherit;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background: rgb(43 112 130 / 42%);
+}
+
+.retryButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 3px;
+}
+
+@media (max-width: 960px) {
+  .grid,
+  .skeletonGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .grid,
+  .skeletonGrid {
+    gap: 10px;
+  }
+
+  .skeletonCopy {
+    gap: 7px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .grid,
+  .skeletonGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

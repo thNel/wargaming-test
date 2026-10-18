@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
 import { FILTER_DICTIONARIES } from "@/features/filters/locales";
+import { CATALOG_DICTIONARIES } from "@/features/catalog/locales";
 import { MAIN_DICTIONARIES } from "@/pages/main/locales";
 import { SUPPORTED_LOCALES, type SupportedLocale } from "./supportedLocales";
 import { findSupportedLocale, getLanguageTag } from "./locale.utils";
@@ -49,7 +50,11 @@ void i18nInstance.init({
   resources: Object.fromEntries(
     SUPPORTED_LOCALES.map((locale) => [
       locale,
-      { filters: FILTER_DICTIONARIES[locale], main: MAIN_DICTIONARIES[locale] },
+      {
+        catalog: CATALOG_DICTIONARIES[locale],
+        filters: FILTER_DICTIONARIES[locale],
+        main: MAIN_DICTIONARIES[locale],
+      },
     ]),
   ),
   interpolation: {

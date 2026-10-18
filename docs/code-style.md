@@ -15,7 +15,7 @@ This document describes conventions that are useful for review but are not fully
 - Interfaces and type aliases use PascalCase. Do not prefix interface names with `I`.
 - Enum members use PascalCase.
 - Variables and functions use camelCase. Do not use PascalCase for variables.
-- Primitive constants and frozen values use UPPER_SNAKE_CASE. Mutable objects and instances use camelCase. Keep static component constants in a separate `*.constants.ts` module, including constants used by only one component. Values derived from props, state, or hooks belong in the component or its hook.
+- Primitive constants and frozen values use UPPER_SNAKE_CASE. Mutable objects and instances use camelCase. Keep static component constants in a separate `*.constants.ts` module, including constants used by only one component. Use the shared `defineConstants` factory for static lists and maps. Values derived from props, state, or hooks belong in the component or its hook.
 - A leading underscore is reserved for values that are intentionally unused for now. Other leading and trailing underscores are not allowed.
 - Hooks begin with `use` and use camelCase after that prefix. Every hook must declare its return type.
 - Component files and component names use PascalCase.
@@ -41,6 +41,7 @@ This document describes conventions that are useful for review but are not fully
 - Keep components and functions focused on their product or domain responsibility. Avoid mixing them with development/runtime infrastructure such as API contracts, service setup, store wiring, or configuration; move that infrastructure into dedicated modules and keep component and function bodies free of unrelated setup details.
 - Pages compose ready feature components. Keep temporary feature placeholders inside their owning features. The main page owns its header and language drawer under `src/pages/main/components/`.
 - Each filter group owns its options, handlers, and store subscriptions. Do not pass options or handlers through a parent that only composes those groups.
+- The filters feature may share a `FilterGroup` shell for its common `fieldset` and `legend`; each concrete group owns its content and internal layout.
 - The header owns the language drawer's local open state; `LanguageDrawer` owns language selection; the shared `Drawer` owns presentation and receives state, callbacks, and labels through props.
 - The current filter groups render once per page. Use stable explicit IDs for their labels; do not add `useId` solely to support unneeded duplicate instances.
 
@@ -50,9 +51,10 @@ This document describes conventions that are useful for review but are not fully
 - Keep application theme variables, base text color, background, and viewport height in `src/index.css`. Use the document's global scrollbar for the page and catalog. The global `user-select: none` is intentional.
 - Use `classnames` to compose classes.
 - Keep SVG resources in `public/` instead of creating inline SVG component helpers.
-- Render every application `<img>` through the shared `Image` for its skeleton and error fallback. The consumer owns the loading strategy through the `loading` prop; use `loading="lazy"` for catalog images. Route image sources through the application's image proxy without assuming a specific route name.
+- Render every application `<img>` through the shared `Image` for its skeleton and error fallback. The consumer owns the loading strategy through the `loading` prop; use `loading="lazy"` for catalog images. A deployment must proxy image sources in its hosting configuration; the route and implementation are deployment-specific. Local development may use Vite's proxy.
 - `Skeleton` has its own explicit props rather than inheriting all span attributes. Its dimension props are named `w` and `h`; inline styles are allowed for those dimensions. Do not explicitly pass the default `w="100%"`. The component owns its radius and appearance; do not pass field borders or radius overrides from parents.
 - Keep shared checkbox appearance in `Checkbox.module.css`; filter groups own the surrounding labels and layout.
+- Tooltips open on pointer hover and keyboard focus. Do not add touch long-press behavior; touch users can use the filter icons visually.
 
 ## Localization
 
@@ -85,7 +87,7 @@ This document describes conventions that are useful for review but are not fully
 - Redux owns the complete normalized catalog, loading status, and errors. Do not introduce a second catalog cache inside a singleton or class. Choose ordinary functions when an object has no meaningful state or lifecycle.
 - Publish a complete catalog only after all required sources succeed and normalization finishes. Preserve the last successful catalog when a later load fails.
 - Derive active-filter state by comparing it with the initial filter state. Prepare filter criteria in selectors and keep the catalog filtering algorithm independent from the UI's boolean maps.
-- Search displayed localized names and short names, with fallback for each field. Normalize the search term at the filtering boundary. Do not search internal IDs or descriptions instead of the text shown to the user.
+- Search and sort by the active locale's full vehicle name, falling back directly to the original `vehicle.name` when that translation is missing. Do not insert English translation or short-name fallbacks into filtering or sorting. Debounce only search text (750 ms); apply discrete filter changes immediately. Normalize the search term at the filtering boundary. Do not search internal IDs or descriptions instead of the text shown to the user.
 - Use RTK/Immer's existing immutability guarantees; do not add recursive freezing machinery without a concrete need.
 
 ## Commit messages

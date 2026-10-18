@@ -1,0 +1,153 @@
+.item {
+  min-width: 0;
+}
+
+.card {
+  overflow: hidden;
+  height: 100%;
+  border: 1px solid rgb(154 194 211 / 16%);
+  border-radius: 5px;
+  background: linear-gradient(155deg, rgb(14 39 54 / 92%), rgb(5 22 34 / 96%));
+  box-shadow: 0 10px 28px rgb(0 0 0 / 12%);
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgb(117 211 225 / 42%);
+  box-shadow: 0 14px 34px rgb(0 0 0 / 24%);
+}
+
+.artwork {
+  position: relative;
+  display: grid;
+  min-height: 136px;
+  aspect-ratio: 16 / 10;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 54% 78%, rgb(85 146 163 / 24%), transparent 45%),
+    linear-gradient(180deg, rgb(16 43 58 / 24%) 0%, rgb(8 29 41 / 58%) 72%, #071a26 100%);
+}
+
+.artwork::after {
+  position: absolute;
+  inset: auto 9% 19% 9%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(150 203 216 / 34%), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.artImage {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-color: transparent;
+  transition: transform 220ms ease;
+}
+
+.nationBackdrop {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 105%;
+  height: 105%;
+  transform: translate(-50%, -50%);
+  border-radius: 0;
+  aspect-ratio: auto;
+  background-color: transparent;
+  opacity: 0.44;
+  pointer-events: none;
+}
+
+.card:hover .artImage {
+  transform: scale(1.035);
+}
+
+.vehicleHeading {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  width: auto;
+  max-width: none;
+  min-width: 0;
+  align-items: center;
+  padding: 4px;
+  gap: 7px;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    rgb(3 18 28 / 82%) 0%,
+    rgb(3 18 28 / 48%) 32%,
+    transparent 100%
+  );
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.name {
+  position: relative;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin: 0;
+  color: #edf3f6;
+  font-size: clamp(1rem, 1.2vw, 1.18rem);
+  font-weight: 700;
+  letter-spacing: 0.015em;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nameMeasure {
+  position: absolute;
+  width: max-content;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.namePremium {
+  color: #e3c477;
+}
+
+.classIcon {
+  flex: 0 0 auto;
+  opacity: 0.88;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .artImage {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:hover .artImage {
+    transform: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .artwork {
+    min-height: 116px;
+  }
+
+  .vehicleHeading {
+    top: 9px;
+    left: 9px;
+    right: 9px;
+    height: 28px;
+  }
+}

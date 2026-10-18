@@ -1,29 +1,19 @@
-export type NationKey =
-  | "ussr"
-  | "japan"
-  | "usa"
-  | "uk"
-  | "germany"
-  | "france"
-  | "italy"
-  | "europe"
-  | "pan_asia"
-  | "commonwealth"
-  | "pan_america"
-  | "netherlands"
-  | "spain";
+import type { Tier as SharedTier } from "@/shared/constants/tiers.constants";
+import type {
+  NationKey as SharedNationKey,
+  VehicleTypeKey as SharedVehicleTypeKey,
+} from "@/shared/constants/catalogFilters.constants";
 
-export type VehicleTypeKey = "Cruiser" | "AirCarrier" | "Battleship" | "Destroyer" | "Submarine";
+export type NationKey = SharedNationKey;
+export type VehicleTypeKey = SharedVehicleTypeKey;
 
-export type Tier = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+export type Tier = SharedTier;
 
 export interface CatalogFiltersState {
   searchTerm: string;
   nations: Record<NationKey, boolean>;
   classes: Record<VehicleTypeKey, boolean>;
   tiers: Record<Tier, boolean>;
-  showHidden: boolean;
-  showMissing: boolean;
 }
 
 export interface PreparedCatalogFilters {
@@ -31,6 +21,4 @@ export interface PreparedCatalogFilters {
   nations: readonly NationKey[];
   classes: readonly VehicleTypeKey[];
   tiers: readonly Tier[];
-  showHidden: boolean;
-  showMissing: boolean;
 }

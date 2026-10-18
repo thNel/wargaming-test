@@ -7,8 +7,6 @@ import {
   selectHasActiveCatalogFilters,
   selectPreparedCatalogFilters,
   setCatalogSearchTerm,
-  setShowHiddenShips,
-  setShowMissingShips,
   toggleCatalogClass,
   toggleCatalogNation,
   toggleCatalogTier,
@@ -52,8 +50,6 @@ function defaultFilters() {
       10: false,
       11: false,
     },
-    showHidden: true,
-    showMissing: true,
   };
 }
 
@@ -89,15 +85,12 @@ describe("catalog filters", () => {
     store.dispatch(toggleCatalogClass("Battleship"));
     store.dispatch(toggleCatalogTier(10));
     store.dispatch(setCatalogSearchTerm("  YaMaTo  "));
-    store.dispatch(setShowHiddenShips(false));
 
     expect(selectPreparedCatalogFilters(store.getState())).toEqual({
       searchTerm: "  YaMaTo  ",
       nations: ["japan", "usa"],
       classes: ["Battleship"],
       tiers: [10],
-      showHidden: false,
-      showMissing: true,
     });
   });
 
@@ -122,16 +115,12 @@ describe("catalog filters", () => {
     store.dispatch(toggleCatalogTier(8));
     store.dispatch(toggleCatalogTier(10));
     store.dispatch(setCatalogSearchTerm("Yamato"));
-    store.dispatch(setShowHiddenShips(false));
-    store.dispatch(setShowMissingShips(false));
 
     expect(selectCatalogFilters(store.getState())).toEqual({
       searchTerm: "Yamato",
       nations: { ...defaultFilters().nations, japan: true, usa: true },
       classes: { ...defaultFilters().classes, Battleship: true, Cruiser: true },
       tiers: { ...defaultFilters().tiers, 8: true, 10: true },
-      showHidden: false,
-      showMissing: false,
     });
   });
 
@@ -143,16 +132,12 @@ describe("catalog filters", () => {
     store.dispatch(toggleCatalogTier(10));
     store.dispatch(toggleCatalogTier(10));
     store.dispatch(setCatalogSearchTerm("Yamato"));
-    store.dispatch(setShowHiddenShips(false));
-    store.dispatch(setShowMissingShips(false));
 
     expect(selectCatalogFilters(store.getState())).toEqual({
       searchTerm: "Yamato",
       nations: defaultFilters().nations,
       classes: defaultFilters().classes,
       tiers: defaultFilters().tiers,
-      showHidden: false,
-      showMissing: false,
     });
 
     store.dispatch(resetCatalogFilters());

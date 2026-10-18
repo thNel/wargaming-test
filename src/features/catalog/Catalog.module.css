@@ -1,59 +1,13 @@
 .root {
-  --placeholder-line: rgb(154 194 211 / 12%);
-  --toolbar-field-height: 36px;
-  --sort-field-width: 144px;
-  --card-art-height: clamp(88px, 10vw, 144px);
-
   min-width: 0;
   min-height: 340px;
   padding: 20px;
-  border: 1px solid var(--placeholder-line);
-  background: linear-gradient(145deg, rgb(17 43 58 / 85%), rgb(8 29 43 / 88%));
-}
-
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.sortField {
-  flex: 0 0 auto;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.card {
-  overflow: hidden;
-  min-width: 0;
-  border: 1px solid rgb(154 194 211 / 10%);
-  border-radius: 8px 8px 4px 4px;
-  background: rgb(3 20 31 / 42%);
-}
-
-.cardArt {
-  position: relative;
-  border-radius: 0;
-}
-
-.cardCopy {
-  display: grid;
-  gap: 9px;
-  padding: 14px;
+  border: 1px solid rgb(154 194 211 / 12%);
 }
 
 @media (max-width: 960px) {
   .root {
     padding: 16px;
-  }
-
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -61,35 +15,5 @@
   .root {
     min-height: 0;
     padding: 14px;
-  }
-
-  .toolbar {
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .root {
-    --toolbar-field-height: 32px;
-    --sort-field-width: 104px;
-    --card-art-height: clamp(76px, 24vw, 112px);
-  }
-
-  .grid {
-    gap: 10px;
-  }
-
-  .cardCopy {
-    gap: 7px;
-    padding: 10px;
-  }
-}
-
-@media (max-width: 380px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .root {
-    --card-art-height: 112px;
   }
 }

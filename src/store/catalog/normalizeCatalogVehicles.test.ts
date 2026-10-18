@@ -93,7 +93,7 @@ describe("normalizeCatalogVehicles", () => {
     expect(vehicle?.class?.locales.name.ru).toBe("Линкор");
     expect(vehicle).not.toHaveProperty("localization");
     expect(vehicle).not.toHaveProperty("nationInfo");
-    expect(vehicle).not.toHaveProperty("shipTypeInfo");
+    expect(vehicle).not.toHaveProperty("vehicleTypeInfo");
     expect(Object.isFrozen(vehicles)).toBe(true);
     expect(Object.isFrozen(vehicle)).toBe(true);
     expect(Object.isFrozen(vehicle?.nation)).toBe(true);
@@ -143,7 +143,7 @@ describe("normalizeCatalogVehicles", () => {
       vehicles: {
         "vehicle-3": {
           level: 1,
-          name: "UnknownShip",
+          name: "UnknownVehicle",
           nation: "unknown",
           tags: ["unknown-class"],
           icons: { small: "vehicle/small/unknown.png" },
@@ -169,7 +169,7 @@ describe("normalizeCatalogVehicles", () => {
       vehicles: {
         "vehicle-1": {
           level: 10,
-          name: "Ship One",
+          name: "Vehicle One",
           nation: "japan",
           tags: ["Battleship", "special"],
           icons: {},
@@ -177,7 +177,7 @@ describe("normalizeCatalogVehicles", () => {
         },
         "vehicle-2": {
           level: 9,
-          name: "Ship Two",
+          name: "Vehicle Two",
           nation: "japan",
           tags: ["Battleship", "premium"],
           icons: {},

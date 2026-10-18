@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "艦艇カタログを読み込めませんでした。",
+  "catalogEmpty": "選択したフィルターに一致する艦艇はありません。",
+  "catalogCount_zero": "{{count}} 隻の艦艇",
+  "catalogCount_one": "{{count}} 隻の艦艇",
+  "catalogCount_few": "{{count}} 隻の艦艇",
+  "catalogCount_many": "{{count}} 隻の艦艇",
+  "catalogCount_other": "{{count}} 隻の艦艇",
+  "sortDefault": "デフォルト",
+  "sortByName": "名前順",
+  "sortByLevel": "Tier順",
+  "sortAscending": "昇順",
+  "sortDescending": "降順",
+  "sortBy": "並べ替え",
+  "sortLabel": "並べ替え",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "プレミアム{{className}}",
+  "specialVehicleClass": "特別{{className}}",
+  "specialSubmarineClass": "特別{{className}}",
+  "vehicleListLabel": "艦隊カタログ",
+  "retry": "再試行"
+}

@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useState } from "react";
 import classNames from "classnames";
 
 import { Skeleton } from "@/shared/components/Skeleton/Skeleton";
@@ -17,20 +17,15 @@ const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
       isLoading ?? (!hasError && (loadState.source !== src || loadState.status !== "loaded"));
     const wrapperClassName = classNames(styles.image, className);
     const wrapperStyle = { width: w, height: h };
-    const handleError = useCallback<NonNullable<ImageProps["onError"]>>(
-      (event) => {
-        onError?.(event);
-        setLoadState({ source: src, status: "error" });
-      },
-      [onError, src],
-    );
-    const handleLoad = useCallback<NonNullable<ImageProps["onLoad"]>>(
-      (event) => {
-        setLoadState({ source: src, status: "loaded" });
-        onLoad?.(event);
-      },
-      [onLoad, src],
-    );
+    function handleError(event: Parameters<NonNullable<ImageProps["onError"]>>[0]): void {
+      onError?.(event);
+      setLoadState({ source: src, status: "error" });
+    }
+
+    function handleLoad(event: Parameters<NonNullable<ImageProps["onLoad"]>>[0]): void {
+      setLoadState({ source: src, status: "loaded" });
+      onLoad?.(event);
+    }
 
     if (loadState.source !== src) {
       setLoadState({ source: src, status: "loading" });

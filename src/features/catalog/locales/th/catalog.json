@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "ไม่สามารถโหลดแคตตาล็อกยานพาหนะได้",
+  "catalogEmpty": "ไม่มียานพาหนะที่ตรงกับตัวกรองที่เลือก",
+  "catalogCount_zero": "{{count}} ยานพาหนะ",
+  "catalogCount_one": "{{count}} ยานพาหนะ",
+  "catalogCount_few": "{{count}} ยานพาหนะ",
+  "catalogCount_many": "{{count}} ยานพาหนะ",
+  "catalogCount_other": "{{count}} ยานพาหนะ",
+  "sortDefault": "ค่าเริ่มต้น",
+  "sortByName": "ตามชื่อ",
+  "sortByLevel": "ตามระดับ",
+  "sortAscending": "น้อยไปมาก",
+  "sortDescending": "มากไปน้อย",
+  "sortBy": "เรียงตาม",
+  "sortLabel": "เรียงลำดับ",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "{{className}} พรีเมียม",
+  "specialVehicleClass": "{{className}} พิเศษ",
+  "specialSubmarineClass": "{{className}} พิเศษ",
+  "vehicleListLabel": "แคตตาล็อกกองเรือ",
+  "retry": "ลองอีกครั้ง"
+}

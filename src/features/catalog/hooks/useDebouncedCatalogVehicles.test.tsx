@@ -10,8 +10,6 @@ const emptyFilters: PreparedCatalogFilters = {
   nations: [],
   classes: [],
   tiers: [],
-  showHidden: true,
-  showMissing: true,
 };
 
 const vehicles: CatalogVehicle[] = [
@@ -42,7 +40,7 @@ afterEach(() => {
 });
 
 describe("useDebouncedCatalogVehicles", () => {
-  it("filters after the debounce and its result length is the catalog count", () => {
+  it("applies discrete filters immediately", () => {
     vi.useFakeTimers();
 
     const filters: PreparedCatalogFilters = {
@@ -50,7 +48,7 @@ describe("useDebouncedCatalogVehicles", () => {
       tiers: [10],
     };
     const { result, rerender } = renderHook(
-      ({ activeFilters }) => useDebouncedCatalogVehicles(vehicles, activeFilters, "en", 250),
+      ({ activeFilters }) => useDebouncedCatalogVehicles(vehicles, activeFilters, "en"),
       { initialProps: { activeFilters: emptyFilters } },
     );
 
@@ -58,33 +56,43 @@ describe("useDebouncedCatalogVehicles", () => {
 
     rerender({ activeFilters: filters });
 
-    expect(result.current.map(({ id }) => id)).toEqual(["yamato", "bismarck"]);
-
-    act(() => vi.advanceTimersByTime(249));
-    expect(result.current.map(({ id }) => id)).toEqual(["yamato", "bismarck"]);
-
-    act(() => vi.advanceTimersByTime(1));
     expect(result.current.map(({ id }) => id)).toEqual(["yamato"]);
     expect(result.current.length).toBe(1);
   });
 
-  it("uses the latest filters when changes happen before the delay expires", () => {
+  it("debounces only search input for 750 milliseconds", () => {
     vi.useFakeTimers();
 
     const firstFilters = { ...emptyFilters, searchTerm: "yam" };
     const secondFilters = { ...emptyFilters, searchTerm: "bismarck" };
     const { result, rerender } = renderHook(
-      ({ activeFilters }) => useDebouncedCatalogVehicles(vehicles, activeFilters, "en", 250),
+      ({ activeFilters }) => useDebouncedCatalogVehicles(vehicles, activeFilters, "en"),
       { initialProps: { activeFilters: emptyFilters } },
     );
 
     rerender({ activeFilters: firstFilters });
     act(() => vi.advanceTimersByTime(100));
     rerender({ activeFilters: secondFilters });
-    act(() => vi.advanceTimersByTime(249));
+    act(() => vi.advanceTimersByTime(749));
     expect(result.current.map(({ id }) => id)).toEqual(["yamato", "bismarck"]);
 
     act(() => vi.advanceTimersByTime(1));
     expect(result.current.map(({ id }) => id)).toEqual(["bismarck"]);
+  });
+
+  it("applies discrete changes immediately while search is pending", () => {
+    vi.useFakeTimers();
+
+    const searchFilters = { ...emptyFilters, searchTerm: "bismarck" };
+    const changedTierFilters: PreparedCatalogFilters = { ...searchFilters, tiers: [10] };
+    const { result, rerender } = renderHook(
+      ({ activeFilters }) => useDebouncedCatalogVehicles(vehicles, activeFilters, "en"),
+      { initialProps: { activeFilters: emptyFilters } },
+    );
+
+    rerender({ activeFilters: searchFilters });
+    rerender({ activeFilters: changedTierFilters });
+
+    expect(result.current.map(({ id }) => id)).toEqual(["yamato"]);
   });
 });

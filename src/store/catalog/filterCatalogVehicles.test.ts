@@ -9,8 +9,6 @@ const defaultFilters: PreparedCatalogFilters = {
   nations: [],
   classes: [],
   tiers: [],
-  showHidden: true,
-  showMissing: true,
 };
 
 function createVehicle({
@@ -100,7 +98,7 @@ const vehicles = [
 ];
 
 describe("filterCatalogVehicles", () => {
-  it("returns the complete collection when no filters are selected", () => {
+  it("keeps vehicles with catalogue visibility tags in the complete collection", () => {
     const result = filterCatalogVehicles(vehicles, defaultFilters, "en");
 
     expect(result.map(({ id }) => id)).toEqual(vehicles.map(({ id }) => id));
@@ -131,7 +129,7 @@ describe("filterCatalogVehicles", () => {
     expect(result.map(({ id }) => id)).toEqual(["yamato"]);
   });
 
-  it("searches only the active locale name and short name, with English fallback", () => {
+  it("searches the full active-locale name or raw source name", () => {
     const russianMatch = filterCatalogVehicles(
       vehicles,
       { ...defaultFilters, searchTerm: "ямато" },
@@ -165,39 +163,7 @@ describe("filterCatalogVehicles", () => {
     expect(englishFallback.map(({ id }) => id)).toEqual(["bismarck"]);
   });
 
-  it("excludes hidden and missing vehicles only when their include flags are disabled", () => {
-    const withoutHidden = filterCatalogVehicles(
-      vehicles,
-      {
-        ...defaultFilters,
-        showHidden: false,
-      },
-      "en",
-    );
-    const withoutMissing = filterCatalogVehicles(
-      vehicles,
-      {
-        ...defaultFilters,
-        showMissing: false,
-      },
-      "en",
-    );
-
-    expect(withoutHidden.map(({ id }) => id)).toEqual([
-      "yamato",
-      "bismarck",
-      "des-moines",
-      "missing",
-    ]);
-    expect(withoutMissing.map(({ id }) => id)).toEqual([
-      "yamato",
-      "bismarck",
-      "des-moines",
-      "hidden",
-    ]);
-  });
-
-  it("falls back to English separately for the name and short name", () => {
+  it("does not use English translations or short names when the active locale is missing", () => {
     const partiallyLocalizedVehicles = [
       createVehicle({
         id: "english-name",
@@ -225,19 +191,24 @@ describe("filterCatalogVehicles", () => {
       }),
     ];
 
-    expect(
-      filterCatalogVehicles(
-        partiallyLocalizedVehicles,
-        { ...defaultFilters, searchTerm: "  FALLBACK NAME  " },
-        "ru",
-      ).map(({ id }) => id),
-    ).toEqual(["english-name"]);
-    expect(
-      filterCatalogVehicles(
-        partiallyLocalizedVehicles,
-        { ...defaultFilters, searchTerm: "  FALLBACK ABBREVIATION  " },
-        "ru",
-      ).map(({ id }) => id),
-    ).toEqual(["english-short-name"]);
+    const rawSourceName = filterCatalogVehicles(
+      partiallyLocalizedVehicles,
+      { ...defaultFilters, searchTerm: "english-name" },
+      "ru",
+    );
+    const englishTranslation = filterCatalogVehicles(
+      partiallyLocalizedVehicles,
+      { ...defaultFilters, searchTerm: "fallback name" },
+      "ru",
+    );
+    const shortName = filterCatalogVehicles(
+      partiallyLocalizedVehicles,
+      { ...defaultFilters, searchTerm: "локальное сокращение" },
+      "ru",
+    );
+
+    expect(rawSourceName.map(({ id }) => id)).toEqual(["english-name"]);
+    expect(englishTranslation).toEqual([]);
+    expect(shortName).toEqual([]);
   });
 });

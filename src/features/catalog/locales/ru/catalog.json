@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "Не удалось загрузить каталог техники.",
+  "catalogEmpty": "По выбранным фильтрам техника не найдена.",
+  "catalogCount_zero": "{{count}} единиц техники",
+  "catalogCount_one": "{{count}} единица техники",
+  "catalogCount_few": "{{count}} единицы техники",
+  "catalogCount_many": "{{count}} единиц техники",
+  "catalogCount_other": "{{count}} единицы техники",
+  "sortDefault": "По умолчанию",
+  "sortByName": "По названию",
+  "sortByLevel": "По уровню",
+  "sortAscending": "По возрастанию",
+  "sortDescending": "По убыванию",
+  "sortBy": "Сортировать по",
+  "sortLabel": "Сортировка",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "Премиум {{className}}",
+  "specialVehicleClass": "Особый {{className}}",
+  "specialSubmarineClass": "Особая {{className}}",
+  "vehicleListLabel": "Каталог флота",
+  "retry": "Повторить"
+}

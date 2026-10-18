@@ -8,21 +8,6 @@
   padding-block: clamp(20px, 3vw, 40px) 40px;
 }
 
-.pageIntro {
-  margin-bottom: clamp(28px, 4vw, 48px);
-  padding-inline: var(--content-inset);
-}
-
-.pageIntro h1 {
-  max-width: 760px;
-  margin: 0;
-  color: #edf3f6;
-  font-size: clamp(30px, 3.2vw, 46px);
-  font-weight: 600;
-  letter-spacing: 0.015em;
-  line-height: 1.08;
-}
-
 .contentLayout {
   display: grid;
   grid-template-columns: minmax(220px, 0.23fr) minmax(0, 1fr);

@@ -1,0 +1,12 @@
+.surface {
+  -webkit-backdrop-filter: blur(6px) saturate(145%);
+  backdrop-filter: blur(8px) saturate(145%);
+}
+
+.dark {
+  background: linear-gradient(145deg, rgb(4 17 27 / 72%), rgb(5 22 34 / 72%));
+}
+
+.light {
+  background: linear-gradient(145deg, rgb(20 50 66 / 58%), rgb(8 29 43 / 58%));
+}

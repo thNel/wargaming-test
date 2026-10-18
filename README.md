@@ -1,6 +1,6 @@
-# World of Warships Ship Catalog
+# World of Warships Vehicle Catalog
 
-A React, TypeScript, and Vite starter for the World of Warships home task.
+A React, TypeScript, and Vite vehicle catalog for World of Warships.
 
 ## Application foundations
 

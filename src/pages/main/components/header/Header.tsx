@@ -1,29 +1,27 @@
-import { useCallback, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
+import { GlassSurface } from "@/shared/components/GlassSurface/GlassSurface";
 import { Image } from "@/shared/components/Image/Image";
 
+import { LanguageButton } from "../language-button/LanguageButton";
 import { LanguageDrawer } from "../language-drawer/LanguageDrawer";
 import styles from "./Header.module.css";
 
 export function Header() {
-  const { i18n, t } = useTranslation("main");
   const [isLanguageDrawerOpen, setIsLanguageDrawerOpen] = useState(false);
-  const languageCode = (i18n.resolvedLanguage ?? i18n.language ?? "en")
-    .replaceAll("_", "-")
-    .toUpperCase();
-  const handleLanguageButtonClick = useCallback(() => {
-    setIsLanguageDrawerOpen((isOpen) => !isOpen);
-  }, []);
-  const handleLanguageDrawerClose = useCallback(() => {
+  function openLanguageDrawer(): void {
+    setIsLanguageDrawerOpen(true);
+  }
+
+  function closeLanguageDrawer(): void {
     setIsLanguageDrawerOpen(false);
-  }, []);
+  }
 
   return (
     <>
-      <header className={styles.header}>
+      <GlassSurface as="header" className={styles.header} mode="dark">
         <div className={styles.inner}>
-          <a className={styles.brand} href="/" aria-label={t("title")}>
+          <a className={styles.brand} href="/">
             <Image
               alt="World of Warships"
               className={styles.brandImage}
@@ -34,23 +32,13 @@ export function Header() {
             />
           </a>
 
-          <button
-            aria-controls="language-drawer"
-            aria-expanded={isLanguageDrawerOpen}
-            aria-label={t("language")}
-            className={styles.languageButton}
-            onClick={handleLanguageButtonClick}
-            type="button"
-          >
-            <span className={styles.languageIcon} aria-hidden="true" />
-            <span>{languageCode}</span>
-          </button>
+          <LanguageButton expanded={isLanguageDrawerOpen} onClick={openLanguageDrawer} />
         </div>
-      </header>
+      </GlassSurface>
       <LanguageDrawer
         id="language-drawer"
         open={isLanguageDrawerOpen}
-        onClose={handleLanguageDrawerClose}
+        onClose={closeLanguageDrawer}
       />
     </>
   );

@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "無法載入載具目錄。",
+  "catalogEmpty": "沒有符合所選篩選條件的載具。",
+  "catalogCount_zero": "{{count}} 個載具",
+  "catalogCount_one": "{{count}} 個載具",
+  "catalogCount_few": "{{count}} 個載具",
+  "catalogCount_many": "{{count}} 個載具",
+  "catalogCount_other": "{{count}} 個載具",
+  "sortDefault": "預設順序",
+  "sortByName": "依名稱",
+  "sortByLevel": "依階級",
+  "sortAscending": "升冪",
+  "sortDescending": "降冪",
+  "sortBy": "排序依據",
+  "sortLabel": "排序",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "加值{{className}}",
+  "specialVehicleClass": "特殊{{className}}",
+  "specialSubmarineClass": "特殊{{className}}",
+  "vehicleListLabel": "艦隊目錄",
+  "retry": "重試"
+}

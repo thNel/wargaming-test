@@ -12,7 +12,7 @@ The endpoint path contains a locale, but the observed `localization` objects con
 
 | Endpoint                                                                                               | `data` type                   | Purpose                                       |
 | ------------------------------------------------------------------------------------------------------ | ----------------------------- | --------------------------------------------- |
-| [`vehicles/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicles/)                         | Object keyed by vehicle ID    | Ship records used to build the catalog        |
+| [`vehicles/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicles/)                         | Object keyed by vehicle ID    | Vehicle records used to build the catalog     |
 | [`nations/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/nations/)                           | Array                         | Nation labels, flags, colors, and IDs         |
 | [`vehicle_types_common/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicle_types_common/) | Object keyed by vehicle class | Class labels, icons, and display order        |
 | [`media_path/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/media_path/)                     | String                        | Base URL for standard encyclopedia icon paths |
@@ -52,16 +52,50 @@ The `data` value is an object map. Each property name is a vehicle ID; its value
 | Field          | Observed type            | Meaning and catalog use                                                                                                                                                                                                                                                                                |
 | -------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Map key        | String                   | Vehicle ID. Use this as the stable key when turning the map into a list.                                                                                                                                                                                                                               |
-| `level`        | Number                   | Ship tier. Values from 1 through 11 were present in the observed data.                                                                                                                                                                                                                                 |
+| `level`        | Number                   | Vehicle tier. Values from 1 through 11 were present in the observed data.                                                                                                                                                                                                                              |
 | `name`         | String                   | Internal vehicle name, e.g. `PASD505_Hill`; it is not the localized display label.                                                                                                                                                                                                                     |
 | `nation`       | String                   | Nation code, e.g. `usa`, `japan`, or `ussr`. Matches `nations[].name`.                                                                                                                                                                                                                                 |
 | `tags`         | String array             | Mixed classification and game metadata. The five observed class tags are `AirCarrier`, `Battleship`, `Cruiser`, `Destroyer`, and `Submarine`. Other examples include `premium`, `special`, `specialUnsellable`, `uiPremium`, `sellable`, `canRent`, `catalogueHidden`, and `catalogueHiddenIfMissing`. |
 | `localization` | Object                   | Localized `mark`, `shortmark`, and `description` maps. The observed response contained 19 language codes.                                                                                                                                                                                              |
 | `icons`        | Object of relative paths | Standard and local game icon paths; see [Vehicle icons](#vehicle-icons).                                                                                                                                                                                                                               |
 
+### Vehicle tags
+
+The API exposes `tags` as strings but provides no schema or authoritative descriptions for them. The inventory below is a snapshot from the live `vehicles/` endpoint checked on 2026-10-18: 1,059 records. Counts are occurrences in that response and can change.
+
+| Apparent group            | Observed tags and counts                                                                                                                                             | What the response supports                                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Class                     | `AirCarrier` (80), `Battleship` (296), `Cruiser` (395), `Destroyer` (253), `Submarine` (35)                                                                          | These are the five keys in `vehicle_types_common.data`; use that endpoint to resolve the class.                         |
+| Vortex type and UI marker | `premium` (14), `special` (384), `specialUnsellable` (15), `uiPremium` (413), `uiSpecial` (223), `ultimate` (112)                                                    | The API has no `rarity` field. These tags are not the Armory rarity markers; see the comparison below.                  |
+| Availability              | `buyable` (431), `sellable` (815), `canRent` (621)                                                                                                                   | Do not treat these as Armory purchase availability; Aberdeen is listed with a purchase button without `buyable`.        |
+| Catalog visibility        | `catalogueHidden` (132), `catalogueHiddenIfMissing` (199), `catalogueHidden_ASIA` (1), `catalogueHidden_CN` (24), `catalogueHidden_EU` (1), `catalogueHidden_NA` (1) | Ignored by this catalog. Taejong (`catalogueHidden`) and Black (`catalogueHiddenIfMissing`) are still listed in Armory. |
+| Progression               | `upgradeable` (382), `start` (13), `superShip` (22), `earlyAccess` (1)                                                                                               | `start` occurred only at tier I, `upgradeable` at II–X, `superShip` at XI, and `ultimate` at X in this snapshot.        |
+| Content group             | `anime` (8), `arpeggio` (11), `azur` (13), `clan` (13), `hsf` (4), `wh40k` (4)                                                                                       | The API does not document these group labels; several align with named collaboration series.                            |
+| Other observed flags      | `coopOnly` (1), `demoWithoutStats` (23), `demoWithoutStatsPrem` (31), `experimental` (6), `forgettable` (12), `glossUnapproved` (724), `preserved` (42)              | Their precise meanings are not defined in the response. Do not infer behavior solely from their names.                  |
+
+#### Armory comparison
+
+The Armory page has a separate rarity marker (`uncommon`, `rare`, or `epic`) and class-icon variant (`premium` or `special`). The Vortex vehicle records do not expose the Armory rarity marker. Examples checked on 2026-10-18:
+
+| Vehicle  | Vortex tags             | Armory class icon | Armory rarity |
+| -------- | ----------------------- | ----------------- | ------------- |
+| Aberdeen | `special`, `uiPremium`  | `premium`         | `uncommon`    |
+| Black    | `special`, `uiPremium`  | `premium`         | `epic`        |
+| Taejong  | `ultimate`, `uiSpecial` | `special`         | `rare`        |
+| Defence  | `ultimate`, `uiSpecial` | `special`         | `epic`        |
+| Incheon  | `ultimate`, `uiSpecial` | `special`         | `uncommon`    |
+
+In this snapshot, `uiPremium` and `uiSpecial` were mutually exclusive. The sampled Armory cards use `uiPremium` for the `premium` class icon and `uiSpecial` for the `special` class icon. These markers must not be used as rarity values.
+
+No actual rarity field exists in the Vortex vehicle response. Do not label a sort based on `premium`/`special` tags as Armory rarity; the current catalog omits that sort until a real rarity source is available.
+
+The API does not define the exact distinction between `premium`, `special`, and `specialUnsellable`. Preserve these as source metadata unless a separate product rule needs them.
+
+Tag group labels above are based on the matching class endpoint, tag names, and observed co-occurrence—not an API-provided taxonomy. Preserve unrecognized tags and avoid deriving behavior from them without a product rule.
+
 Observed localization codes: `cs`, `de`, `en`, `es`, `es_mx`, `fr`, `it`, `ja`, `ko`, `nl`, `pl`, `pt_br`, `ru`, `th`, `tr`, `uk`, `zh_cn`, `zh_sg`, and `zh_tw`.
 
-Use `localization.mark[locale]` for the main ship name. `localization.shortmark[locale]` is available for compact labels, and `localization.description[locale]` contains the ship description. A UI should handle a missing translation by falling back to another available locale or to `name`.
+Use `localization.mark[locale]` for the main vehicle name. `localization.shortmark[locale]` is available for compact labels, and `localization.description[locale]` contains the vehicle description. A UI should handle a missing translation by falling back to another available locale or to `name`.
 
 ### Vehicle icons
 
@@ -142,6 +176,8 @@ The `data` value is an object keyed by the class tag used in vehicle `tags`. Fiv
 | `localization.shortmark` | Object                   | Present in the observed payload; it was empty in the observed class records. |
 | `icons`                  | Object of relative paths | Class icon variants: `default`, `normal`, `elite`, `premium`, and `special`. |
 
+The API does not define which class icon variant to use for a vehicle. On the Armory page checked on 2026-10-18, Aberdeen (`special` + `uiPremium`) used the `premium` class icon, while Taejong and Defence (`ultimate` + `uiSpecial`) used the `special` class icon. The catalog therefore uses `uiPremium` and `uiSpecial` to choose the icon variant, independently of its rarity classification. The response contained no `elite` vehicle tag; do not infer the `elite` icon from `ultimate`.
+
 Observed class keys and order: `Submarine` (1), `Destroyer` (2), `Cruiser` (3), `Battleship` (4), and `AirCarrier` (5). The English label for `AirCarrier` is `Aircraft Carrier`.
 
 ## `media_path/`
@@ -170,16 +206,16 @@ For a catalog view, the response data can be normalized as follows:
 1. Convert each property in `vehicles.data` into a vehicle record and retain the property name as its ID.
 2. Resolve `vehicle.nation` against the nation record whose `name` matches it.
 3. Resolve a vehicle class by finding one known class key in `vehicle.tags` and looking it up in `vehicle_types_common.data`.
-4. Use the selected locale from `localization.mark` for the ship label and from each reference record's localization for filter labels.
+4. Use the selected locale from `localization.mark` for the vehicle label and from each reference record's localization for filter labels.
 5. Build standard image URLs from `media_path.data` and the chosen relative icon path.
 
-Do not treat every vehicle tag as a class. Tags mix ship classes with availability, progression, special-event, and catalog-visibility flags. The supplied API responses do not define which tags should be hidden from the home-task catalog, so any visibility rule needs an explicit product decision.
+Do not treat every vehicle tag as a class. Tags mix vehicle classes with availability, progression, special-event, and catalog-visibility flags. The supplied API responses do not define which tags should be hidden from the home-task catalog, so any visibility rule needs an explicit product decision.
 
 ## Integration notes
 
 - In local development, requests go to the same-origin `/api/` path and Vite forwards them to the Vortex encyclopedia API. `npm run dev:mock` uses local fixture files instead and does not use the proxy.
 - The supplied `vehicles/` endpoint returns the whole observed dataset; no pagination metadata was present in its response.
-- The live vehicle tags observed on 2026-10-15 distinguish `premium` from `special` and `specialUnsellable`. `uiPremium` overlaps those groups, so it is not sufficient to classify a ship by itself.
+- See [Vehicle tags](#vehicle-tags) for the live tag inventory checked on 2026-10-18 and the comparison between Vortex and Armory markers.
 - The observed vehicle JSON was approximately 20.1 MB. Virtual scrolling reduces rendered DOM nodes, but does not reduce the downloaded response size.
 - The response contains encyclopedia fields and icon paths, not detailed combat statistics such as damage or armor.
 - Check both the HTTP response and the JSON `status` field. Provide a visible loading, error, retry, and empty-results state in the client.

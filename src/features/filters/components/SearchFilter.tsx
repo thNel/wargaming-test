@@ -1,4 +1,4 @@
-import { useCallback, type ChangeEventHandler } from "react";
+import type { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,10 +11,9 @@ export function SearchFilter() {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
   const searchTerm = useSelector((state: RootState) => state.filters.searchTerm);
-  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (event) => dispatch(setCatalogSearchTerm(event.currentTarget.value)),
-    [dispatch],
-  );
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    dispatch(setCatalogSearchTerm(event.currentTarget.value));
+  }
 
   return (
     <div className={styles.root}>

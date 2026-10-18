@@ -1,6 +1,5 @@
 .root {
   padding-block: 16px;
-  border-block-end: 1px solid rgb(154 194 211 / 12%);
 }
 
 .label {
@@ -32,7 +31,7 @@
 
 .input:focus-visible {
   border-color: #73d9e5;
-  outline: 2px solid #73d9e5;
+  outline: var(--focus-outline);
   outline-offset: 2px;
 }
 

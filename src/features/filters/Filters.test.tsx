@@ -43,7 +43,7 @@ const API_RESPONSES: Readonly<Record<string, unknown>> = Object.freeze({
 
 const FILTER_GROUPS = Object.freeze([
   { endpoint: "nations", name: "Nations", option: "United States" },
-  { endpoint: "vehicle_types_common", name: "Ship type", option: "Cruiser" },
+  { endpoint: "vehicle_types_common", name: "Vehicle type", option: "Cruiser" },
 ]);
 
 function mockFilterApi(failedEndpoints = new Set<string>()) {
@@ -113,7 +113,7 @@ describe("Filters", () => {
   });
 
   it.each(FILTER_GROUPS)(
-    "retries the failed $name request after an initial error",
+    "keeps the hardcoded $name options visible while retrying a failed source",
     async ({ endpoint, name, option }) => {
       const user = userEvent.setup();
       const failedEndpoints = new Set([endpoint]);
@@ -125,12 +125,13 @@ describe("Filters", () => {
       expect(await within(group).findByRole("alert")).toHaveTextContent(
         "Could not load filter options.",
       );
-      expect(within(group).queryByRole("checkbox", { name: option })).not.toBeInTheDocument();
+      const checkbox = within(group).getByRole("checkbox", { name: option });
+      expect(checkbox).toBeEnabled();
 
       failedEndpoints.delete(endpoint);
       await user.click(within(group).getByRole("button", { name: "Retry" }));
 
-      expect(await within(group).findByRole("checkbox", { name: option })).toBeEnabled();
+      expect(await within(group).findByRole("checkbox", { name: option })).toBe(checkbox);
       expect(within(group).queryByRole("alert")).not.toBeInTheDocument();
       expect(requestedEndpoints.filter((requested) => requested === endpoint)).toHaveLength(2);
       expect(requestedEndpoints.filter((requested) => requested === "media_path")).toHaveLength(1);
@@ -146,7 +147,7 @@ describe("Filters", () => {
     const nation = await screen.findByRole("checkbox", { name: "United States" });
     const vehicleType = await screen.findByRole("checkbox", { name: "Cruiser" });
     const nations = screen.getByRole("group", { name: "Nations" });
-    const classes = screen.getByRole("group", { name: "Ship type" });
+    const classes = screen.getByRole("group", { name: "Vehicle type" });
 
     expect(await within(nations).findByRole("alert")).toBeInTheDocument();
     expect(await within(classes).findByRole("alert")).toBeInTheDocument();
@@ -234,19 +235,19 @@ describe("Filters", () => {
       "Крейсер",
     );
     expect(nation).toBeChecked();
-    expect(screen.getByRole("searchbox", { name: "Поиск кораблей" })).toBeInTheDocument();
+    expect(screen.getByRole("searchbox", { name: "Поиск техники" })).toBeInTheDocument();
 
     await act(async () => {
       await i18nInstance.changeLanguage("de");
     });
 
     expect(screen.getByRole("checkbox", { name: "United States" })).toBe(nation);
-    expect(screen.getByRole("checkbox", { name: "Cruiser" })).toBe(vehicleType);
+    expect(screen.getByRole("checkbox", { name: "Kreuzer" })).toBe(vehicleType);
     expect(screen.getByRole("group", { name: "Nationen" })).toBeInTheDocument();
     expect(requestedEndpoints).toHaveLength(3);
   });
 
-  it("connects every control to Redux and resets selected and visibility values", async () => {
+  it("connects filter controls to Redux and resets selected values", async () => {
     const user = userEvent.setup();
 
     mockFilterApi();
@@ -254,9 +255,7 @@ describe("Filters", () => {
     const nation = await screen.findByRole("checkbox", { name: "United States" });
     const vehicleType = await screen.findByRole("checkbox", { name: "Cruiser" });
     const tier = screen.getByRole("checkbox", { name: "X" });
-    const showHidden = screen.getByRole("checkbox", { name: "Show hidden ships" });
-    const showMissing = screen.getByRole("checkbox", { name: "Show missing ships" });
-    const search = screen.getByRole("searchbox", { name: "Search ships" });
+    const search = screen.getByRole("searchbox", { name: "Search vehicles" });
     const reset = screen.getByRole("button", { name: "Reset" });
 
     expect(reset).toBeDisabled();
@@ -264,22 +263,16 @@ describe("Filters", () => {
     await user.click(nation);
     await user.click(vehicleType);
     await user.click(tier);
-    await user.click(showHidden);
-    await user.click(showMissing);
 
     expect(store.getState().filters).toMatchObject({
       nations: { usa: true },
       classes: { Cruiser: true },
       tiers: { 10: true },
-      showHidden: false,
-      showMissing: false,
       searchTerm: "Yamato",
     });
     expect(nation).toBeChecked();
     expect(vehicleType).toBeChecked();
     expect(tier).toBeChecked();
-    expect(showHidden).not.toBeChecked();
-    expect(showMissing).not.toBeChecked();
 
     await user.click(reset);
 
@@ -287,15 +280,11 @@ describe("Filters", () => {
       nations: { usa: false },
       classes: { Cruiser: false },
       tiers: { 10: false },
-      showHidden: true,
-      showMissing: true,
       searchTerm: "",
     });
     expect(nation).not.toBeChecked();
     expect(vehicleType).not.toBeChecked();
     expect(tier).not.toBeChecked();
-    expect(showHidden).toBeChecked();
-    expect(showMissing).toBeChecked();
     expect(search).toHaveValue("");
     expect(reset).toBeDisabled();
   });

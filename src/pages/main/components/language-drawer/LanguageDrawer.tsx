@@ -1,4 +1,4 @@
-import { useCallback, type MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Drawer } from "@/shared/components/Drawer/Drawer";
@@ -12,19 +12,16 @@ import styles from "./LanguageDrawer.module.css";
 export function LanguageDrawer({ id, onClose, open }: LanguageDrawerProps) {
   const { i18n, t } = useTranslation("main");
   const currentLocale = findSupportedLocale(i18n.resolvedLanguage ?? i18n.language) ?? "en";
-  const handleSelect = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const locale = findSupportedLocale(event.currentTarget.value);
+  function handleSelect(event: MouseEvent<HTMLButtonElement>): void {
+    const locale = findSupportedLocale(event.currentTarget.value);
 
-      if (!locale) {
-        return;
-      }
+    if (!locale) {
+      return;
+    }
 
-      void i18n.changeLanguage(locale);
-      onClose();
-    },
-    [i18n, onClose],
-  );
+    void i18n.changeLanguage(locale);
+    onClose();
+  }
 
   return (
     <Drawer closeLabel={t("close")} id={id} onClose={onClose} open={open} title={t("language")}>

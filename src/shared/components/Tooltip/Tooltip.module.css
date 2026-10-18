@@ -1,0 +1,35 @@
+.scope {
+  display: inline-flex;
+  anchor-scope: --tooltip-anchor;
+}
+
+.anchor {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  anchor-name: --tooltip-anchor;
+  outline-offset: 3px;
+}
+
+.tooltip {
+  position: fixed;
+  position-anchor: --tooltip-anchor;
+  position-area: block-start;
+  position-try-fallbacks: flip-block, flip-inline;
+  justify-self: anchor-center;
+  inset: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  margin: 0 0 8px;
+  padding: 6px 9px;
+  border: 0;
+  color: #e8eef3;
+  box-shadow: 0 5px 14px rgb(0 0 0 / 35%);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  overflow: hidden;
+  pointer-events: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "无法加载载具目录。",
+  "catalogEmpty": "没有符合所选筛选条件的载具。",
+  "catalogCount_zero": "{{count}} 个载具",
+  "catalogCount_one": "{{count}} 个载具",
+  "catalogCount_few": "{{count}} 个载具",
+  "catalogCount_many": "{{count}} 个载具",
+  "catalogCount_other": "{{count}} 个载具",
+  "sortDefault": "默认顺序",
+  "sortByName": "按名称",
+  "sortByLevel": "按等级",
+  "sortAscending": "升序",
+  "sortDescending": "降序",
+  "sortBy": "排序依据",
+  "sortLabel": "排序",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "高级{{className}}",
+  "specialVehicleClass": "特种{{className}}",
+  "specialSubmarineClass": "特种{{className}}",
+  "vehicleListLabel": "舰队目录",
+  "retry": "重试"
+}

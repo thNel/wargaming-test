@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "Katalog vozidel se nepodařilo načíst.",
+  "catalogEmpty": "Žádná vozidla neodpovídají vybraným filtrům.",
+  "catalogCount_zero": "{{count}} vozidel",
+  "catalogCount_one": "{{count}} vozidlo",
+  "catalogCount_few": "{{count}} vozidla",
+  "catalogCount_many": "{{count}} vozidel",
+  "catalogCount_other": "{{count}} vozidel",
+  "sortDefault": "Ve výchozím pořadí",
+  "sortByName": "Podle názvu",
+  "sortByLevel": "Podle úrovně",
+  "sortAscending": "Vzestupně",
+  "sortDescending": "Sestupně",
+  "sortBy": "Řadit podle",
+  "sortLabel": "Řazení",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "Prémiové vozidlo: {{className}}",
+  "specialVehicleClass": "Speciální {{className}}",
+  "specialSubmarineClass": "Speciální {{className}}",
+  "vehicleListLabel": "Katalog flotily",
+  "retry": "Zkusit znovu"
+}

@@ -4,27 +4,26 @@ import type { SupportedLocale } from "@/shared/i18n/supportedLocales";
 import type { CatalogVehicleCollection } from "@/store/catalog/catalog.types";
 import { filterCatalogVehicles } from "@/store/catalog/filterCatalogVehicles";
 import type { PreparedCatalogFilters } from "@/store/filters/filters.types";
-
-const CATALOG_FILTER_DEBOUNCE_MS = 250;
+import { CATALOG_SEARCH_DEBOUNCE_MS } from "../catalog.constants";
 
 export function useDebouncedCatalogVehicles(
   vehicles: CatalogVehicleCollection,
   filters: PreparedCatalogFilters,
   locale: SupportedLocale,
-  delayMs = CATALOG_FILTER_DEBOUNCE_MS,
+  delayMs = CATALOG_SEARCH_DEBOUNCE_MS,
 ): CatalogVehicleCollection {
-  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(filters.searchTerm);
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      setDebouncedFilters(filters);
+      setDebouncedSearchTerm(filters.searchTerm);
     }, delayMs);
 
     return () => window.clearTimeout(timeoutId);
-  }, [delayMs, filters]);
+  }, [delayMs, filters.searchTerm]);
 
   return useMemo(
-    () => filterCatalogVehicles(vehicles, debouncedFilters, locale),
-    [debouncedFilters, locale, vehicles],
+    () => filterCatalogVehicles(vehicles, { ...filters, searchTerm: debouncedSearchTerm }, locale),
+    [debouncedSearchTerm, filters, locale, vehicles],
   );
 }

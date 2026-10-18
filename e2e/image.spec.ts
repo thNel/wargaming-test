@@ -5,10 +5,10 @@ test("failed filter images keep the requested icon dimensions", async ({ page })
   await page.goto("/");
 
   const nationFlag = page.locator(
-    'label[for="filter-nation-japan"] > span[data-tooltip] > div[aria-hidden="true"]',
+    'label[for="filter-nation-japan"] [data-tooltip] > div[aria-hidden="true"]',
   );
   const vehicleIcon = page.locator(
-    'label[for="filter-class-Cruiser"] > span[data-tooltip] > div[aria-hidden="true"]',
+    'label[for="filter-class-Cruiser"] [data-tooltip] > div[aria-hidden="true"]',
   );
 
   await expect(nationFlag).toHaveCSS("height", "18px");

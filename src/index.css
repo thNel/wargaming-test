@@ -1,9 +1,11 @@
 :root {
+  --header-height: 56px;
   --page-gutter: clamp(20px, 4vw, 48px);
   --content-inset: clamp(16px, 1.2vw, 24px);
   --content-width: 1440px;
   --color-ink: #e8eef3;
   --color-muted: #91a5b5;
+  --focus-outline: 2px solid #73d9e5;
   --scrollbar-thumb: rgb(195 216 227 / 38%);
   --scrollbar-thumb-hover: rgb(216 231 238 / 58%);
 
@@ -79,6 +81,10 @@ html {
 }
 
 @media (max-width: 700px) {
+  :root {
+    --header-height: 48px;
+  }
+
   html {
     background-image: linear-gradient(rgb(7 26 40 / 28%), rgb(6 21 33 / 50%));
     background-attachment: scroll;

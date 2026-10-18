@@ -1,5 +1,8 @@
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
+import { NATION_KEYS, VEHICLE_TYPE_KEYS } from "@/shared/constants/catalogFilters.constants";
+import { TIERS } from "@/shared/constants/tiers.constants";
+
 import type { RootState } from "../index";
 import type {
   CatalogFiltersState,
@@ -9,45 +12,17 @@ import type {
   VehicleTypeKey,
 } from "./filters.types";
 
+function createSelectionMap<Key extends string | number>(
+  keys: readonly Key[],
+): Record<Key, boolean> {
+  return Object.fromEntries(keys.map((key) => [key, false])) as Record<Key, boolean>;
+}
+
 const initialState: CatalogFiltersState = {
   searchTerm: "",
-  nations: {
-    ussr: false,
-    japan: false,
-    usa: false,
-    uk: false,
-    germany: false,
-    france: false,
-    italy: false,
-    europe: false,
-    pan_asia: false,
-    commonwealth: false,
-    pan_america: false,
-    netherlands: false,
-    spain: false,
-  },
-  classes: {
-    Cruiser: false,
-    AirCarrier: false,
-    Battleship: false,
-    Destroyer: false,
-    Submarine: false,
-  },
-  tiers: {
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false,
-    8: false,
-    9: false,
-    10: false,
-    11: false,
-  },
-  showHidden: true,
-  showMissing: true,
+  nations: createSelectionMap(NATION_KEYS),
+  classes: createSelectionMap(VEHICLE_TYPE_KEYS),
+  tiers: createSelectionMap(TIERS),
 };
 
 const filtersSlice = createSlice({
@@ -66,12 +41,6 @@ const filtersSlice = createSlice({
     toggleCatalogTier(state, action: PayloadAction<Tier>) {
       state.tiers[action.payload] = !state.tiers[action.payload];
     },
-    setShowHiddenShips(state, action: PayloadAction<boolean>) {
-      state.showHidden = action.payload;
-    },
-    setShowMissingShips(state, action: PayloadAction<boolean>) {
-      state.showMissing = action.payload;
-    },
     resetCatalogFilters() {
       return initialState;
     },
@@ -81,8 +50,6 @@ const filtersSlice = createSlice({
 export const {
   resetCatalogFilters,
   setCatalogSearchTerm,
-  setShowHiddenShips,
-  setShowMissingShips,
   toggleCatalogClass,
   toggleCatalogNation,
   toggleCatalogTier,
@@ -111,9 +78,7 @@ export const selectHasActiveCatalogFilters = createSelector(
     filters.searchTerm.trim() !== initialState.searchTerm ||
     hasSelectionChanges(filters.nations, initialState.nations) ||
     hasSelectionChanges(filters.classes, initialState.classes) ||
-    hasSelectionChanges(filters.tiers, initialState.tiers) ||
-    filters.showHidden !== initialState.showHidden ||
-    filters.showMissing !== initialState.showMissing,
+    hasSelectionChanges(filters.tiers, initialState.tiers),
 );
 
 function selectEnabledKeys<Key extends string>(
@@ -138,7 +103,5 @@ export const selectPreparedCatalogFilters = createSelector(
       nations: selectEnabledKeys(filters.nations),
       classes: selectEnabledKeys(filters.classes),
       tiers: selectEnabledTiers(filters.tiers),
-      showHidden: filters.showHidden,
-      showMissing: filters.showMissing,
     }),
 );

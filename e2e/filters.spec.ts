@@ -6,11 +6,10 @@ test("filter checkboxes retain their sizes and support keyboard selection and re
   await page.goto("/");
 
   const nations = page.getByRole("group", { name: "Nations" });
-  const classes = page.getByRole("group", { name: "Ship type" });
+  const classes = page.getByRole("group", { name: "Vehicle type" });
   const nation = nations.getByRole("checkbox").first();
   const vehicleType = classes.getByRole("checkbox").first();
   const tier = page.getByRole("checkbox", { name: "X", exact: true });
-  const showMissing = page.getByRole("checkbox", { name: "Show missing ships" });
   const reset = page.getByRole("button", { name: "Reset", exact: true });
 
   await expect(nation).toBeVisible();
@@ -28,12 +27,10 @@ test("filter checkboxes retain their sizes and support keyboard selection and re
   await expect(nation).toBeFocused();
   await expect(nation).toHaveCSS("outline-style", "solid");
   await tier.check();
-  await showMissing.uncheck();
   await reset.click();
 
   await expect(nation).not.toBeChecked();
   await expect(tier).not.toBeChecked();
-  await expect(showMissing).toBeChecked();
   await expect(reset).toBeDisabled();
 });
 
@@ -44,63 +41,31 @@ test("filter tooltips are anchored to their icons, not their checkboxes", async 
   const japan = nations.locator('label[for="filter-nation-japan"]');
   const checkbox = japan.getByRole("checkbox");
   const flag = japan.locator("img");
-  const tooltipAnchor = japan.locator("[data-tooltip]");
+  const tooltip = page.getByRole("tooltip");
 
   await checkbox.focus();
-  await expect
-    .poll(() =>
-      tooltipAnchor.evaluate(
-        (element) =>
-          element.ownerDocument.defaultView?.getComputedStyle(element, "::after").visibility,
-      ),
-    )
-    .toBe("visible");
+  await expect(tooltip).toHaveText("Japan");
+  await expect(tooltip).toBeVisible();
 
   await page.keyboard.press("Tab");
+  await page.locator("body").click({ position: { x: 0, y: 0 } });
   await checkbox.hover();
-  await expect
-    .poll(() =>
-      tooltipAnchor.evaluate(
-        (element) =>
-          element.ownerDocument.defaultView?.getComputedStyle(element, "::after").visibility,
-      ),
-    )
-    .toBe("hidden");
+  await expect(tooltip).toBeHidden();
 
   await flag.hover();
-  await expect
-    .poll(() =>
-      tooltipAnchor.evaluate(
-        (element) =>
-          element.ownerDocument.defaultView?.getComputedStyle(element, "::after").visibility,
-      ),
-    )
-    .toBe("visible");
+  await expect(tooltip).toHaveText("Japan");
+  await expect(tooltip).toBeVisible();
 
   const cruiser = page.locator('label[for="filter-class-Cruiser"]');
   const cruiserCheckbox = cruiser.getByRole("checkbox");
   const cruiserIcon = cruiser.locator("img");
-  const cruiserTooltip = cruiser.locator("[data-tooltip]");
 
   await cruiserCheckbox.hover();
-  await expect
-    .poll(() =>
-      cruiserTooltip.evaluate(
-        (element) =>
-          element.ownerDocument.defaultView?.getComputedStyle(element, "::after").visibility,
-      ),
-    )
-    .toBe("hidden");
+  await expect(tooltip).toBeHidden();
 
   await cruiserIcon.hover();
-  await expect
-    .poll(() =>
-      cruiserTooltip.evaluate(
-        (element) =>
-          element.ownerDocument.defaultView?.getComputedStyle(element, "::after").visibility,
-      ),
-    )
-    .toBe("visible");
+  await expect(tooltip).toHaveText("Cruiser");
+  await expect(tooltip).toBeVisible();
 });
 
 test("a failed nation request can be retried without reloading the page", async ({ page }) => {
@@ -124,7 +89,7 @@ test("a failed nation request can be retried without reloading the page", async 
 
   await expect(nations.getByRole("alert")).toHaveText("Could not load filter options.");
   await expect(
-    page.getByRole("group", { name: "Ship type" }).getByRole("checkbox").first(),
+    page.getByRole("group", { name: "Vehicle type" }).getByRole("checkbox").first(),
   ).toBeVisible();
   shouldFail = false;
   await nations.getByRole("button", { name: "Retry" }).click();

@@ -6,8 +6,8 @@ describe("getMediaUrl", () => {
   it.each([
     [
       "https://cdn.example/icons/",
-      "vehicle/ship.png",
-      "https://cdn.example/icons/vehicle/ship.png",
+      "vehicle/icon.png",
+      "https://cdn.example/icons/vehicle/icon.png",
     ],
     ["/icons///", "///flag.png", "/icons/flag.png"],
     ["", "flag.png", "/flag.png"],

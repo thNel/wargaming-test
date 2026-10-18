@@ -73,9 +73,9 @@ const moduleConstantCaseRule = {
     },
     schema: [],
     messages: {
-      useUpperSnakeCase: "Use UPPER_SNAKE_CASE for primitive constants and Object.freeze values.",
+      useUpperSnakeCase: "Use UPPER_SNAKE_CASE for primitive constants and defineConstants values.",
       reserveUpperSnakeCase:
-        "UPPER_SNAKE_CASE is reserved for primitive constants and Object.freeze values.",
+        "UPPER_SNAKE_CASE is reserved for primitive constants and defineConstants values.",
     },
   },
   create(context) {
@@ -98,11 +98,13 @@ const moduleConstantCaseRule = {
     };
     const isFrozenValue = (initializer) =>
       initializer?.type === "CallExpression" &&
-      initializer.callee.type === "MemberExpression" &&
-      initializer.callee.object.type === "Identifier" &&
-      initializer.callee.object.name === "Object" &&
-      initializer.callee.property.type === "Identifier" &&
-      initializer.callee.property.name === "freeze";
+      ((initializer.callee.type === "MemberExpression" &&
+        initializer.callee.object.type === "Identifier" &&
+        initializer.callee.object.name === "Object" &&
+        initializer.callee.property.type === "Identifier" &&
+        initializer.callee.property.name === "freeze") ||
+        (initializer.callee.type === "Identifier" &&
+          initializer.callee.name === "defineConstants"));
     const isModuleLevelDeclaration = (declaration) => {
       let owner = declaration.parent;
 
@@ -294,7 +296,7 @@ export default defineConfig([
       "@stylistic": stylistic,
     },
     rules: {
-      "react/jsx-no-bind": "error",
+      "react/jsx-no-bind": ["error", { allowFunctions: true }],
       "@stylistic/jsx-curly-brace-presence": [
         "error",
         {

@@ -9,9 +9,11 @@ describe("Image", () => {
     const imageRef = createRef<HTMLImageElement>();
     const handleLoad = vi.fn();
 
-    render(<Image alt="Ship" loading="lazy" onLoad={handleLoad} ref={imageRef} src="/ship.png" />);
+    render(
+      <Image alt="Vehicle" loading="lazy" onLoad={handleLoad} ref={imageRef} src="/vehicle.png" />,
+    );
 
-    const image = screen.getByRole("img", { name: "Ship" });
+    const image = screen.getByRole("img", { name: "Vehicle" });
 
     expect(image.parentElement).toHaveAttribute("aria-busy", "true");
     expect(image).toHaveAttribute("loading", "lazy");
@@ -24,18 +26,18 @@ describe("Image", () => {
   });
 
   it("forwards the loading strategy selected by the consumer", () => {
-    render(<Image alt="Ship" loading="eager" src="/ship.png" />);
+    render(<Image alt="Vehicle" loading="eager" src="/vehicle.png" />);
 
-    expect(screen.getByRole("img", { name: "Ship" })).toHaveAttribute("loading", "eager");
+    expect(screen.getByRole("img", { name: "Vehicle" })).toHaveAttribute("loading", "eager");
   });
 
   it("replaces a failed image with an accessible fallback that keeps its dimensions", () => {
     const handleError = vi.fn();
 
-    render(<Image alt="Ship" h={18} onError={handleError} src="/ship.png" w={26} />);
-    fireEvent.error(screen.getByRole("img", { name: "Ship" }));
+    render(<Image alt="Vehicle" h={18} onError={handleError} src="/vehicle.png" w={26} />);
+    fireEvent.error(screen.getByRole("img", { name: "Vehicle" }));
 
-    const fallback = screen.getByRole("img", { name: "Ship" });
+    const fallback = screen.getByRole("img", { name: "Vehicle" });
 
     expect(fallback.tagName).toBe("DIV");
     expect(fallback).toHaveStyle({ height: "18px", width: "26px" });
@@ -43,14 +45,14 @@ describe("Image", () => {
   });
 
   it("retries a failed source when it is selected again after another source", () => {
-    const { rerender } = render(<Image alt="Ship" src="/first.png" />);
+    const { rerender } = render(<Image alt="Vehicle" src="/first.png" />);
 
-    fireEvent.error(screen.getByRole("img", { name: "Ship" }));
-    rerender(<Image alt="Ship" src="/second.png" />);
-    fireEvent.load(screen.getByRole("img", { name: "Ship" }));
-    rerender(<Image alt="Ship" src="/first.png" />);
+    fireEvent.error(screen.getByRole("img", { name: "Vehicle" }));
+    rerender(<Image alt="Vehicle" src="/second.png" />);
+    fireEvent.load(screen.getByRole("img", { name: "Vehicle" }));
+    rerender(<Image alt="Vehicle" src="/first.png" />);
 
-    const retriedImage = screen.getByRole("img", { name: "Ship" });
+    const retriedImage = screen.getByRole("img", { name: "Vehicle" });
 
     expect(retriedImage).toHaveAttribute("src", "/first.png");
     expect(retriedImage.parentElement).toHaveAttribute("aria-busy", "true");
@@ -61,13 +63,13 @@ describe("Image", () => {
   });
 
   it("starts a fresh loading state when returning to an earlier source", () => {
-    const { rerender } = render(<Image alt="Ship" src="/first.png" />);
+    const { rerender } = render(<Image alt="Vehicle" src="/first.png" />);
 
-    fireEvent.load(screen.getByRole("img", { name: "Ship" }));
-    rerender(<Image alt="Ship" src="/second.png" />);
-    rerender(<Image alt="Ship" src="/first.png" />);
+    fireEvent.load(screen.getByRole("img", { name: "Vehicle" }));
+    rerender(<Image alt="Vehicle" src="/second.png" />);
+    rerender(<Image alt="Vehicle" src="/first.png" />);
 
-    expect(screen.getByRole("img", { name: "Ship" }).parentElement).toHaveAttribute(
+    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).toHaveAttribute(
       "aria-busy",
       "true",
     );
@@ -81,18 +83,18 @@ describe("Image", () => {
   });
 
   it("keeps the skeleton visible while its controlled loading state is active", () => {
-    const { rerender } = render(<Image alt="Ship" isLoading src="/ship.png" />);
+    const { rerender } = render(<Image alt="Vehicle" isLoading src="/vehicle.png" />);
 
-    fireEvent.load(screen.getByRole("img", { name: "Ship" }));
+    fireEvent.load(screen.getByRole("img", { name: "Vehicle" }));
 
-    expect(screen.getByRole("img", { name: "Ship" }).parentElement).toHaveAttribute(
+    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).toHaveAttribute(
       "aria-busy",
       "true",
     );
 
-    rerender(<Image alt="Ship" isLoading={false} src="/ship.png" />);
+    rerender(<Image alt="Vehicle" isLoading={false} src="/vehicle.png" />);
 
-    expect(screen.getByRole("img", { name: "Ship" }).parentElement).not.toHaveAttribute(
+    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).not.toHaveAttribute(
       "aria-busy",
     );
   });

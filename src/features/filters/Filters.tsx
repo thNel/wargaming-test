@@ -1,7 +1,7 @@
-import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
+import { GlassSurface } from "@/shared/components/GlassSurface/GlassSurface";
 import type { AppDispatch } from "@/store";
 import { resetCatalogFilters, selectHasActiveCatalogFilters } from "@/store/filters/filtersSlice";
 
@@ -9,19 +9,18 @@ import { NationFilterGroup } from "./components/NationFilterGroup";
 import { SearchFilter } from "./components/SearchFilter";
 import { TierFilterGroup } from "./components/TierFilterGroup";
 import { VehicleTypeFilterGroup } from "./components/VehicleTypeFilterGroup";
-import { VisibilityFilterGroup } from "./components/VisibilityFilterGroup";
 import styles from "./Filters.module.css";
 
 export function Filters() {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
   const hasActiveFilters = useSelector(selectHasActiveCatalogFilters);
-  const handleReset = useCallback(() => {
+  function handleReset(): void {
     dispatch(resetCatalogFilters());
-  }, [dispatch]);
+  }
 
   return (
-    <aside aria-labelledby="filters-heading" className={styles.root}>
+    <GlassSurface as="aside" aria-labelledby="filters-heading" className={styles.root} mode="light">
       <div className={styles.header}>
         <h2 className={styles.title} id="filters-heading">
           {t("title")}
@@ -43,8 +42,6 @@ export function Filters() {
         <NationFilterGroup />
         <TierFilterGroup />
       </div>
-
-      <VisibilityFilterGroup />
-    </aside>
+    </GlassSurface>
   );
 }

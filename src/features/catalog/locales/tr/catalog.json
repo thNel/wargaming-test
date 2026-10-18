@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "Araç kataloğu yüklenemedi.",
+  "catalogEmpty": "Seçilen filtrelerle eşleşen araç yok.",
+  "catalogCount_zero": "{{count}} araç",
+  "catalogCount_one": "{{count}} araç",
+  "catalogCount_few": "{{count}} araç",
+  "catalogCount_many": "{{count}} araç",
+  "catalogCount_other": "{{count}} araç",
+  "sortDefault": "Varsayılan",
+  "sortByName": "Ada göre",
+  "sortByLevel": "Seviyeye göre",
+  "sortAscending": "Artan",
+  "sortDescending": "Azalan",
+  "sortBy": "Sıralama ölçütü",
+  "sortLabel": "Sıralama",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "Premium {{className}}",
+  "specialVehicleClass": "Özel {{className}}",
+  "specialSubmarineClass": "Özel {{className}}",
+  "vehicleListLabel": "Filo kataloğu",
+  "retry": "Yeniden dene"
+}

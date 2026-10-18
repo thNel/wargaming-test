@@ -1,6 +1,6 @@
 # Local Vortex API snapshots
 
-These files are local fixtures based on the four Vortex Encyclopedia API responses supplied with the World of Warships home task. The source responses were retrieved on **2026-10-14**. The vehicle fixture contains a curated sample of 25 ships spanning all five classes; every selected ship retains its full API record and the original `{ status, data }` response shape. The nations, vehicle types, and media path fixtures retain their observed responses.
+These files are local fixtures based on the four Vortex Encyclopedia API responses supplied with the World of Warships home task. The source responses were retrieved on **2026-10-14**. The vehicle fixture contains a curated sample of 25 vehicles spanning all five classes; every selected vehicle retains its full API record and the original `{ status, data }` response shape. The nations, vehicle types, and media path fixtures retain their observed responses.
 
 | Local file                                                                      | Source endpoint                                                                                        | `data` records |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | -------------: |
@@ -9,7 +9,7 @@ These files are local fixtures based on the four Vortex Encyclopedia API respons
 | [`vehicle_types_common.json`](../public/mocks/vortex/vehicle_types_common.json) | [`vehicle_types_common/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/vehicle_types_common/) |              5 |
 | [`media_path.json`](../public/mocks/vortex/media_path.json)                     | [`media_path/`](https://vortex.worldofwarships.eu/api/encyclopedia/en/media_path/)                     |   Scalar value |
 
-The files and downloaded web icons are under Vite's `public` directory, so they can be loaded locally without importing fixture data into the JavaScript bundle. The nations fixture contains only the six nations represented by the selected ships. The mock `media_path.json` points to `/mocks/vortex/images/`, where the downloaded image files preserve the relative paths from the API. Run `npm run mocks:images` after cloning to download the ignored image files.
+The files and downloaded web icons are under Vite's `public` directory, so they can be loaded locally without importing fixture data into the JavaScript bundle. The nations fixture contains only the six nations represented by the selected vehicles. The mock `media_path.json` points to `/mocks/vortex/images/`, where the downloaded image files preserve the relative paths from the API. Run `npm run mocks:images` after cloning to download the ignored image files.
 
 The current fixtures contain 209 CDN-backed images, downloaded under `images/`. The API also returns 139 unique `gui/...` paths for `local_*` icons. These are game-client resources, not files hosted by the encyclopedia icon CDN, so the download script skips them. Use the standard `small`, `medium`, `large`, and contour icon paths in the web app.
 

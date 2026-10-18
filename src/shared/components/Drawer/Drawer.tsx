@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  type ComponentPropsWithoutRef,
-  type MouseEvent,
-} from "react";
+import { useLayoutEffect, useRef, type ComponentPropsWithoutRef, type MouseEvent } from "react";
 import classNames from "classnames";
 
 import type { DrawerProps } from "./Drawer.types";
@@ -21,32 +15,29 @@ export function Drawer({
   ...dialogProps
 }: DrawerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const handleCancel = useCallback<NonNullable<ComponentPropsWithoutRef<"dialog">["onCancel"]>>(
-    (event) => {
-      event.preventDefault();
+  function handleCancel(
+    event: Parameters<NonNullable<ComponentPropsWithoutRef<"dialog">["onCancel"]>>[0],
+  ): void {
+    event.preventDefault();
+    onClose();
+  }
+
+  function handleBackdropClick(event: MouseEvent<HTMLDialogElement>): void {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    const { bottom, left, right, top } = event.currentTarget.getBoundingClientRect();
+    const isOutside =
+      event.clientX < left ||
+      event.clientX > right ||
+      event.clientY < top ||
+      event.clientY > bottom;
+
+    if (isOutside) {
       onClose();
-    },
-    [onClose],
-  );
-  const handleBackdropClick = useCallback(
-    (event: MouseEvent<HTMLDialogElement>) => {
-      if (event.target !== event.currentTarget) {
-        return;
-      }
-
-      const { bottom, left, right, top } = event.currentTarget.getBoundingClientRect();
-      const isOutside =
-        event.clientX < left ||
-        event.clientX > right ||
-        event.clientY < top ||
-        event.clientY > bottom;
-
-      if (isOutside) {
-        onClose();
-      }
-    },
-    [onClose],
-  );
+    }
+  }
 
   useLayoutEffect(() => {
     const dialog = dialogRef.current;

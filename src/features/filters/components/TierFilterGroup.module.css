@@ -1,28 +1,8 @@
-.group {
-  --panel-line: rgb(154 194 211 / 12%);
-
-  min-width: 0;
-  margin: 0;
-  padding: 16px 0;
-  border: 0;
-  border-block-end: 1px solid var(--panel-line);
-}
-
-.groupTitle {
-  padding: 0;
-  color: #a9bfca;
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
-  text-transform: uppercase;
-}
-
 .tierOptions {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2px 4px;
-  margin-block-start: 10px;
+  margin-block-start: 2px;
 }
 
 .tierOption {

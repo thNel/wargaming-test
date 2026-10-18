@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "함정 카탈로그를 불러오지 못했습니다.",
+  "catalogEmpty": "선택한 필터와 일치하는 함정이 없습니다.",
+  "catalogCount_zero": "{{count}}척",
+  "catalogCount_one": "{{count}}척",
+  "catalogCount_few": "{{count}}척",
+  "catalogCount_many": "{{count}}척",
+  "catalogCount_other": "{{count}}척",
+  "sortDefault": "기본 순서",
+  "sortByName": "이름순",
+  "sortByLevel": "단계순",
+  "sortAscending": "오름차순",
+  "sortDescending": "내림차순",
+  "sortBy": "정렬 기준",
+  "sortLabel": "정렬",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "프리미엄 {{className}}",
+  "specialVehicleClass": "특별 {{className}}",
+  "specialSubmarineClass": "특별 {{className}}",
+  "vehicleListLabel": "함대 카탈로그",
+  "retry": "다시 시도"
+}

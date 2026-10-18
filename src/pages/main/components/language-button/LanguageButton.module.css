@@ -1,0 +1,47 @@
+.button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-width: 76px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid rgb(161 196 212 / 17%);
+  border-radius: 2px;
+  color: #d9e5eb;
+  background: linear-gradient(180deg, rgb(28 57 73 / 66%), rgb(14 37 51 / 74%));
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.button:hover {
+  border-color: rgb(115 217 229 / 42%);
+  background-color: rgb(31 72 89 / 72%);
+}
+
+.button:focus-visible {
+  outline: var(--focus-outline);
+}
+
+.icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background: url("/images/globe.svg") center / contain no-repeat;
+}
+
+@media (max-width: 700px) {
+  .button {
+    min-width: 70px;
+    height: 32px;
+  }
+}

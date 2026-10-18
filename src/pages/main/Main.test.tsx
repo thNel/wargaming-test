@@ -122,9 +122,7 @@ describe("main page", () => {
     expect(await screen.findByRole("heading", { name: "Каталог флота" })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Кага" })).toBeInTheDocument();
     expect(screen.getByRole("complementary", { name: "Фильтры" })).toBeInTheDocument();
-    expect(
-      await screen.findByRole("checkbox", { name: "Показывать скрытые корабли" }),
-    ).toBeInTheDocument();
+    expect(await screen.findByRole("group", { name: "Уровень" })).toBeInTheDocument();
     expect(await screen.findByRole("checkbox", { name: "США" })).toBeInTheDocument();
   });
 
@@ -140,7 +138,7 @@ describe("main page", () => {
     });
 
     expect(screen.getByRole("heading", { name: "Каталог флота" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Каталог флота" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "World of Warships" })).toBeInTheDocument();
     expect(screen.getByRole("checkbox", { name: "США" })).toBeInTheDocument();
     expect(screen.getByRole("checkbox", { name: "Крейсер" })).toBeInTheDocument();
     expect(document.documentElement.lang).toBe("ru");

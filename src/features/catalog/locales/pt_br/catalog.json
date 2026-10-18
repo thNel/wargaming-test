@@ -1,0 +1,22 @@
+{
+  "catalogLoadError": "Não foi possível carregar o catálogo de veículos.",
+  "catalogEmpty": "Nenhum veículo corresponde aos filtros selecionados.",
+  "catalogCount_zero": "{{count}} veículos",
+  "catalogCount_one": "{{count}} veículo",
+  "catalogCount_few": "{{count}} veículos",
+  "catalogCount_many": "{{count}} veículos",
+  "catalogCount_other": "{{count}} veículos",
+  "sortDefault": "Padrão",
+  "sortByName": "Por nome",
+  "sortByLevel": "Por nível",
+  "sortAscending": "Crescente",
+  "sortDescending": "Decrescente",
+  "sortBy": "Ordenar por",
+  "sortLabel": "Ordenação",
+  "vehicleClass": "{{className}}",
+  "premiumVehicleClass": "{{className}} premium",
+  "specialVehicleClass": "{{className}} especial",
+  "specialSubmarineClass": "{{className}} especial",
+  "vehicleListLabel": "Catálogo da frota",
+  "retry": "Tentar novamente"
+}

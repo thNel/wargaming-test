@@ -1,27 +1,26 @@
-import { useCallback, type ChangeEventHandler } from "react";
+import type { ChangeEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Checkbox } from "@/shared/components/Checkbox/Checkbox";
+import { TIER_LABELS, TIERS } from "@/shared/constants/tiers.constants";
 import type { AppDispatch, RootState } from "@/store";
 import { toggleCatalogTier } from "@/store/filters/filtersSlice";
 import type { Tier } from "@/store/filters/filters.types";
 
-import { TIERS, TIER_LABELS } from "../filters.constants";
+import { FilterGroup } from "./FilterGroup";
 import styles from "./TierFilterGroup.module.css";
 
 export function TierFilterGroup() {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
   const selectedTiers = useSelector((state: RootState) => state.filters.tiers);
-  const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
-    (event) => dispatch(toggleCatalogTier(Number(event.currentTarget.value) as Tier)),
-    [dispatch],
-  );
+  function handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    dispatch(toggleCatalogTier(Number(event.currentTarget.value) as Tier));
+  }
 
   return (
-    <fieldset className={styles.group}>
-      <legend className={styles.groupTitle}>{t("tiers")}</legend>
+    <FilterGroup title={t("tiers")}>
       <div className={styles.tierOptions}>
         {TIERS.map((tier) => {
           const label = TIER_LABELS[tier];
@@ -42,6 +41,6 @@ export function TierFilterGroup() {
           );
         })}
       </div>
-    </fieldset>
+    </FilterGroup>
   );
 }
