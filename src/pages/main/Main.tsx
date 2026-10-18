@@ -6,7 +6,6 @@ import { Filters } from "@/features/filters/Filters";
 
 import styles from "./Main.module.css";
 
-/* eslint-disable a11yinspect/heading-element-error -- The translated title key is non-empty in every supported locale. */
 export function Main() {
   const { t } = useTranslation("main");
 

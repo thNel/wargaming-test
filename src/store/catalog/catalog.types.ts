@@ -1,4 +1,10 @@
-export type LocaleMap = Readonly<Record<string, string>>;
+export type LocaleMap = Readonly<Record<string, string | undefined>>;
+
+export type CatalogStatus = "idle" | "loading" | "succeeded" | "failed";
+
+export interface CatalogLoadState {
+  status: CatalogStatus;
+}
 
 export interface CatalogVehicleLocales {
   readonly name: LocaleMap;

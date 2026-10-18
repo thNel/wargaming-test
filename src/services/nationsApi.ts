@@ -1,11 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 import type { NationDto } from "./nations.dto";
 import type { VortexResponseDto } from "./vortex-response.dto";
+import { createVortexApi } from "./createVortexApi";
 
-export const nationsApi = createApi({
-  reducerPath: "nationsApi",
-  baseQuery: fetchBaseQuery({ baseUrl: new URL("/api/", globalThis.location.origin).toString() }),
+export const nationsApi = createVortexApi("nationsApi").injectEndpoints({
   endpoints: (build) => ({
     getNations: build.query<VortexResponseDto<NationDto[]>, void>({
       query: () => "nations/",

@@ -1,0 +1,19 @@
+{
+  "title": "Фильтры",
+  "reset": "Сбросить",
+  "search": "Поиск кораблей",
+  "nations": "Нации",
+  "classes": "Класс корабля",
+  "tiers": "Уровень",
+  "showHidden": "Показывать скрытые корабли",
+  "showMissing": "Показывать отсутствующие корабли",
+  "classCruiser": "Крейсер",
+  "classAircraftCarrier": "Авианосец",
+  "classBattleship": "Линкор",
+  "classDestroyer": "Эсминец",
+  "classSubmarine": "Подводная лодка",
+  "visibility": "Отображение",
+  "loading": "Загрузка вариантов…",
+  "loadError": "Не удалось загрузить данные фильтра.",
+  "retry": "Повторить"
+}

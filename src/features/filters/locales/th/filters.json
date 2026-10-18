@@ -1,0 +1,19 @@
+{
+  "title": "ตัวกรอง",
+  "reset": "รีเซ็ต",
+  "search": "ค้นหาเรือ",
+  "nations": "ชาติ",
+  "classes": "ประเภทเรือ",
+  "tiers": "ระดับ",
+  "showHidden": "แสดงเรือที่ซ่อนอยู่",
+  "showMissing": "แสดงเรือที่ขาดหายไป",
+  "classCruiser": "เรือลาดตระเวน",
+  "classAircraftCarrier": "เรือบรรทุกเครื่องบิน",
+  "classBattleship": "เรือประจัญบาน",
+  "classDestroyer": "เรือพิฆาต",
+  "classSubmarine": "เรือดำน้ำ",
+  "visibility": "การแสดงผล",
+  "loading": "กำลังโหลดตัวเลือก…",
+  "loadError": "ไม่สามารถโหลดตัวเลือกตัวกรองได้",
+  "retry": "ลองอีกครั้ง"
+}

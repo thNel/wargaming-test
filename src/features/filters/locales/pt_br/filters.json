@@ -1,0 +1,19 @@
+{
+  "title": "Filtros",
+  "reset": "Redefinir",
+  "search": "Buscar navios",
+  "nations": "Nações",
+  "classes": "Tipo de navio",
+  "tiers": "Nível",
+  "showHidden": "Mostrar navios ocultos",
+  "showMissing": "Mostrar navios ausentes",
+  "classCruiser": "Cruzador",
+  "classAircraftCarrier": "Porta-aviões",
+  "classBattleship": "Encouraçado",
+  "classDestroyer": "Contratorpedeiro",
+  "classSubmarine": "Submarino",
+  "visibility": "Exibição",
+  "loading": "Carregando opções…",
+  "loadError": "Não foi possível carregar as opções do filtro.",
+  "retry": "Tentar novamente"
+}

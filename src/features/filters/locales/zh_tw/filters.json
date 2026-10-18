@@ -1,0 +1,19 @@
+{
+  "title": "篩選",
+  "reset": "重設",
+  "search": "搜尋艦艇",
+  "nations": "國家",
+  "classes": "艦種",
+  "tiers": "階級",
+  "showHidden": "顯示隱藏艦艇",
+  "showMissing": "顯示缺少的艦艇",
+  "classCruiser": "巡洋艦",
+  "classAircraftCarrier": "航空母艦",
+  "classBattleship": "戰艦",
+  "classDestroyer": "驅逐艦",
+  "classSubmarine": "潛水艇",
+  "visibility": "顯示選項",
+  "loading": "正在載入選項…",
+  "loadError": "無法載入篩選選項。",
+  "retry": "重試"
+}

@@ -1,0 +1,41 @@
+.root {
+  padding-block: 16px;
+  border-block-end: 1px solid rgb(154 194 211 / 12%);
+}
+
+.label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid rgb(154 194 211 / 20%);
+  border-radius: 2px;
+  color: #e8eef3;
+  background: rgb(5 22 34 / 48%);
+  font: inherit;
+}
+
+.input::placeholder {
+  color: #91a8b4;
+  opacity: 1;
+}
+
+.input:focus-visible {
+  border-color: #73d9e5;
+  outline: 2px solid #73d9e5;
+  outline-offset: 2px;
+}
+
+.input::-webkit-search-cancel-button {
+  cursor: pointer;
+}

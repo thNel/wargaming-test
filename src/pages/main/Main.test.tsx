@@ -21,6 +21,14 @@ const API_RESPONSES: Readonly<Record<string, unknown>> = Object.freeze({
         localization: { mark: { en: "United States", ru: "США" } },
         id: 1,
       },
+      {
+        name: "japan",
+        icons: { tiny: "japan.png" },
+        color: 0,
+        tags: [],
+        localization: { mark: { en: "Japan", ru: "Япония" } },
+        id: 2,
+      },
     ],
   },
   vehicle_types_common: {
@@ -33,6 +41,23 @@ const API_RESPONSES: Readonly<Record<string, unknown>> = Object.freeze({
           shortmark: { en: "Cruiser", ru: "Крейсер" },
         },
         sort_order: 0,
+      },
+    },
+  },
+  vehicles: {
+    status: "ok",
+    data: {
+      "3751786192": {
+        level: 8,
+        name: "PJSA518_Kaga",
+        icons: { large: "vehicle/large/kaga.png" },
+        tags: ["Cruiser", "special"],
+        localization: {
+          mark: { en: "Kaga", ru: "Кага" },
+          shortmark: { en: "Kaga", ru: "Кага" },
+          description: {},
+        },
+        nation: "japan",
       },
     },
   },
@@ -80,13 +105,13 @@ afterEach(() => {
 });
 
 describe("main page", () => {
-  it("renders the page heading, filters, and catalog skeleton", async () => {
+  it("renders the page heading, filters, and catalog cards", async () => {
     mockApiFetch();
     renderMainPage();
 
     expect(await screen.findByRole("heading", { name: "Fleet catalog" })).toBeInTheDocument();
     expect(screen.getByRole("complementary", { name: "Filters" })).toBeInTheDocument();
-    expect(screen.getByRole("main").querySelector('[aria-hidden="true"]')).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Kaga" })).toBeInTheDocument();
   });
 
   it("uses the active locale for visible and accessible filter labels", async () => {
@@ -95,6 +120,7 @@ describe("main page", () => {
     renderMainPage();
 
     expect(await screen.findByRole("heading", { name: "Каталог флота" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Кага" })).toBeInTheDocument();
     expect(screen.getByRole("complementary", { name: "Фильтры" })).toBeInTheDocument();
     expect(
       await screen.findByRole("checkbox", { name: "Показывать скрытые корабли" }),

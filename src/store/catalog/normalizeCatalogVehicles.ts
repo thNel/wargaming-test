@@ -1,13 +1,13 @@
+import { getMediaUrl } from "@/shared/utils/getMediaUrl";
+
 import type { CatalogNation, CatalogVehicleType, CatalogVehicleCollection } from "./catalog.types";
 import type { CatalogVehicleSources } from "./normalizeCatalogVehicles.types";
 
 function buildIconUrls(icons: Record<string, string>, mediaPath: string): Record<string, string> {
-  const normalizedBase = mediaPath.replace(/\/+$/, "");
-
   return Object.fromEntries(
     Object.entries(icons)
       .filter(([key, path]) => !key.startsWith("local_") && !path.startsWith("gui/"))
-      .map(([key, path]) => [key, `${normalizedBase}/${path.replace(/^\/+/, "")}`]),
+      .map(([key, path]) => [key, getMediaUrl(mediaPath, path)]),
   );
 }
 

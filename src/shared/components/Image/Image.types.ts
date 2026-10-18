@@ -7,6 +7,11 @@ type NativeImageProps = Omit<
 
 export type ImageFit = "contain" | "cover" | "fill" | "none" | "scale-down";
 
+export type ImageLoadState = {
+  source: string | undefined;
+  status: "loading" | "loaded" | "error";
+};
+
 export type ImageProps = NativeImageProps & {
   alt?: string;
   className?: string;

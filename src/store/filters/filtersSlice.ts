@@ -94,6 +94,28 @@ export function selectCatalogFilters(state: RootState): CatalogFiltersState {
   return state.filters;
 }
 
+function hasSelectionChanges<Key extends string>(
+  selections: Readonly<Record<Key, boolean>>,
+  initialSelections: Readonly<Record<Key, boolean>>,
+): boolean {
+  return Object.keys(initialSelections).some((key) => {
+    const selectionKey = key as Key;
+
+    return selections[selectionKey] !== initialSelections[selectionKey];
+  });
+}
+
+export const selectHasActiveCatalogFilters = createSelector(
+  [selectCatalogFilters],
+  (filters) =>
+    filters.searchTerm.trim() !== initialState.searchTerm ||
+    hasSelectionChanges(filters.nations, initialState.nations) ||
+    hasSelectionChanges(filters.classes, initialState.classes) ||
+    hasSelectionChanges(filters.tiers, initialState.tiers) ||
+    filters.showHidden !== initialState.showHidden ||
+    filters.showMissing !== initialState.showMissing,
+);
+
 function selectEnabledKeys<Key extends string>(
   selections: Readonly<Record<Key, boolean>>,
 ): readonly Key[] {

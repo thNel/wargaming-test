@@ -3,46 +3,38 @@ import classNames from "classnames";
 
 import { Skeleton } from "@/shared/components/Skeleton/Skeleton";
 
-import type { ImageProps } from "./Image.types";
+import type { ImageLoadState, ImageProps } from "./Image.types";
 import styles from "./Image.module.css";
 
 const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
   (
-    {
-      alt,
-      className,
-      fit = "cover",
-      h,
-      isLoading,
-      loading,
-      onError,
-      onLoad,
-      src,
-      w,
-      ...imageProps
-    },
+    { alt, className, fit = "cover", h, isLoading, onError, onLoad, src, w, ...imageProps },
     ref,
   ) => {
-    const [failedSource, setFailedSource] = useState<string>();
-    const [loadedSource, setLoadedSource] = useState<string>();
-    const hasError = !src || failedSource === src;
-    const showSkeleton = isLoading ?? (!hasError && loadedSource !== src);
+    const [loadState, setLoadState] = useState<ImageLoadState>({ source: src, status: "loading" });
+    const hasError = !src || (loadState.source === src && loadState.status === "error");
+    const showSkeleton =
+      isLoading ?? (!hasError && (loadState.source !== src || loadState.status !== "loaded"));
     const wrapperClassName = classNames(styles.image, className);
     const wrapperStyle = { width: w, height: h };
     const handleError = useCallback<NonNullable<ImageProps["onError"]>>(
       (event) => {
         onError?.(event);
-        setFailedSource(src);
+        setLoadState({ source: src, status: "error" });
       },
       [onError, src],
     );
     const handleLoad = useCallback<NonNullable<ImageProps["onLoad"]>>(
       (event) => {
-        setLoadedSource(src);
+        setLoadState({ source: src, status: "loaded" });
         onLoad?.(event);
       },
       [onLoad, src],
     );
+
+    if (loadState.source !== src) {
+      setLoadState({ source: src, status: "loading" });
+    }
 
     if (hasError && !showSkeleton) {
       const isDecorative = !alt;
@@ -68,7 +60,6 @@ const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
           alt={alt ?? ""}
           className={styles.imageContent}
           data-fit={fit}
-          loading={loading}
           onError={handleError}
           onLoad={handleLoad}
           src={src || undefined}

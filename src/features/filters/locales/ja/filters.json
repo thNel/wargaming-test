@@ -1,0 +1,19 @@
+{
+  "title": "フィルター",
+  "reset": "リセット",
+  "search": "艦艇を検索",
+  "nations": "国家",
+  "classes": "艦種",
+  "tiers": "ティア",
+  "showHidden": "非表示の艦艇を表示",
+  "showMissing": "未掲載の艦艇を表示",
+  "classCruiser": "巡洋艦",
+  "classAircraftCarrier": "航空母艦",
+  "classBattleship": "戦艦",
+  "classDestroyer": "駆逐艦",
+  "classSubmarine": "潜水艦",
+  "visibility": "表示設定",
+  "loading": "選択肢を読み込み中…",
+  "loadError": "フィルターの選択肢を読み込めませんでした。",
+  "retry": "再試行"
+}

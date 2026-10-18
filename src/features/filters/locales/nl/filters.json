@@ -1,0 +1,19 @@
+{
+  "title": "Filters",
+  "reset": "Herstellen",
+  "search": "Schepen zoeken",
+  "nations": "Naties",
+  "classes": "Scheepstype",
+  "tiers": "Niveau",
+  "showHidden": "Verborgen schepen tonen",
+  "showMissing": "Ontbrekende schepen tonen",
+  "classCruiser": "Kruiser",
+  "classAircraftCarrier": "Vliegdekschip",
+  "classBattleship": "Slagschip",
+  "classDestroyer": "Torpedobootjager",
+  "classSubmarine": "Onderzeeboot",
+  "visibility": "Zichtbaarheid",
+  "loading": "Opties laden…",
+  "loadError": "Filteropties konden niet worden geladen.",
+  "retry": "Opnieuw proberen"
+}

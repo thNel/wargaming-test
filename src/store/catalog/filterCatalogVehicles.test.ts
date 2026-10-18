@@ -196,4 +196,48 @@ describe("filterCatalogVehicles", () => {
       "hidden",
     ]);
   });
+
+  it("falls back to English separately for the name and short name", () => {
+    const partiallyLocalizedVehicles = [
+      createVehicle({
+        id: "english-name",
+        name: "Fallback name",
+        nation: "japan",
+        classKey: "Battleship",
+        level: 10,
+        locales: {
+          name: { en: "Fallback name" },
+          shortName: { en: "English abbreviation", ru: "Локальное сокращение" },
+          description: {},
+        },
+      }),
+      createVehicle({
+        id: "english-short-name",
+        name: "English name",
+        nation: "japan",
+        classKey: "Battleship",
+        level: 10,
+        locales: {
+          name: { en: "English name", ru: "Локальное имя" },
+          shortName: { en: "Fallback abbreviation" },
+          description: {},
+        },
+      }),
+    ];
+
+    expect(
+      filterCatalogVehicles(
+        partiallyLocalizedVehicles,
+        { ...defaultFilters, searchTerm: "  FALLBACK NAME  " },
+        "ru",
+      ).map(({ id }) => id),
+    ).toEqual(["english-name"]);
+    expect(
+      filterCatalogVehicles(
+        partiallyLocalizedVehicles,
+        { ...defaultFilters, searchTerm: "  FALLBACK ABBREVIATION  " },
+        "ru",
+      ).map(({ id }) => id),
+    ).toEqual(["english-short-name"]);
+  });
 });

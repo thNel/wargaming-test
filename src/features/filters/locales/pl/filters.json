@@ -1,0 +1,19 @@
+{
+  "title": "Filtry",
+  "reset": "Resetuj",
+  "search": "Szukaj okrętów",
+  "nations": "Narody",
+  "classes": "Typ okrętu",
+  "tiers": "Poziom",
+  "showHidden": "Pokaż ukryte okręty",
+  "showMissing": "Pokaż brakujące okręty",
+  "classCruiser": "Krążownik",
+  "classAircraftCarrier": "Lotniskowiec",
+  "classBattleship": "Pancernik",
+  "classDestroyer": "Niszczyciel",
+  "classSubmarine": "Okręt podwodny",
+  "visibility": "Widoczność",
+  "loading": "Ładowanie opcji…",
+  "loadError": "Nie udało się wczytać opcji filtra.",
+  "retry": "Spróbuj ponownie"
+}

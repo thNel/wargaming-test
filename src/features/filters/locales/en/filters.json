@@ -1,0 +1,19 @@
+{
+  "title": "Filters",
+  "reset": "Reset",
+  "search": "Search ships",
+  "nations": "Nations",
+  "classes": "Ship type",
+  "tiers": "Tier",
+  "showHidden": "Show hidden ships",
+  "showMissing": "Show missing ships",
+  "classCruiser": "Cruiser",
+  "classAircraftCarrier": "Aircraft carrier",
+  "classBattleship": "Battleship",
+  "classDestroyer": "Destroyer",
+  "classSubmarine": "Submarine",
+  "visibility": "Visibility",
+  "loading": "Loading options…",
+  "loadError": "Could not load filter options.",
+  "retry": "Retry"
+}

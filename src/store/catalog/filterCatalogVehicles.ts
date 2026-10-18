@@ -15,14 +15,12 @@ function matchesSearch(
   searchTerm: string,
   locale: SupportedLocale,
 ): boolean {
-  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
-
-  if (!normalizedSearchTerm) {
+  if (!searchTerm) {
     return true;
   }
 
   return getSearchableText(vehicle, locale).some((value) =>
-    value.toLowerCase().includes(normalizedSearchTerm),
+    value.toLowerCase().includes(searchTerm),
   );
 }
 
@@ -31,8 +29,10 @@ export function filterCatalogVehicles(
   filters: PreparedCatalogFilters,
   locale: SupportedLocale,
 ): CatalogVehicle[] {
+  const searchTerm = filters.searchTerm.trim().toLowerCase();
+
   return vehicles.filter((vehicle) => {
-    if (!matchesSearch(vehicle, filters.searchTerm, locale)) {
+    if (!matchesSearch(vehicle, searchTerm, locale)) {
       return false;
     }
 

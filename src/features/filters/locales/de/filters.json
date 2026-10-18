@@ -1,0 +1,19 @@
+{
+  "title": "Filter",
+  "reset": "Zurücksetzen",
+  "search": "Schiffe suchen",
+  "nations": "Nationen",
+  "classes": "Schiffstyp",
+  "tiers": "Stufe",
+  "showHidden": "Versteckte Schiffe anzeigen",
+  "showMissing": "Fehlende Schiffe anzeigen",
+  "classCruiser": "Kreuzer",
+  "classAircraftCarrier": "Flugzeugträger",
+  "classBattleship": "Schlachtschiff",
+  "classDestroyer": "Zerstörer",
+  "classSubmarine": "U-Boot",
+  "visibility": "Anzeige",
+  "loading": "Optionen werden geladen…",
+  "loadError": "Filteroptionen konnten nicht geladen werden.",
+  "retry": "Erneut versuchen"
+}

@@ -4,6 +4,7 @@ import { createAppStore } from "@/store";
 import {
   resetCatalogFilters,
   selectCatalogFilters,
+  selectHasActiveCatalogFilters,
   selectPreparedCatalogFilters,
   setCatalogSearchTerm,
   setShowHiddenShips,
@@ -61,6 +62,23 @@ describe("catalog filters", () => {
     const store = createAppStore();
 
     expect(selectCatalogFilters(store.getState())).toEqual(defaultFilters());
+    expect(selectHasActiveCatalogFilters(store.getState())).toBe(false);
+  });
+
+  it("checks active filters against the initial values", () => {
+    const store = createAppStore();
+
+    store.dispatch(toggleCatalogNation("japan"));
+    expect(selectHasActiveCatalogFilters(store.getState())).toBe(true);
+
+    store.dispatch(toggleCatalogNation("japan"));
+    expect(selectHasActiveCatalogFilters(store.getState())).toBe(false);
+
+    store.dispatch(setCatalogSearchTerm("  Yamato  "));
+    expect(selectHasActiveCatalogFilters(store.getState())).toBe(true);
+
+    store.dispatch(setCatalogSearchTerm("   "));
+    expect(selectHasActiveCatalogFilters(store.getState())).toBe(false);
   });
 
   it("selects prepared criteria for filtering", () => {

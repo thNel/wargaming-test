@@ -1,16 +1,13 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
+import type { CatalogLoadState, CatalogStatus, CatalogVehicle } from "./catalog.types";
 import type { RootState } from "../index";
 import { loadCatalog } from "./catalogThunks";
-import type { CatalogVehicle } from "./catalog.types";
-
-export type CatalogStatus = "idle" | "loading" | "succeeded" | "failed";
 
 const catalogAdapter = createEntityAdapter<CatalogVehicle>();
 
-const initialState = catalogAdapter.getInitialState({
-  status: "idle" as CatalogStatus,
-  error: null as string | null,
+const initialState = catalogAdapter.getInitialState<CatalogLoadState>({
+  status: "idle",
 });
 
 const catalogSlice = createSlice({
@@ -21,15 +18,13 @@ const catalogSlice = createSlice({
     builder
       .addCase(loadCatalog.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
       .addCase(loadCatalog.fulfilled, (state, action) => {
         catalogAdapter.setAll(state, [...action.payload]);
         state.status = "succeeded";
       })
-      .addCase(loadCatalog.rejected, (state, action) => {
+      .addCase(loadCatalog.rejected, (state) => {
         state.status = "failed";
-        state.error = action.payload ?? action.error.message ?? "Catalog request failed";
       });
   },
 });
@@ -41,8 +36,4 @@ export const { selectAll: selectAllCatalogVehicles } = catalogAdapter.getSelecto
 
 export function selectCatalogStatus(state: RootState): CatalogStatus {
   return state.catalog.status;
-}
-
-export function selectCatalogError(state: RootState): string | null {
-  return state.catalog.error;
 }

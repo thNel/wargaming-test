@@ -1,0 +1,19 @@
+{
+  "title": "Filtreler",
+  "reset": "Sıfırla",
+  "search": "Gemi ara",
+  "nations": "Uluslar",
+  "classes": "Gemi türü",
+  "tiers": "Seviye",
+  "showHidden": "Gizli gemileri göster",
+  "showMissing": "Eksik gemileri göster",
+  "classCruiser": "Kruvazör",
+  "classAircraftCarrier": "Uçak gemisi",
+  "classBattleship": "Zırhlı",
+  "classDestroyer": "Muhrip",
+  "classSubmarine": "Denizaltı",
+  "visibility": "Görünürlük",
+  "loading": "Seçenekler yükleniyor…",
+  "loadError": "Filtre seçenekleri yüklenemedi.",
+  "retry": "Yeniden dene"
+}

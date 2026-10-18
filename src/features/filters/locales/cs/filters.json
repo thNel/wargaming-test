@@ -1,0 +1,19 @@
+{
+  "title": "Filtry",
+  "reset": "Resetovat",
+  "search": "Hledat lodě",
+  "nations": "Národy",
+  "classes": "Typ lodi",
+  "tiers": "Úroveň",
+  "showHidden": "Zobrazit skryté lodě",
+  "showMissing": "Zobrazit chybějící lodě",
+  "classCruiser": "Křižník",
+  "classAircraftCarrier": "Letadlová loď",
+  "classBattleship": "Bitevní loď",
+  "classDestroyer": "Torpédoborec",
+  "classSubmarine": "Ponorka",
+  "visibility": "Zobrazení",
+  "loading": "Načítání možností…",
+  "loadError": "Možnosti filtru se nepodařilo načíst.",
+  "retry": "Zkusit znovu"
+}

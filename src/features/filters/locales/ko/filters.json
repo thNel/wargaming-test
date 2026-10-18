@@ -1,0 +1,19 @@
+{
+  "title": "필터",
+  "reset": "초기화",
+  "search": "군함 검색",
+  "nations": "국가",
+  "classes": "함종",
+  "tiers": "단계",
+  "showHidden": "숨겨진 군함 표시",
+  "showMissing": "누락된 군함 표시",
+  "classCruiser": "순양함",
+  "classAircraftCarrier": "항공모함",
+  "classBattleship": "전함",
+  "classDestroyer": "구축함",
+  "classSubmarine": "잠수함",
+  "visibility": "표시 설정",
+  "loading": "옵션 불러오는 중…",
+  "loadError": "필터 옵션을 불러오지 못했습니다.",
+  "retry": "다시 시도"
+}

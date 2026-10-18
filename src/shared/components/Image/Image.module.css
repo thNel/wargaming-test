@@ -45,7 +45,6 @@
 
 .fallback {
   display: grid;
-  min-height: 6rem;
   place-items: center;
   color: var(--color-muted, #91a5b5);
   background-color: rgb(4 17 27 / 76%);
@@ -53,8 +52,8 @@
 
 .fallbackIcon {
   display: block;
-  width: 2rem;
-  height: 2rem;
+  width: min(2rem, 100%);
+  height: min(2rem, 100%);
   background: url("/images/image-fallback.svg") center / contain no-repeat;
   opacity: 0.64;
 }
