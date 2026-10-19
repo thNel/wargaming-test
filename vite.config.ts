@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": isMockMode
           ? {
-              target: "http://localhost:4173/mocks",
+              target: "http://127.0.0.1:4173/mocks",
               rewrite: (path) => path.replace(/^\/api/, "/vortex").replace(/\/$/, ".json"),
             }
           : {

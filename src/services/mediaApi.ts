@@ -1,10 +1,11 @@
 import type { VortexResponseDto } from "./vortex-response.dto";
-import { createVortexApi } from "./createVortexApi";
+import { vortexApi } from "./vortexApi";
 
-export const mediaApi = createVortexApi("mediaApi").injectEndpoints({
+export const mediaApi = vortexApi.injectEndpoints({
   endpoints: (build) => ({
     getMediaPath: build.query<VortexResponseDto<string>, void>({
       query: () => "media_path/",
+      providesTags: ["MediaPath"],
     }),
   }),
 });

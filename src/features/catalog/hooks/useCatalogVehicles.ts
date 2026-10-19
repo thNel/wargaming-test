@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import type { SupportedLocale } from "@/shared/i18n/supportedLocales";
@@ -13,7 +13,7 @@ import type {
   CatalogVehiclesResult,
 } from "../catalog.types";
 import { sortCatalogVehicles } from "../sortCatalogVehicles";
-import { useDebouncedCatalogVehicles } from "./useDebouncedCatalogVehicles";
+import { useDeferredCatalogVehicles } from "./useDeferredCatalogVehicles";
 
 export function useCatalogVehicles(
   locale: SupportedLocale,
@@ -35,11 +35,13 @@ export function useCatalogVehicles(
     void dispatch(loadCatalog());
   }
 
-  const visibleVehicles = useDebouncedCatalogVehicles(vehicles, filters, locale);
-  const sortedVehicles = useMemo(
-    () => sortCatalogVehicles(visibleVehicles, sortMode, sortDirection, locale),
-    [locale, sortDirection, sortMode, visibleVehicles],
-  );
+  const visibleVehicles = useDeferredCatalogVehicles(vehicles, filters, locale);
+  const sortedVehicles = sortCatalogVehicles(visibleVehicles, sortMode, sortDirection, locale);
 
-  return { retry, status, count: visibleVehicles.length, vehicles: sortedVehicles };
+  return {
+    retry,
+    status,
+    count: visibleVehicles.length,
+    vehicles: sortedVehicles,
+  };
 }

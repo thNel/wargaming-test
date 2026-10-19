@@ -36,3 +36,24 @@ test("drawer closes with Escape and its close button and restores focus", async 
   await expect(drawer).not.toBeVisible();
   await expect(languageButton).toBeFocused();
 });
+
+test("drawer locks page scrolling and restores the previous overflow style", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("html").evaluate((element) => {
+    element.style.overflow = "clip";
+  });
+
+  const languageButton = page.getByRole("button", { name: "Language", exact: true });
+  const drawer = page.getByRole("dialog", { name: "Language" });
+
+  await languageButton.click();
+  await expect(drawer).toBeVisible();
+  await expect
+    .poll(() => page.locator("html").evaluate((element) => element.style.overflow))
+    .toBe("hidden");
+  await page.keyboard.press("Escape");
+  await expect(drawer).not.toBeVisible();
+  await expect
+    .poll(() => page.locator("html").evaluate((element) => element.style.overflow))
+    .toBe("clip");
+});

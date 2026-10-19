@@ -18,7 +18,7 @@ test("failed filter images keep the requested icon dimensions", async ({ page })
 });
 
 test("failed logo keeps its desktop and mobile dimensions", async ({ page }) => {
-  await page.route("**/images/logo-wows-long-raster.webp", (route) => route.abort());
+  await page.route("**/images/logo-wows-2x.png", (route) => route.abort());
   await page.goto("/");
 
   const logo = page.getByRole("img", { name: "World of Warships" });

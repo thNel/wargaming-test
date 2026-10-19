@@ -25,16 +25,28 @@ export function NationFilterGroup() {
   const selectedNations = useSelector((state: RootState) => state.filters.nations);
   const {
     data: nationsResponse,
-    isFetching: isNationsLoading,
+    isInitialLoading: isNationsLoading,
     isError: hasNationsError,
     refetch: refetchNations,
-  } = nationsApi.useGetNationsQuery();
+  } = nationsApi.useGetNationsQuery(undefined, {
+    selectFromResult: ({ data, isFetching, isError }) => ({
+      data,
+      isInitialLoading: isFetching && data === undefined,
+      isError,
+    }),
+  });
   const {
     data: mediaPathResponse,
-    isFetching: isMediaLoading,
+    isInitialLoading: isMediaLoading,
     isError: hasMediaError,
     refetch: refetchMediaPath,
-  } = mediaApi.useGetMediaPathQuery();
+  } = mediaApi.useGetMediaPathQuery(undefined, {
+    selectFromResult: ({ data, isFetching, isError }) => ({
+      data,
+      isInitialLoading: isFetching && data === undefined,
+      isError,
+    }),
+  });
   const isLoading = isNationsLoading || isMediaLoading;
   const hasError = hasNationsError || hasMediaError;
   const locale = normalizeLocale(i18n.resolvedLanguage ?? i18n.language ?? "en");

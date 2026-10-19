@@ -1,4 +1,5 @@
 import type { SupportedLocale } from "@/shared/i18n/supportedLocales";
+import { normalizeSearchTerm } from "@/shared/utils/normalizeSearchTerm";
 
 import type { PreparedCatalogFilters } from "../filters/filters.types";
 import type { CatalogVehicle, CatalogVehicleCollection } from "./catalog.types";
@@ -21,7 +22,7 @@ export function filterCatalogVehicles(
   filters: PreparedCatalogFilters,
   locale: SupportedLocale,
 ): CatalogVehicle[] {
-  const searchTerm = filters.searchTerm.trim().toLowerCase();
+  const searchTerm = normalizeSearchTerm(filters.searchTerm);
 
   return vehicles.filter((vehicle) => {
     if (!matchesSearch(vehicle, searchTerm, locale)) {

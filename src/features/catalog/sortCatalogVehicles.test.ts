@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/supportedLocales";
 import type { CatalogVehicle } from "@/store/catalog/catalog.types";
 
 import { sortCatalogVehicles } from "./sortCatalogVehicles";
@@ -10,6 +11,10 @@ function createVehicle(
   localizedNames: CatalogVehicle["locales"]["name"],
   level = 1,
 ): CatalogVehicle {
+  const nameByLocale = Object.fromEntries(
+    SUPPORTED_LOCALES.map((locale) => [locale, localizedNames[locale] ?? name]),
+  ) as Record<SupportedLocale, string>;
+
   return {
     id,
     name,
@@ -19,6 +24,16 @@ function createVehicle(
     nation: null,
     class: null,
     icons: {},
+    card: {
+      nameByLocale,
+      tierLabel: level,
+      artwork: { src: undefined, srcSet: undefined, sizes: undefined },
+      nationBackdrop: undefined,
+      classIconUrl: undefined,
+      classTitleByLocale: undefined,
+      classTooltipKey: undefined,
+      hasPremiumAppearance: false,
+    },
   };
 }
 

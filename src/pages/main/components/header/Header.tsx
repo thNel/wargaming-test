@@ -27,8 +27,7 @@ export function Header() {
               className={styles.brandImage}
               fit="contain"
               h={32}
-              loading="lazy"
-              src="/images/logo-wows-long-raster.webp"
+              src="/images/logo-wows-2x.png"
             />
           </a>
 

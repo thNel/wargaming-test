@@ -1,0 +1,55 @@
+import classNames from "classnames";
+import { useTranslation } from "react-i18next";
+
+import { Selector } from "@/shared/components/Selector/Selector";
+
+import { CATALOG_SORT_OPTIONS } from "../catalog.constants";
+import type { CatalogSortControlProps } from "./CatalogSortControl.types";
+import styles from "./CatalogSortControl.module.css";
+
+export function CatalogSortControl({
+  onSortChange,
+  sortDirection,
+  sortMode,
+}: CatalogSortControlProps) {
+  const { t } = useTranslation("catalog");
+
+  const options = CATALOG_SORT_OPTIONS.map(({ labelKey, value }) => ({
+    value,
+    label: t(labelKey),
+  }));
+
+  const selectedOption = options.find((option) => option.value === sortMode) ?? options[0];
+  const directionLabel = t(sortDirection);
+
+  return (
+    <div className={styles.sortControl}>
+      <span className={styles.sortLabel}>{t("sortLabel")}:</span>
+      <Selector
+        optionsAriaLabel={t("sortBy")}
+        onSelect={onSortChange}
+        options={options}
+        selectedValue={sortMode}
+      >
+        <summary
+          aria-label={
+            sortMode === "default"
+              ? `${t("sortBy")}: ${selectedOption.label}`
+              : `${t("sortBy")}: ${selectedOption.label}, ${directionLabel}`
+          }
+        >
+          <span>{selectedOption.label}</span>
+          {sortMode !== "default" && (
+            <span
+              aria-hidden="true"
+              className={classNames(
+                styles.directionIcon,
+                sortDirection === "ascending" ? styles.ascending : styles.descending,
+              )}
+            />
+          )}
+        </summary>
+      </Selector>
+    </div>
+  );
+}

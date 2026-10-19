@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/supportedLocales";
+
 import type { CatalogVehicle } from "./catalog.types";
 import { filterCatalogVehicles } from "./filterCatalogVehicles";
 import type { PreparedCatalogFilters } from "../filters/filters.types";
@@ -10,6 +12,15 @@ const defaultFilters: PreparedCatalogFilters = {
   classes: [],
   tiers: [],
 };
+
+function createNameByLocale(
+  localizedNames: CatalogVehicle["locales"]["name"],
+  fallback: string,
+): Readonly<Record<SupportedLocale, string>> {
+  return Object.fromEntries(
+    SUPPORTED_LOCALES.map((locale) => [locale, localizedNames[locale] ?? fallback]),
+  ) as Record<SupportedLocale, string>;
+}
 
 function createVehicle({
   id,
@@ -28,12 +39,14 @@ function createVehicle({
   tags?: string[];
   locales?: CatalogVehicle["locales"];
 }): CatalogVehicle {
+  const normalizedLocales = locales ?? { name: { en: name }, shortName: {}, description: {} };
+
   return {
     id,
     name: id,
     level,
     tags,
-    locales: locales ?? { name: { en: name }, shortName: {}, description: {} },
+    locales: normalizedLocales,
     nation: {
       name: nation,
       id: 1,
@@ -49,6 +62,16 @@ function createVehicle({
       icons: {},
     },
     icons: {},
+    card: {
+      nameByLocale: createNameByLocale(normalizedLocales.name, id),
+      tierLabel: level,
+      artwork: { src: undefined, srcSet: undefined, sizes: undefined },
+      nationBackdrop: undefined,
+      classIconUrl: undefined,
+      classTitleByLocale: createNameByLocale({ en: classKey }, classKey),
+      classTooltipKey: "vehicleClass",
+      hasPremiumAppearance: tags.includes("uiPremium") || tags.includes("uiSpecial"),
+    },
   };
 }
 

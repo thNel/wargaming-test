@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { mediaApi } from "@/services/mediaApi";
-import { nationsApi } from "@/services/nationsApi";
-import { vehicleTypesApi } from "../services/vehicleTypesApi.ts";
-import { vehiclesApi } from "../services/vehiclesApi.ts";
+import { vortexApi } from "@/services/vortexApi";
 import { catalogReducer } from "./catalog/catalogSlice";
 import { filtersReducer } from "./filters/filtersSlice";
 
@@ -13,18 +10,9 @@ export function createAppStore() {
     reducer: {
       catalog: catalogReducer,
       filters: filtersReducer,
-      [vehiclesApi.reducerPath]: vehiclesApi.reducer,
-      [nationsApi.reducerPath]: nationsApi.reducer,
-      [vehicleTypesApi.reducerPath]: vehicleTypesApi.reducer,
-      [mediaApi.reducerPath]: mediaApi.reducer,
+      [vortexApi.reducerPath]: vortexApi.reducer,
     },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(
-        vehiclesApi.middleware,
-        nationsApi.middleware,
-        vehicleTypesApi.middleware,
-        mediaApi.middleware,
-      ),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(vortexApi.middleware),
   });
 }
 

@@ -48,6 +48,10 @@ export const selectCatalogStatus = createSelector(
     (state: RootState) => selectMediaPathResult(state).data,
   ],
   (status, vehicles, nations, vehicleTypes, mediaPath): CatalogStatus => {
+    if (status === "succeeded" && !vehicles) {
+      return "idle";
+    }
+
     const hasAllReferenceData = nations && vehicleTypes && mediaPath;
     const hasLoadedVehicles = status === "succeeded" || (status === "failed" && vehicles);
 

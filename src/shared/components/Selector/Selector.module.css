@@ -1,0 +1,84 @@
+.root {
+  position: relative;
+  width: fit-content;
+  color: #d8e2e8;
+}
+
+.root > summary {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 4px 8px;
+  border: 1px solid rgb(161 196 212 / 22%);
+  border-radius: 2px;
+  color: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.root > summary::before {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  transform: translateY(-2px) rotate(45deg);
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  content: "";
+  transition: transform 140ms ease;
+}
+
+.root[open] > summary::before {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.root > summary::-webkit-details-marker {
+  display: none;
+}
+
+.root > summary:focus-visible,
+.option:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.options {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 4px);
+  right: 0;
+  display: grid;
+  min-width: 100%;
+  padding-block: 2px;
+  border: 1px solid rgb(152 183 198 / 42%);
+  box-shadow:
+    0 12px 28px rgb(0 0 0 / 32%),
+    inset 0 1px 0 rgb(202 224 235 / 7%);
+}
+
+.option {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 14px;
+  border: 0;
+  color: #c4d1d9;
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.option:hover,
+.option[aria-pressed="true"] {
+  color: #e5edf2;
+  background: rgb(133 171 190 / 12%);
+}

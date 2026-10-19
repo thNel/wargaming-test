@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,9 +15,14 @@ import styles from "./Filters.module.css";
 export function Filters() {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
+  const [hasPendingSearch, setHasPendingSearch] = useState(false);
+  const [searchResetVersion, setSearchResetVersion] = useState(0);
   const hasActiveFilters = useSelector(selectHasActiveCatalogFilters);
+
   function handleReset(): void {
     dispatch(resetCatalogFilters());
+    setHasPendingSearch(false);
+    setSearchResetVersion((currentVersion) => currentVersion + 1);
   }
 
   return (
@@ -27,7 +33,7 @@ export function Filters() {
         </h2>
         <button
           className={styles.resetButton}
-          disabled={!hasActiveFilters}
+          disabled={!hasActiveFilters && !hasPendingSearch}
           onClick={handleReset}
           type="button"
         >
@@ -35,7 +41,7 @@ export function Filters() {
         </button>
       </div>
 
-      <SearchFilter />
+      <SearchFilter onPendingChange={setHasPendingSearch} resetVersion={searchResetVersion} />
 
       <div className={styles.filterGroups}>
         <VehicleTypeFilterGroup />

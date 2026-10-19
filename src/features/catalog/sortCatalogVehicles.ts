@@ -16,16 +16,20 @@ export function sortCatalogVehicles(
   }
 
   const multiplier = direction === "descending" ? -1 : 1;
+  const nameCollator =
+    mode === "name"
+      ? new Intl.Collator(getLanguageTag(locale), { sensitivity: "base" })
+      : undefined;
 
   return [...vehicles].sort((first, second) => {
     let comparison = first.level - second.level;
 
     if (mode === "name") {
-      comparison = getCatalogVehicleName(first, locale).localeCompare(
-        getCatalogVehicleName(second, locale),
-        getLanguageTag(locale),
-        { sensitivity: "base" },
-      );
+      comparison =
+        nameCollator?.compare(
+          getCatalogVehicleName(first, locale),
+          getCatalogVehicleName(second, locale),
+        ) ?? 0;
     }
 
     return comparison * multiplier || first.id.localeCompare(second.id);

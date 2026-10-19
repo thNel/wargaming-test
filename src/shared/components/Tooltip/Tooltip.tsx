@@ -16,6 +16,7 @@ import styles from "./Tooltip.module.css";
 export function Tooltip({
   accessibleName,
   children,
+  focusable = true,
   focusWithinParent = false,
   tooltip,
 }: TooltipProps) {
@@ -24,23 +25,28 @@ export function Tooltip({
   const tooltipId = useId();
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const isOpen = Boolean(tooltip) && (isHovered || isFocused);
+  const [isDismissed, setIsDismissed] = useState(false);
+  const isOpen = Boolean(tooltip) && !isDismissed && (isHovered || isFocused);
   function handleBlur(): void {
     setIsFocused(false);
+    setIsDismissed(false);
   }
 
   function handleFocus(event: ReactFocusEvent<HTMLDivElement>): void {
+    setIsDismissed(false);
     setIsFocused(event.currentTarget.matches(":focus-visible"));
   }
 
   function handlePointerEnter(event: ReactPointerEvent<HTMLDivElement>): void {
     if (event.pointerType !== "touch") {
+      setIsDismissed(false);
       setIsHovered(true);
     }
   }
 
   function handlePointerLeave(event: ReactPointerEvent<HTMLDivElement>): void {
     if (event.pointerType !== "touch") {
+      setIsDismissed(false);
       setIsHovered(false);
     }
   }
@@ -56,11 +62,13 @@ export function Tooltip({
     }
 
     const handleFocusIn = (event: FocusEvent) => {
+      setIsDismissed(false);
       setIsFocused(event.target instanceof HTMLElement && event.target.matches(":focus-visible"));
     };
     const handleFocusOut = (event: FocusEvent) => {
       if (!parent.contains(event.relatedTarget as Node | null)) {
         setIsFocused(false);
+        setIsDismissed(false);
       }
     };
 
@@ -72,6 +80,32 @@ export function Tooltip({
       parent.removeEventListener("focusout", handleFocusOut);
     };
   }, [focusWithinParent]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const eventTarget = focusWithinParent ? scopeRef.current?.parentElement : scopeRef.current;
+
+    if (!eventTarget) {
+      return;
+    }
+
+    function handleEscape(event: KeyboardEvent): void {
+      if (event.key !== "Escape") {
+        return;
+      }
+
+      setIsHovered(false);
+      setIsFocused(false);
+      setIsDismissed(true);
+    }
+
+    eventTarget.addEventListener("keydown", handleEscape);
+
+    return () => eventTarget.removeEventListener("keydown", handleEscape);
+  }, [focusWithinParent, isOpen]);
 
   useLayoutEffect(() => {
     const tooltipElement = tooltipRef.current;
@@ -99,7 +133,7 @@ export function Tooltip({
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
         role={accessibleName ? "img" : undefined}
-        tabIndex={accessibleName ? 0 : undefined}
+        tabIndex={accessibleName && focusable ? 0 : undefined}
       >
         {children}
       </div>

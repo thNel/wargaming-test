@@ -2,6 +2,8 @@ import { defineConstants } from "@/shared/constants/defineConstants";
 import type { NationKey, VehicleTypeKey } from "@/shared/constants/catalogFilters.constants";
 import type en from "./locales/en/filters.json";
 
+export const FILTER_SEARCH_DEBOUNCE_MS = 750;
+
 export const NATION_FALLBACK_LABELS: Readonly<Record<NationKey, string>> = defineConstants({
   ussr: "USSR",
   japan: "Japan",

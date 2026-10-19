@@ -138,6 +138,61 @@ describe("Filters", () => {
     },
   );
 
+  it.each(FILTER_GROUPS)(
+    "announces loading while retrying $name after its first request fails",
+    async ({ endpoint, name }) => {
+      const user = userEvent.setup();
+      let endpointRequests = 0;
+      let releaseRetry: ((response: Response) => void) | undefined;
+      const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+        const requestUrl = input instanceof Request ? input.url : String(input);
+        const requestedEndpoint = new URL(requestUrl, window.location.origin).pathname
+          .split("/")
+          .filter(Boolean)
+          .at(-1);
+
+        if (!requestedEndpoint || !(requestedEndpoint in API_RESPONSES)) {
+          throw new Error(`Unexpected filter request: ${requestUrl}`);
+        }
+
+        if (requestedEndpoint === endpoint) {
+          endpointRequests += 1;
+
+          if (endpointRequests === 1) {
+            return new Response(JSON.stringify({ status: "error" }), { status: 503 });
+          }
+
+          return await new Promise<Response>((resolve) => {
+            releaseRetry = resolve;
+          });
+        }
+
+        return Response.json(API_RESPONSES[requestedEndpoint]);
+      });
+
+      vi.stubGlobal("fetch", fetchMock);
+      renderFilters();
+
+      const group = screen.getByRole("group", { name });
+
+      await within(group).findByRole("alert");
+      await user.click(within(group).getByRole("button", { name: "Retry" }));
+
+      await waitFor(() => expect(endpointRequests).toBe(2));
+      expect(await within(group).findByRole("status")).toHaveTextContent("Loading options…");
+      expect(group).toHaveAttribute("aria-busy", "true");
+      expect(within(group).queryByRole("alert")).not.toBeInTheDocument();
+      expect(within(group).queryByRole("button", { name: "Retry" })).not.toBeInTheDocument();
+
+      await act(async () => {
+        releaseRetry?.(Response.json(API_RESPONSES[endpoint]));
+      });
+
+      await waitFor(() => expect(group).not.toHaveAttribute("aria-busy"));
+      expect(within(group).queryByRole("status")).not.toBeInTheDocument();
+    },
+  );
+
   it("keeps both groups usable when media fails and retries the shared request once", async () => {
     const user = userEvent.setup();
     const failedEndpoints = new Set(["media_path"]);
@@ -264,6 +319,7 @@ describe("Filters", () => {
     await user.click(vehicleType);
     await user.click(tier);
 
+    await waitFor(() => expect(store.getState().filters.searchTerm).toBe("Yamato"));
     expect(store.getState().filters).toMatchObject({
       nations: { usa: true },
       classes: { Cruiser: true },

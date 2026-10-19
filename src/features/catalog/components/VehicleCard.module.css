@@ -75,10 +75,10 @@
   z-index: 2;
   top: 12px;
   left: 12px;
-  right: 12px;
+  right: auto;
   display: flex;
-  width: auto;
-  max-width: none;
+  width: max-content;
+  max-width: calc(100% - 24px);
   min-width: 0;
   align-items: center;
   padding: 4px;
@@ -110,14 +110,6 @@
   white-space: nowrap;
 }
 
-.nameMeasure {
-  position: absolute;
-  width: max-content;
-  visibility: hidden;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
 .namePremium {
   color: #e3c477;
 }
@@ -147,7 +139,8 @@
   .vehicleHeading {
     top: 9px;
     left: 9px;
-    right: 9px;
+    right: auto;
     height: 28px;
+    max-width: calc(100% - 18px);
   }
 }

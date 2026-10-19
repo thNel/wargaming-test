@@ -1,21 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createVortexApi } from "./createVortexApi";
+import { mediaApi } from "./mediaApi";
+import { vortexApi } from "./vortexApi";
 import type { VortexResponseDto } from "./vortex-response.dto";
 
-const api = createVortexApi("vortexTestApi").injectEndpoints({
-  endpoints: (build) => ({
-    getMediaPath: build.query<VortexResponseDto<string>, void>({
-      query: () => "media_path/",
-    }),
-  }),
-});
+const api = mediaApi;
 
 function createTestStore() {
   return configureStore({
-    reducer: { [api.reducerPath]: api.reducer },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
+    reducer: { [vortexApi.reducerPath]: vortexApi.reducer },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(vortexApi.middleware),
   });
 }
 
@@ -26,13 +21,13 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  store.dispatch(api.util.resetApiState());
+  store.dispatch(vortexApi.util.resetApiState());
   vi.unstubAllGlobals();
 });
 
-describe("createVortexApi", () => {
+describe("vortexApi", () => {
   it("keeps a successful envelope in the query cache", async () => {
-    const response = { status: "ok", data: "/icons/" };
+    const response: VortexResponseDto<string> = { status: "ok", data: "/icons/" };
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => Response.json(response)),
@@ -73,7 +68,7 @@ describe("createVortexApi", () => {
   });
 
   it("requests data again after an unsuccessful envelope", async () => {
-    const response = { status: "ok", data: "/icons/" };
+    const response: VortexResponseDto<string> = { status: "ok", data: "/icons/" };
     const fetchMock = vi
       .fn()
       .mockResolvedValueOnce(Response.json({ status: "error", data: null }))

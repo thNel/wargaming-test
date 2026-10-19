@@ -6,7 +6,7 @@ export default defineConfig({
   workers: 2,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:4173",
+    baseURL: "http://127.0.0.1:4173",
     locale: "en-US",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
@@ -18,8 +18,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run dev:mock -- --host localhost --port 4173 --strictPort",
-    url: "http://localhost:4173",
+    command: "npm run dev:mock -- --host 127.0.0.1 --port 4173 --strictPort",
+    url: "http://127.0.0.1:4173",
     reuseExistingServer: !process.env.CI,
   },
 });

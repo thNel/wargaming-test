@@ -10,9 +10,10 @@ describe("normalizeCatalogVehicles", () => {
           level: 10,
           name: "JPNB110_Yamato",
           nation: "japan",
-          tags: ["Battleship", "special"],
+          tags: ["Battleship", "uiSpecial"],
           icons: {
             small: "vehicle/small/yamato.png",
+            medium: "vehicle/medium/yamato.png",
             large: "vehicle/large/yamato.png",
             local_small: "gui/ship_previews/yamato.png",
           },
@@ -31,6 +32,7 @@ describe("normalizeCatalogVehicles", () => {
           tags: ["inTree"],
           icons: {
             small: "nation_flags/small/japan.png",
+            large: "nation_flags/large/japan.png",
             local_small: "gui/nation_flags/small/japan.png",
           },
           localization: { mark: { en: "Japan", ru: "Япония" } },
@@ -41,6 +43,7 @@ describe("normalizeCatalogVehicles", () => {
           sort_order: 4,
           icons: {
             default: "vehicle/types/Battleship/standard.png",
+            normal: "vehicle/types/Battleship/normal.png",
             special: "vehicle/types/Battleship/special.png",
           },
           localization: {
@@ -58,7 +61,7 @@ describe("normalizeCatalogVehicles", () => {
       id: "vehicle-1",
       level: 10,
       name: "JPNB110_Yamato",
-      tags: ["special"],
+      tags: ["uiSpecial"],
       locales: {
         name: { en: "Yamato", ru: "Ямато" },
         shortName: { en: "Yamato", ru: "Ямато" },
@@ -85,7 +88,28 @@ describe("normalizeCatalogVehicles", () => {
       },
       icons: {
         small: "https://cdn.example.test/icons/vehicle/small/yamato.png",
+        medium: "https://cdn.example.test/icons/vehicle/medium/yamato.png",
         large: "https://cdn.example.test/icons/vehicle/large/yamato.png",
+      },
+      card: {
+        nameByLocale: { en: "Yamato", ru: "Ямато", de: "JPNB110_Yamato" },
+        tierLabel: "X",
+        artwork: {
+          src: "https://cdn.example.test/icons/vehicle/medium/yamato.png",
+          srcSet:
+            "https://cdn.example.test/icons/vehicle/medium/yamato.png 435w, https://cdn.example.test/icons/vehicle/large/yamato.png 870w",
+          sizes: "auto, (max-width: 700px) 50vw, 25vw",
+        },
+        nationBackdrop: {
+          src: "https://cdn.example.test/icons/nation_flags/large/japan.png",
+          srcSet:
+            "https://cdn.example.test/icons/nation_flags/small/japan.png 117w, https://cdn.example.test/icons/nation_flags/large/japan.png 694w",
+          sizes: "auto, (max-width: 700px) 50vw, 25vw",
+        },
+        classIconUrl: "https://cdn.example.test/icons/vehicle/types/Battleship/special.png",
+        classTitleByLocale: { en: "Battleship", ru: "Линкор" },
+        classTooltipKey: "specialVehicleClass",
+        hasPremiumAppearance: true,
       },
     });
 
@@ -98,6 +122,9 @@ describe("normalizeCatalogVehicles", () => {
     expect(Object.isFrozen(vehicle)).toBe(true);
     expect(Object.isFrozen(vehicle?.nation)).toBe(true);
     expect(Object.isFrozen(vehicle?.class)).toBe(true);
+    expect(Object.isFrozen(vehicle?.card)).toBe(true);
+    expect(Object.isFrozen(vehicle?.card.artwork)).toBe(true);
+    expect(Object.isFrozen(vehicle?.card.nameByLocale)).toBe(true);
   });
 
   it("preserves available language dictionaries and missing reference data", () => {
@@ -136,6 +163,55 @@ describe("normalizeCatalogVehicles", () => {
     });
     expect(vehicle?.class?.locales.name).toEqual({ en: "Cruiser" });
     expect(vehicle?.nation).toBeNull();
+    expect(vehicle?.card.nameByLocale.ru).toBe("USSB003_InternalName");
+    expect(vehicle?.card.classTitleByLocale?.ru).toBe("Cruiser");
+  });
+
+  it("prepares class icon variants and tooltip keys from vehicle tags", () => {
+    const vehicles = normalizeCatalogVehicles({
+      vehicles: {
+        premium: {
+          level: 10,
+          name: "Premium submarine",
+          nation: "submarine-nation",
+          tags: ["Submarine", "uiSpecial", "uiPremium"],
+          icons: {},
+          localization: { mark: {}, shortmark: {}, description: {} },
+        },
+        special: {
+          level: 10,
+          name: "Special submarine",
+          nation: "submarine-nation",
+          tags: ["Submarine", "uiSpecial"],
+          icons: {},
+          localization: { mark: {}, shortmark: {}, description: {} },
+        },
+      },
+      nations: [],
+      vehicleTypes: {
+        Submarine: {
+          sort_order: 5,
+          icons: {
+            normal: "vehicle/types/Submarine/normal.png",
+            special: "vehicle/types/Submarine/special.png",
+            premium: "vehicle/types/Submarine/premium.png",
+          },
+          localization: { mark: { en: "Submarine" }, shortmark: {} },
+        },
+      },
+      mediaPath: "/icons",
+    });
+
+    expect(vehicles[0]?.card).toMatchObject({
+      classIconUrl: "/icons/vehicle/types/Submarine/premium.png",
+      classTooltipKey: "premiumVehicleClass",
+      hasPremiumAppearance: true,
+    });
+    expect(vehicles[1]?.card).toMatchObject({
+      classIconUrl: "/icons/vehicle/types/Submarine/special.png",
+      classTooltipKey: "specialSubmarineClass",
+      hasPremiumAppearance: true,
+    });
   });
 
   it("keeps vehicles whose nation or class reference is unavailable", () => {
@@ -161,6 +237,12 @@ describe("normalizeCatalogVehicles", () => {
       nation: null,
       class: null,
       icons: { small: "/icons/vehicle/small/unknown.png" },
+      card: {
+        classIconUrl: undefined,
+        classTitleByLocale: undefined,
+        classTooltipKey: undefined,
+        hasPremiumAppearance: false,
+      },
     });
   });
 

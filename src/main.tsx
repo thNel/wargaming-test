@@ -4,9 +4,12 @@ import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
 
 import { store } from "./store";
+import { startApiPolling } from "./store/apiPolling";
 import { Main } from "./pages/main/Main";
 import { i18nInstance } from "./shared/i18n";
 import "./index.css";
+
+startApiPolling(store.dispatch);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

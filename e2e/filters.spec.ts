@@ -68,6 +68,20 @@ test("filter tooltips are anchored to their icons, not their checkboxes", async 
   await expect(tooltip).toBeVisible();
 });
 
+test("Escape dismisses a focused tooltip without moving focus", async ({ page }) => {
+  await page.goto("/");
+
+  const checkbox = page.getByRole("checkbox", { name: "Japan" });
+  const tooltip = page.getByRole("tooltip");
+
+  await checkbox.focus();
+  await expect(tooltip).toBeVisible();
+  await page.keyboard.press("Escape");
+
+  await expect(tooltip).toBeHidden();
+  await expect(checkbox).toBeFocused();
+});
+
 test("a failed nation request can be retried without reloading the page", async ({ page }) => {
   let shouldFail = true;
 

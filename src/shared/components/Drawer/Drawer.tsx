@@ -46,11 +46,24 @@ export function Drawer({
       return;
     }
 
+    const rootElement = document.documentElement;
+    const previousOverflow = rootElement.style.overflow;
+
+    if (open) {
+      rootElement.style.overflow = "hidden";
+    }
+
     if (open && !dialog.open) {
       dialog.showModal();
     } else if (!open && dialog.open) {
       dialog.close();
     }
+
+    return () => {
+      if (open) {
+        rootElement.style.overflow = previousOverflow;
+      }
+    };
   }, [open]);
 
   // The native dialog's backdrop click is the equivalent of a dismiss control; Escape remains available through onCancel.

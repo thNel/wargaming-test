@@ -1,14 +1,18 @@
+import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Skeleton } from "@/shared/components/Skeleton/Skeleton";
 
 import { CATALOG_SKELETON_COUNT } from "../catalog.constants";
+import { useVirtualizedCatalogRows } from "../hooks/useVirtualizedCatalogRows";
 import { VehicleCard } from "./VehicleCard";
 import type { CatalogContentProps } from "./CatalogContent.types";
 import styles from "./CatalogContent.module.css";
 
 export function CatalogContent({ locale, onRetry, status, vehicles }: CatalogContentProps) {
   const { t } = useTranslation("catalog");
+  const { columnCount, listElementRef, measureRef, paddingBottom, paddingTop, rows } =
+    useVirtualizedCatalogRows(vehicles.length);
 
   if (status === "idle" || status === "loading") {
     return (
@@ -46,9 +50,34 @@ export function CatalogContent({ locale, onRetry, status, vehicles }: CatalogCon
   }
 
   return (
-    <ul aria-label={t("vehicleListLabel")} className={styles.grid}>
-      {vehicles.map((vehicle) => (
-        <VehicleCard key={vehicle.id} locale={locale} vehicle={vehicle} />
+    <ul
+      aria-label={t("vehicleListLabel")}
+      className={styles.grid}
+      ref={listElementRef}
+      style={{
+        gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
+        paddingBlockEnd: paddingBottom,
+        paddingBlockStart: paddingTop,
+      }}
+    >
+      {rows.map(({ endIndex, index, spacerBefore, startIndex }) => (
+        <Fragment key={index}>
+          {spacerBefore > 0 && (
+            <li
+              aria-hidden="true"
+              className={styles.virtualSpacer}
+              style={{ height: spacerBefore }}
+            />
+          )}
+          {vehicles.slice(startIndex, endIndex).map((vehicle, columnIndex) => (
+            <VehicleCard
+              key={vehicle.id}
+              locale={locale}
+              measureRef={startIndex + columnIndex === rows[0]?.startIndex ? measureRef : undefined}
+              vehicle={vehicle}
+            />
+          ))}
+        </Fragment>
       ))}
     </ul>
   );

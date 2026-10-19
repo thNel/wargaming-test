@@ -24,16 +24,28 @@ export function VehicleTypeFilterGroup() {
   const selectedVehicleTypes = useSelector((state: RootState) => state.filters.classes);
   const {
     data: vehicleTypesResponse,
-    isFetching: isVehicleTypesLoading,
+    isInitialLoading: isVehicleTypesLoading,
     isError: hasVehicleTypesError,
     refetch: refetchVehicleTypes,
-  } = vehicleTypesApi.useGetVehicleTypesQuery();
+  } = vehicleTypesApi.useGetVehicleTypesQuery(undefined, {
+    selectFromResult: ({ data, isFetching, isError }) => ({
+      data,
+      isInitialLoading: isFetching && data === undefined,
+      isError,
+    }),
+  });
   const {
     data: mediaPathResponse,
-    isFetching: isMediaLoading,
+    isInitialLoading: isMediaLoading,
     isError: hasMediaError,
     refetch: refetchMediaPath,
-  } = mediaApi.useGetMediaPathQuery();
+  } = mediaApi.useGetMediaPathQuery(undefined, {
+    selectFromResult: ({ data, isFetching, isError }) => ({
+      data,
+      isInitialLoading: isFetching && data === undefined,
+      isError,
+    }),
+  });
   const isLoading = isVehicleTypesLoading || isMediaLoading;
   const hasError = hasVehicleTypesError || hasMediaError;
   const vehicleTypes = vehicleTypesResponse?.data;
