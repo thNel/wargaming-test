@@ -28,6 +28,7 @@
   height: 100%;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   margin-inline: auto;
   padding-inline: var(--content-inset, clamp(16px, 1.2vw, 24px));
 }
@@ -79,8 +80,14 @@
     height: 48px;
   }
 
+  .inner {
+    width: 100%;
+  }
+}
+
+@media (max-width: 399px) {
   .brand {
-    width: 100px;
+    width: 32px;
   }
 }
 

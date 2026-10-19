@@ -8,7 +8,19 @@ import styles from "./Image.module.css";
 
 const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
   (
-    { alt, className, fit = "cover", h, isLoading, onError, onLoad, src, w, ...imageProps },
+    {
+      alt,
+      className,
+      fit = "cover",
+      h,
+      isLoading,
+      onError,
+      onLoad,
+      sources,
+      src,
+      w,
+      ...imageProps
+    },
     ref,
   ) => {
     const [loadState, setLoadState] = useState<ImageLoadState>({ source: src, status: "loading" });
@@ -49,16 +61,21 @@ const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
 
     return (
       <div aria-busy={showSkeleton || undefined} className={wrapperClassName} style={wrapperStyle}>
-        <img
-          {...imageProps}
-          ref={ref}
-          alt={alt ?? ""}
-          className={styles.imageContent}
-          data-fit={fit}
-          onError={handleError}
-          onLoad={handleLoad}
-          src={src || undefined}
-        />
+        <picture className={styles.picture}>
+          {sources?.map((source) => (
+            <source key={`${source.media ?? ""}-${source.type ?? ""}`} {...source} />
+          ))}
+          <img
+            {...imageProps}
+            ref={ref}
+            alt={alt ?? ""}
+            className={styles.imageContent}
+            data-fit={fit}
+            onError={handleError}
+            onLoad={handleLoad}
+            src={src || undefined}
+          />
+        </picture>
         {showSkeleton && <Skeleton className={styles.skeleton} h="100%" />}
       </div>
     );

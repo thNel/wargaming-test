@@ -27,10 +27,15 @@ test("failed logo keeps its desktop and mobile dimensions", async ({ page }) => 
   await expect(logo).toHaveCSS("height", "32px");
   await expect(logo).toHaveCSS("width", "274px");
 
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 400, height: 844 });
 
   await expect(logo).toHaveCSS("height", "32px");
-  await expect(logo).toHaveCSS("width", "100px");
+  await expect(logo).toHaveCSS("width", "274px");
+
+  await page.setViewportSize({ width: 399, height: 844 });
+
+  await expect(logo).toHaveCSS("height", "32px");
+  await expect(logo).toHaveCSS("width", "32px");
 });
 
 test("loaded logo keeps its desktop and mobile dimensions", async ({ page }) => {
@@ -45,8 +50,16 @@ test("loaded logo keeps its desktop and mobile dimensions", async ({ page }) => 
   await expect(logo).toHaveCSS("height", "32px");
   await expect(logo).toHaveCSS("width", "274px");
 
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 400, height: 844 });
 
   await expect(logo).toHaveCSS("height", "32px");
-  await expect(logo).toHaveCSS("width", "100px");
+  await expect(logo).toHaveCSS("width", "274px");
+
+  await page.setViewportSize({ width: 399, height: 844 });
+
+  await expect(logo).toHaveCSS("height", "32px");
+  await expect(logo).toHaveCSS("width", "32px");
+  await expect
+    .poll(() => logo.evaluate((image) => (image as { currentSrc: string }).currentSrc))
+    .toContain("short-logo.png");
 });

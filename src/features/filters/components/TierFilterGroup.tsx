@@ -11,12 +11,30 @@ import type { Tier } from "@/store/filters/filters.types";
 import { FilterGroup } from "./FilterGroup";
 import styles from "./TierFilterGroup.module.css";
 
-export function TierFilterGroup() {
+interface TierFilterGroupProps {
+  idPrefix?: string;
+  selectedTiers?: RootState["filters"]["tiers"];
+  onSelectionChange?: (key: Tier) => void;
+}
+
+export function TierFilterGroup({
+  idPrefix = "",
+  onSelectionChange,
+  selectedTiers: draftTiers,
+}: TierFilterGroupProps) {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
-  const selectedTiers = useSelector((state: RootState) => state.filters.tiers);
+  const appliedTiers = useSelector((state: RootState) => state.filters.tiers);
+  const selectedTiers = draftTiers ?? appliedTiers;
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    dispatch(toggleCatalogTier(Number(event.currentTarget.value) as Tier));
+    const key = Number(event.currentTarget.value) as Tier;
+
+    if (onSelectionChange) {
+      onSelectionChange(key);
+      return;
+    }
+
+    dispatch(toggleCatalogTier(key));
   }
 
   return (
@@ -24,7 +42,7 @@ export function TierFilterGroup() {
       <div className={styles.tierOptions}>
         {TIERS.map((tier) => {
           const label = TIER_LABELS[tier];
-          const inputId = `filter-tier-${tier}`;
+          const inputId = `${idPrefix}filter-tier-${tier}`;
 
           return (
             <label className={styles.tierOption} htmlFor={inputId} key={tier}>

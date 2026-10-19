@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactElement, ReactNode } from "react";
+import type { GlassSurfaceMode } from "@/shared/components/GlassSurface/GlassSurface.types";
 
 export interface SelectorOption<Value extends string> {
   value: Value;
@@ -8,6 +9,7 @@ export interface SelectorOption<Value extends string> {
 export interface SelectorProps<Value extends string> {
   children: ReactElement<HTMLAttributes<HTMLElement>>;
   className?: string;
+  optionsMode?: GlassSurfaceMode;
   onSelect: (value: Value) => void;
   options: readonly SelectorOption<Value>[];
   optionsAriaLabel: string;

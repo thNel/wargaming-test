@@ -27,6 +27,8 @@ export function Header() {
               className={styles.brandImage}
               fit="contain"
               h={32}
+              w="100%"
+              sources={[{ media: "(max-width: 399px)", srcSet: "/images/short-logo.png" }]}
               src="/images/logo-wows-2x.png"
             />
           </a>

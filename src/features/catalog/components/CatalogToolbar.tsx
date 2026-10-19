@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { GlassSurface } from "@/shared/components/GlassSurface/GlassSurface";
+import { MobileFilters } from "@/features/filters/MobileFilters";
 
 import { CatalogSortControl } from "./CatalogSortControl";
 import type { CatalogToolbarProps } from "./CatalogToolbar.types";
@@ -22,11 +23,14 @@ export function CatalogToolbar({
         </p>
       )}
 
-      <CatalogSortControl
-        onSortChange={onSortChange}
-        sortDirection={sortDirection}
-        sortMode={sortMode}
-      />
+      <div className={styles.controls}>
+        <MobileFilters />
+        <CatalogSortControl
+          onSortChange={onSortChange}
+          sortDirection={sortDirection}
+          sortMode={sortMode}
+        />
+      </div>
     </GlassSurface>
   );
 }

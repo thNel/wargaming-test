@@ -12,6 +12,12 @@
   box-shadow: 0 8px 20px rgb(1 12 20 / 16%);
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .count {
   margin: 0;
   color: #c8d6de;
@@ -31,14 +37,18 @@
 @media (max-width: 700px) {
   .root {
     top: 48px;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
     margin: -14px -14px 12px;
     padding: 10px 14px;
   }
 
   .count {
-    align-self: flex-start;
+    display: none;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: space-between;
   }
 }

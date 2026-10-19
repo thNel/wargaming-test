@@ -1,6 +1,7 @@
 {
   "title": "Filters",
   "reset": "Reset",
+  "apply": "Apply",
   "search": "Search vehicles",
   "nations": "Nations",
   "classes": "Vehicle type",

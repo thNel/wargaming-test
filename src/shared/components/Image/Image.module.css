@@ -16,6 +16,12 @@
   height: 100%;
 }
 
+.picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
 .imageContent[data-fit="contain"] {
   object-fit: contain;
 }

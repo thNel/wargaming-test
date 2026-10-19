@@ -18,12 +18,16 @@ function createSelectionMap<Key extends string | number>(
   return Object.fromEntries(keys.map((key) => [key, false])) as Record<Key, boolean>;
 }
 
-const initialState: CatalogFiltersState = {
-  searchTerm: "",
-  nations: createSelectionMap(NATION_KEYS),
-  classes: createSelectionMap(VEHICLE_TYPE_KEYS),
-  tiers: createSelectionMap(TIERS),
-};
+export function createInitialCatalogFilters(): CatalogFiltersState {
+  return {
+    searchTerm: "",
+    nations: createSelectionMap(NATION_KEYS),
+    classes: createSelectionMap(VEHICLE_TYPE_KEYS),
+    tiers: createSelectionMap(TIERS),
+  };
+}
+
+const initialState = createInitialCatalogFilters();
 
 const filtersSlice = createSlice({
   name: "filters",
@@ -31,6 +35,9 @@ const filtersSlice = createSlice({
   reducers: {
     setCatalogSearchTerm(state, action: PayloadAction<string>) {
       state.searchTerm = action.payload;
+    },
+    applyCatalogFilters(_state, action: PayloadAction<CatalogFiltersState>) {
+      return action.payload;
     },
     toggleCatalogNation(state, action: PayloadAction<NationKey>) {
       state.nations[action.payload] = !state.nations[action.payload];
@@ -48,6 +55,7 @@ const filtersSlice = createSlice({
 });
 
 export const {
+  applyCatalogFilters,
   resetCatalogFilters,
   setCatalogSearchTerm,
   toggleCatalogClass,

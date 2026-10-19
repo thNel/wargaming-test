@@ -1,6 +1,7 @@
 {
   "title": "Filtros",
   "reset": "Restablecer",
+  "apply": "Aplicar",
   "search": "Buscar vehículos",
   "nations": "Naciones",
   "classes": "Tipo de vehículo",

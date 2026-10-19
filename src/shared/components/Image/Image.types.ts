@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, CSSProperties } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties, SourceHTMLAttributes } from "react";
 
 type NativeImageProps = Omit<
   ComponentPropsWithoutRef<"img">,
@@ -20,6 +20,7 @@ export type ImageProps = NativeImageProps & {
   isLoading?: boolean;
   onError?: ComponentPropsWithoutRef<"img">["onError"];
   onLoad?: ComponentPropsWithoutRef<"img">["onLoad"];
+  sources?: Array<Pick<SourceHTMLAttributes<HTMLSourceElement>, "media" | "srcSet" | "type">>;
   src?: string;
   w?: CSSProperties["width"];
 };

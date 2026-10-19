@@ -12,6 +12,7 @@ export function Selector<Value extends string>({
   onSelect,
   options,
   optionsAriaLabel,
+  optionsMode = "light",
   selectedValue,
 }: SelectorProps<Value>) {
   const rootRef = useRef<HTMLDetailsElement>(null);
@@ -77,7 +78,7 @@ export function Selector<Value extends string>({
       <GlassSurface
         aria-label={optionsAriaLabel}
         className={styles.options}
-        mode="light"
+        mode={optionsMode}
         role="group"
       >
         {options.map((option) => (

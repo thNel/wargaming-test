@@ -19,10 +19,21 @@ import { FilterGroup } from "./FilterGroup";
 import { FilterGroupStatus } from "./FilterGroupStatus";
 import styles from "./NationFilterGroup.module.css";
 
-export function NationFilterGroup() {
+interface NationFilterGroupProps {
+  idPrefix?: string;
+  selectedNations?: RootState["filters"]["nations"];
+  onSelectionChange?: (key: NationKey) => void;
+}
+
+export function NationFilterGroup({
+  idPrefix = "",
+  onSelectionChange,
+  selectedNations: draftNations,
+}: NationFilterGroupProps) {
   const { i18n, t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
-  const selectedNations = useSelector((state: RootState) => state.filters.nations);
+  const appliedNations = useSelector((state: RootState) => state.filters.nations);
+  const selectedNations = draftNations ?? appliedNations;
   const {
     data: nationsResponse,
     isInitialLoading: isNationsLoading,
@@ -62,7 +73,14 @@ export function NationFilterGroup() {
     return { key, label, iconUrl };
   });
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    dispatch(toggleCatalogNation(event.currentTarget.value as NationKey));
+    const key = event.currentTarget.value as NationKey;
+
+    if (onSelectionChange) {
+      onSelectionChange(key);
+      return;
+    }
+
+    dispatch(toggleCatalogNation(key));
   }
 
   function handleRetry(): void {
@@ -87,7 +105,7 @@ export function NationFilterGroup() {
       />
       <div className={styles.nationOptions}>
         {options.map(({ key, label, iconUrl }) => {
-          const inputId = `filter-nation-${key}`;
+          const inputId = `${idPrefix}filter-nation-${key}`;
 
           return (
             <label className={styles.nationOption} htmlFor={inputId} key={key}>

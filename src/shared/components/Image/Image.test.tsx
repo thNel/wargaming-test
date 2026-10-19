@@ -15,13 +15,13 @@ describe("Image", () => {
 
     const image = screen.getByRole("img", { name: "Vehicle" });
 
-    expect(image.parentElement).toHaveAttribute("aria-busy", "true");
+    expect(image.closest("picture")?.parentElement).toHaveAttribute("aria-busy", "true");
     expect(image).toHaveAttribute("loading", "lazy");
     expect(imageRef.current).toBe(image);
 
     fireEvent.load(image);
 
-    expect(image.parentElement).not.toHaveAttribute("aria-busy");
+    expect(image.closest("picture")?.parentElement).not.toHaveAttribute("aria-busy");
     expect(handleLoad).toHaveBeenCalledOnce();
   });
 
@@ -55,11 +55,11 @@ describe("Image", () => {
     const retriedImage = screen.getByRole("img", { name: "Vehicle" });
 
     expect(retriedImage).toHaveAttribute("src", "/first.png");
-    expect(retriedImage.parentElement).toHaveAttribute("aria-busy", "true");
+    expect(retriedImage.closest("picture")?.parentElement).toHaveAttribute("aria-busy", "true");
 
     fireEvent.load(retriedImage);
 
-    expect(retriedImage.parentElement).not.toHaveAttribute("aria-busy");
+    expect(retriedImage.closest("picture")?.parentElement).not.toHaveAttribute("aria-busy");
   });
 
   it("starts a fresh loading state when returning to an earlier source", () => {
@@ -69,10 +69,9 @@ describe("Image", () => {
     rerender(<Image alt="Vehicle" src="/second.png" />);
     rerender(<Image alt="Vehicle" src="/first.png" />);
 
-    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).toHaveAttribute(
-      "aria-busy",
-      "true",
-    );
+    expect(
+      screen.getByRole("img", { name: "Vehicle" }).closest("picture")?.parentElement,
+    ).toHaveAttribute("aria-busy", "true");
   });
 
   it("keeps a decorative fallback hidden from assistive technology", () => {
@@ -87,15 +86,14 @@ describe("Image", () => {
 
     fireEvent.load(screen.getByRole("img", { name: "Vehicle" }));
 
-    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).toHaveAttribute(
-      "aria-busy",
-      "true",
-    );
+    expect(
+      screen.getByRole("img", { name: "Vehicle" }).closest("picture")?.parentElement,
+    ).toHaveAttribute("aria-busy", "true");
 
     rerender(<Image alt="Vehicle" isLoading={false} src="/vehicle.png" />);
 
-    expect(screen.getByRole("img", { name: "Vehicle" }).parentElement).not.toHaveAttribute(
-      "aria-busy",
-    );
+    expect(
+      screen.getByRole("img", { name: "Vehicle" }).closest("picture")?.parentElement,
+    ).not.toHaveAttribute("aria-busy");
   });
 });

@@ -1,0 +1,115 @@
+.root {
+  display: none;
+}
+
+.openButton {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  padding: 8px;
+  place-items: center;
+  border: 1px solid rgb(157 199 218 / 22%);
+  border-radius: 2px;
+  color: #e8eef3;
+  background: linear-gradient(145deg, rgb(20 50 66 / 88%), rgb(8 29 43 / 92%));
+  font: inherit;
+  cursor: pointer;
+}
+
+.openButton svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.openButton:hover {
+  border-color: rgb(115 217 229 / 58%);
+  background: linear-gradient(145deg, rgb(27 68 84 / 92%), rgb(10 36 52 / 96%));
+}
+
+.openButton:focus-visible,
+.resetButton:focus-visible,
+.applyButton:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 3px;
+}
+
+.drawer {
+  width: min(28rem, calc(100vw - 1rem));
+  color: #e8eef3;
+  background: linear-gradient(145deg, rgb(20 50 66 / 82%), rgb(8 29 43 / 82%));
+  -webkit-backdrop-filter: blur(8px) saturate(145%);
+  backdrop-filter: blur(8px) saturate(145%);
+  border-color: rgb(157 199 218 / 22%);
+}
+
+.panel {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.footerActions {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block-start: auto;
+  padding-block: 12px 2px;
+}
+
+.resetButton {
+  min-width: 0;
+  min-height: 48px;
+  padding: 10px;
+  border: 1px solid rgb(157 199 218 / 30%);
+  border-radius: 2px;
+  color: #d5e3e9;
+  background: rgb(17 43 58 / 92%);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.resetButton:hover:not(:disabled) {
+  border-color: rgb(157 199 218 / 55%);
+  background: rgb(26 60 77 / 96%);
+}
+
+.resetButton:disabled {
+  color: #758b98;
+  opacity: 0.7;
+  cursor: default;
+}
+
+.filterGroups {
+  display: flex;
+  flex-direction: column;
+}
+
+.applyButton {
+  width: 100%;
+  min-height: 48px;
+  margin-block-start: 0;
+  padding: 10px 14px;
+  border: 1px solid rgb(115 217 229 / 54%);
+  border-radius: 2px;
+  color: #061521;
+  background: linear-gradient(180deg, #a3e9f1, #69c9d9);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.applyButton:hover {
+  background: linear-gradient(180deg, #c1f3f7, #84d9e7);
+}
+
+@media (max-width: 700px) {
+  .root {
+    display: block;
+  }
+}

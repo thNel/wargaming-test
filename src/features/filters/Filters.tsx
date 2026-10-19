@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 
 import { GlassSurface } from "@/shared/components/GlassSurface/GlassSurface";
 import type { AppDispatch } from "@/store";
-import { resetCatalogFilters, selectHasActiveCatalogFilters } from "@/store/filters/filtersSlice";
+import {
+  resetCatalogFilters,
+  selectHasActiveCatalogFilters,
+  setCatalogSearchTerm,
+} from "@/store/filters/filtersSlice";
 
 import { NationFilterGroup } from "./components/NationFilterGroup";
 import { SearchFilter } from "./components/SearchFilter";
@@ -13,11 +17,24 @@ import { VehicleTypeFilterGroup } from "./components/VehicleTypeFilterGroup";
 import styles from "./Filters.module.css";
 
 export function Filters() {
-  const { t } = useTranslation("filters");
+  const { i18n, t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
   const [hasPendingSearch, setHasPendingSearch] = useState(false);
   const [searchResetVersion, setSearchResetVersion] = useState(0);
   const hasActiveFilters = useSelector(selectHasActiveCatalogFilters);
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const previousLocale = useRef(locale);
+
+  useEffect(() => {
+    if (previousLocale.current === locale) {
+      return;
+    }
+
+    previousLocale.current = locale;
+    dispatch(setCatalogSearchTerm(""));
+    setHasPendingSearch(false);
+    setSearchResetVersion((currentVersion) => currentVersion + 1);
+  }, [dispatch, locale]);
 
   function handleReset(): void {
     dispatch(resetCatalogFilters());

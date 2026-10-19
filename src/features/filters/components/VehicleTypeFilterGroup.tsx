@@ -18,10 +18,21 @@ import { FilterGroup } from "./FilterGroup";
 import { FilterGroupStatus } from "./FilterGroupStatus";
 import styles from "./VehicleTypeFilterGroup.module.css";
 
-export function VehicleTypeFilterGroup() {
+interface VehicleTypeFilterGroupProps {
+  idPrefix?: string;
+  selectedVehicleTypes?: RootState["filters"]["classes"];
+  onSelectionChange?: (key: VehicleTypeKey) => void;
+}
+
+export function VehicleTypeFilterGroup({
+  idPrefix = "",
+  onSelectionChange,
+  selectedVehicleTypes: draftVehicleTypes,
+}: VehicleTypeFilterGroupProps) {
   const { t } = useTranslation("filters");
   const dispatch = useDispatch<AppDispatch>();
-  const selectedVehicleTypes = useSelector((state: RootState) => state.filters.classes);
+  const appliedVehicleTypes = useSelector((state: RootState) => state.filters.classes);
+  const selectedVehicleTypes = draftVehicleTypes ?? appliedVehicleTypes;
   const {
     data: vehicleTypesResponse,
     isInitialLoading: isVehicleTypesLoading,
@@ -57,7 +68,14 @@ export function VehicleTypeFilterGroup() {
     return { key, label, iconUrl };
   });
   function handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    dispatch(toggleCatalogClass(event.currentTarget.value as VehicleTypeKey));
+    const key = event.currentTarget.value as VehicleTypeKey;
+
+    if (onSelectionChange) {
+      onSelectionChange(key);
+      return;
+    }
+
+    dispatch(toggleCatalogClass(key));
   }
 
   function handleRetry(): void {
@@ -82,7 +100,7 @@ export function VehicleTypeFilterGroup() {
       />
       <div className={styles.iconOptions}>
         {options.map(({ key, label, iconUrl }) => {
-          const inputId = `filter-class-${key}`;
+          const inputId = `${idPrefix}filter-class-${key}`;
 
           return (
             <label className={styles.iconOption} htmlFor={inputId} key={key}>
