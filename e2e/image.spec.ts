@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("failed filter images keep the requested icon dimensions", async ({ page }) => {
   await page.route("**/mocks/vortex/images/**", (route) => route.abort());
@@ -45,7 +45,7 @@ test("loaded logo keeps its desktop and mobile dimensions", async ({ page }) => 
 
   await expect(logo).toHaveJSProperty("tagName", "IMG");
   await expect
-    .poll(() => logo.evaluate((image) => (image as { naturalWidth: number }).naturalWidth))
+    .poll(() => logo.evaluate((image) => Number(Reflect.get(image, "naturalWidth"))))
     .toBeGreaterThan(0);
   await expect(logo).toHaveCSS("height", "32px");
   await expect(logo).toHaveCSS("width", "274px");
@@ -60,6 +60,6 @@ test("loaded logo keeps its desktop and mobile dimensions", async ({ page }) => 
   await expect(logo).toHaveCSS("height", "32px");
   await expect(logo).toHaveCSS("width", "32px");
   await expect
-    .poll(() => logo.evaluate((image) => (image as { currentSrc: string }).currentSrc))
+    .poll(() => logo.evaluate((image) => String(Reflect.get(image, "currentSrc"))))
     .toContain("short-logo.png");
 });

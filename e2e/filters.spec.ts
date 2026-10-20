@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("filter checkboxes retain their sizes and support keyboard selection and reset", async ({
   page,
@@ -32,6 +32,30 @@ test("filter checkboxes retain their sizes and support keyboard selection and re
   await expect(nation).not.toBeChecked();
   await expect(tier).not.toBeChecked();
   await expect(reset).toBeDisabled();
+});
+
+test("nation and class selections combine with OR within groups and AND across groups", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const list = page.getByRole("list", { name: "Fleet catalog" });
+  const nations = page.getByRole("group", { name: "Nations" });
+  const classes = page.getByRole("group", { name: "Vehicle type" });
+
+  await nations.getByRole("checkbox", { name: "Japan" }).check();
+  await nations.getByRole("checkbox", { name: "U.S.A." }).check();
+  await classes.getByRole("checkbox", { name: "Battleship" }).check();
+  await classes.getByRole("checkbox", { name: "Cruiser" }).check();
+  await page.getByRole("checkbox", { name: "X", exact: true }).check();
+
+  await expect(list.getByRole("listitem")).toHaveCount(2);
+  await expect(page.getByRole("button", { name: "Yamato" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Des Moines" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Bismarck" })).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Reset", exact: true }).click();
+  await expect(page.locator('p[aria-live="polite"]')).toHaveText("25 vehicles");
 });
 
 test("filter tooltips are anchored to their icons, not their checkboxes", async ({ page }) => {
@@ -112,4 +136,51 @@ test("a failed nation request can be retried without reloading the page", async 
   await expect(nations.getByRole("checkbox").first()).toBeVisible();
   await nations.getByRole("checkbox").first().check();
   await expect(nations.getByRole("checkbox").first()).toBeChecked();
+});
+
+test("mobile filters keep draft edits private until apply and reset applied filters", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+
+  const openFilters = page.getByRole("button", { name: "Filters" });
+
+  await expect(openFilters).toBeVisible();
+  await openFilters.click();
+
+  const drawer = page.getByRole("dialog", { name: "Filters" });
+  const japan = drawer.getByRole("checkbox", { name: "Japan" });
+  const search = drawer.getByRole("searchbox", { name: "Search vehicles" });
+  const list = page.getByRole("list", { name: "Fleet catalog" });
+
+  await expect(japan).toBeVisible();
+  await japan.check();
+  await search.fill("Yamato");
+  await drawer.getByRole("button", { name: "Apply" }).click();
+
+  await expect(drawer).not.toBeVisible();
+  await expect(list.getByRole("listitem")).toHaveCount(1);
+  await expect(page.getByRole("button", { name: "Yamato" })).toBeVisible();
+
+  await openFilters.click();
+  const reopenedDrawer = page.getByRole("dialog", { name: "Filters" });
+  const reopenedJapan = reopenedDrawer.getByRole("checkbox", { name: "Japan" });
+
+  await expect(reopenedJapan).toBeChecked();
+  await reopenedJapan.uncheck();
+  await page.keyboard.press("Escape");
+  await expect(reopenedDrawer).not.toBeVisible();
+
+  await openFilters.click();
+  const canceledDrawer = page.getByRole("dialog", { name: "Filters" });
+
+  await expect(canceledDrawer.getByRole("checkbox", { name: "Japan" })).toBeChecked();
+  await expect(canceledDrawer.getByRole("searchbox", { name: "Search vehicles" })).toHaveValue(
+    "Yamato",
+  );
+  await canceledDrawer.getByRole("button", { name: "Reset" }).click();
+
+  await expect(canceledDrawer).not.toBeVisible();
+  await expect(page.locator('p[aria-live="polite"]')).toHaveText("25 vehicles");
 });

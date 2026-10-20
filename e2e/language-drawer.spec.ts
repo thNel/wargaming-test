@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("language drawer switches the page locale and closes", async ({ page }) => {
   await page.goto("/");
@@ -16,6 +16,28 @@ test("language drawer switches the page locale and closes", async ({ page }) => 
   await expect(page.locator('input[name="class"][value="Cruiser"]')).toHaveAccessibleName(
     "Крейсер",
   );
+});
+
+test("changing locale clears text search while retaining discrete catalog filters", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const japan = page.locator('input[name="nation"][value="japan"]');
+  const search = page.getByRole("searchbox", { name: "Search vehicles" });
+  const list = page.getByRole("list", { name: "Fleet catalog" });
+
+  await japan.check();
+  await search.fill("Yamato");
+  await expect(list.getByRole("listitem")).toHaveCount(1);
+
+  await page.getByRole("button", { name: "Language" }).click();
+  await page.getByRole("button", { name: "Русский" }).click();
+
+  await expect(page.getByRole("searchbox", { name: "Поиск техники" })).toHaveValue("");
+  await expect(japan).toBeChecked();
+  await expect(page.getByRole("button", { name: "Kaga" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Yamato" })).toBeVisible();
 });
 
 test("regional language selection survives a page reload", async ({ page }) => {

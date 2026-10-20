@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("drawer padding keeps it open while backdrop closes it and restores focus", async ({
   page,

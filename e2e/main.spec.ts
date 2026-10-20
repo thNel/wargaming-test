@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./fixtures.js";
 
 test("main page opens in mock mode", async ({ page }) => {
   await page.goto("/");
