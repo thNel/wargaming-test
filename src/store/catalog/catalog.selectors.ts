@@ -4,6 +4,7 @@ import { mediaApi } from "@/services/mediaApi";
 import { nationsApi } from "@/services/nationsApi";
 import { vehicleTypesApi } from "@/services/vehicleTypesApi";
 import { vehiclesApi } from "@/services/vehiclesApi";
+import { getMediaUrl } from "@/shared/utils/getMediaUrl";
 import type { RootState } from "@/store";
 
 import type { CatalogStatus, CatalogVehicleCollection } from "./catalog.types";
@@ -11,12 +12,37 @@ import { normalizeCatalogVehicles } from "./normalizeCatalogVehicles";
 
 const emptyNations: [] = [];
 const emptyVehicleTypes: Record<string, never> = {};
-const EMPTY_VEHICLES: CatalogVehicleCollection = Object.freeze([]);
 
 const selectVehiclesResult = vehiclesApi.endpoints.getVehicles.select(undefined);
 const selectNationsResult = nationsApi.endpoints.getNations.select(undefined);
 const selectVehicleTypesResult = vehicleTypesApi.endpoints.getVehicleTypes.select(undefined);
 const selectMediaPathResult = mediaApi.endpoints.getMediaPath.select(undefined);
+
+export const selectNationFlagUrls = createSelector(
+  [
+    (state: RootState) => selectNationsResult(state).data?.data,
+    (state: RootState) => selectMediaPathResult(state).data?.data,
+  ],
+  (nations, mediaPath): readonly string[] => {
+    if (!nations || !mediaPath) {
+      return [];
+    }
+
+    const urls = new Set<string>();
+
+    for (const nation of nations) {
+      for (const size of ["tiny", "small", "large"] as const) {
+        const url = getMediaUrl(mediaPath, nation.icons[size]);
+
+        if (url) {
+          urls.add(url);
+        }
+      }
+    }
+
+    return [...urls];
+  },
+);
 
 export const selectAllCatalogVehicles = createSelector(
   [
@@ -27,7 +53,7 @@ export const selectAllCatalogVehicles = createSelector(
   ],
   (vehicles, nations, vehicleTypes, mediaPath): CatalogVehicleCollection => {
     if (!vehicles) {
-      return EMPTY_VEHICLES;
+      return [];
     }
 
     return normalizeCatalogVehicles({
