@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "classnames";
 import { useTranslation } from "react-i18next";
 
 import { Image } from "@/shared/components/Image/Image";
@@ -69,7 +69,9 @@ export function VehicleCard({ locale, measureRef, onSelect, vehicle }: VehicleCa
                 </Tooltip>
               )}
               <h2
-                className={classNames(styles.name, card.hasPremiumAppearance && styles.namePremium)}
+                className={cn(styles.name, {
+                  [styles.namePremium]: card.hasPremiumAppearance,
+                })}
                 id={`vehicle-title-${vehicle.id}`}
               >
                 {name}

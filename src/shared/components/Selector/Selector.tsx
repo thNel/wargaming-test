@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
-import classNames from "classnames";
+import cn from "classnames";
 
 import { GlassSurface } from "@/shared/components/GlassSurface/GlassSurface";
 
@@ -68,7 +68,7 @@ export function Selector<Value extends string>({
 
   return (
     <details
-      className={classNames(styles.root, className)}
+      className={cn(styles.root, className)}
       onToggle={handleToggle}
       open={isOpen}
       ref={rootRef}

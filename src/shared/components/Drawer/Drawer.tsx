@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type ComponentPropsWithoutRef, type MouseEvent } from "react";
-import classNames from "classnames";
+import cn from "classnames";
 
 import type { DrawerProps } from "./Drawer.types";
 import styles from "./Drawer.module.css";
@@ -8,6 +8,8 @@ export function Drawer({
   children,
   className,
   closeLabel,
+  footer,
+  footerClassName,
   onClose,
   open,
   placement = "right",
@@ -88,23 +90,20 @@ export function Drawer({
       {...dialogProps}
       ref={dialogRef}
       aria-label={title}
-      className={classNames(
-        styles.drawer,
-        className,
-        size === "wide" && styles.wide,
-        tone === "ocean" && styles.ocean,
-      )}
+      className={cn(styles.drawer, className, styles[size], styles[tone])}
       data-placement={placement}
       onCancel={handleCancel}
       onClick={handleBackdropClick}
     >
-      <header className={classNames(styles.header, titleVisuallyHidden && styles.headerCloseOnly)}>
+      <header
+        className={cn(styles.header, {
+          [styles.headerCloseOnly]: titleVisuallyHidden,
+        })}
+      >
         <div
-          className={classNames(
-            styles.title,
-            titleClassName,
-            titleVisuallyHidden && styles.visuallyHidden,
-          )}
+          className={cn(styles.title, titleClassName, {
+            [styles.visuallyHidden]: titleVisuallyHidden,
+          })}
         >
           {title}
         </div>
@@ -118,6 +117,7 @@ export function Drawer({
         </button>
       </header>
       <div className={styles.content}>{children}</div>
+      {footer && <div className={cn(styles.footer, footerClassName)}>{footer}</div>}
     </dialog>
   );
 }

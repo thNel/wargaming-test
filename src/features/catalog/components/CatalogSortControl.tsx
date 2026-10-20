@@ -1,4 +1,4 @@
-import classNames from "classnames";
+import cn from "classnames";
 import { useTranslation } from "react-i18next";
 
 import { Selector } from "@/shared/components/Selector/Selector";
@@ -51,13 +51,7 @@ export function CatalogSortControl({
           </svg>
           <span>{selectedOption.label}</span>
           {sortMode !== "default" && (
-            <span
-              aria-hidden="true"
-              className={classNames(
-                styles.directionIcon,
-                sortDirection === "ascending" ? styles.ascending : styles.descending,
-              )}
-            />
+            <span aria-hidden="true" className={cn(styles.directionIcon, styles[sortDirection])} />
           )}
         </summary>
       </Selector>

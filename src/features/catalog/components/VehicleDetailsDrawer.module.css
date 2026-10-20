@@ -14,11 +14,21 @@
 
 .hero {
   position: relative;
+  container-type: size;
   height: clamp(13rem, 38vw, 18rem);
   flex: 0 0 auto;
   overflow: hidden;
   isolation: isolate;
   background: #1988b2;
+}
+
+.scene {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 185cqh;
+  height: 100cqh;
+  transform: translateX(-50%);
 }
 
 .sky {

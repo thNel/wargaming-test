@@ -21,8 +21,12 @@
   width: min(36rem, calc(100vw - 1rem));
 }
 
-.ocean {
-  background: linear-gradient(155deg, #0b2a3c 0%, #061b29 72%);
+.glass {
+  color: #e8eef3;
+  background: linear-gradient(145deg, rgb(20 50 66 / 82%), rgb(8 29 43 / 82%));
+  -webkit-backdrop-filter: blur(8px) saturate(145%);
+  backdrop-filter: blur(8px) saturate(145%);
+  border-color: rgb(157 199 218 / 22%);
 }
 
 .drawer::-webkit-scrollbar-button,
@@ -142,6 +146,12 @@
   min-height: 0;
   padding-block-start: 1rem;
   overflow: auto;
+}
+
+.footer {
+  flex: 0 0 auto;
+  padding-block: 0.75rem 0.125rem;
+  border-block-start: 1px solid rgb(255 255 255 / 14%);
 }
 
 @media (max-width: 30rem) {

@@ -130,38 +130,12 @@ export function MobileFilters() {
       {isOpen && (
         <Drawer
           closeLabel={tMain("close")}
-          className={styles.drawer}
+          className={styles.drawerWidth}
           id="mobile-catalog-filters"
           onClose={closeDrawer}
           open
-          title={t("title")}
-        >
-          <div className={styles.panel}>
-            <SearchFilter
-              id="mobile-catalog-search"
-              onValueChange={updateSearchTerm}
-              resetVersion={0}
-              value={draftFilters.searchTerm}
-            />
-
-            <div className={styles.filterGroups}>
-              <VehicleTypeFilterGroup
-                idPrefix="mobile-"
-                onSelectionChange={toggleClass}
-                selectedVehicleTypes={draftFilters.classes}
-              />
-              <NationFilterGroup
-                idPrefix="mobile-"
-                onSelectionChange={toggleNation}
-                selectedNations={draftFilters.nations}
-              />
-              <TierFilterGroup
-                idPrefix="mobile-"
-                onSelectionChange={toggleTier}
-                selectedTiers={draftFilters.tiers}
-              />
-            </div>
-
+          tone="glass"
+          footer={
             <div className={styles.footerActions}>
               <button
                 className={styles.resetButton}
@@ -175,6 +149,33 @@ export function MobileFilters() {
                 {t("apply")}
               </button>
             </div>
+          }
+          footerClassName={styles.drawerFooter}
+          title={t("title")}
+        >
+          <SearchFilter
+            id="mobile-catalog-search"
+            onValueChange={updateSearchTerm}
+            resetVersion={0}
+            value={draftFilters.searchTerm}
+          />
+
+          <div className={styles.filterGroups}>
+            <VehicleTypeFilterGroup
+              idPrefix="mobile-"
+              onSelectionChange={toggleClass}
+              selectedVehicleTypes={draftFilters.classes}
+            />
+            <NationFilterGroup
+              idPrefix="mobile-"
+              onSelectionChange={toggleNation}
+              selectedNations={draftFilters.nations}
+            />
+            <TierFilterGroup
+              idPrefix="mobile-"
+              onSelectionChange={toggleTier}
+              selectedTiers={draftFilters.tiers}
+            />
           </div>
         </Drawer>
       )}

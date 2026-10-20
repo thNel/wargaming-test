@@ -1,5 +1,5 @@
 import { forwardRef, useState } from "react";
-import classNames from "classnames";
+import cn from "classnames";
 
 import { Skeleton } from "@/shared/components/Skeleton/Skeleton";
 
@@ -27,7 +27,7 @@ const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
     const hasError = !src || (loadState.source === src && loadState.status === "error");
     const showSkeleton =
       isLoading ?? (!hasError && (loadState.source !== src || loadState.status !== "loaded"));
-    const wrapperClassName = classNames(styles.image, className);
+    const wrapperClassName = cn(styles.image, className);
     const wrapperStyle = { width: w, height: h };
     function handleError(event: Parameters<NonNullable<ImageProps["onError"]>>[0]): void {
       onError?.(event);
@@ -50,7 +50,7 @@ const imageWithRef = forwardRef<HTMLImageElement, ImageProps>(
         <div
           aria-hidden={isDecorative || undefined}
           aria-label={isDecorative ? undefined : alt}
-          className={classNames(wrapperClassName, styles.fallback)}
+          className={cn(wrapperClassName, styles.fallback)}
           role={isDecorative ? undefined : "img"}
           style={wrapperStyle}
         >

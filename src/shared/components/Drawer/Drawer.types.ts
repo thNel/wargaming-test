@@ -16,11 +16,13 @@ export type DrawerProps = NativeDialogProps & {
   children: ReactNode;
   className?: string;
   closeLabel: string;
+  footer?: ReactNode;
+  footerClassName?: string;
   onClose: () => void;
   open: boolean;
   placement?: "left" | "right";
   size?: "default" | "wide";
-  tone?: "default" | "ocean";
+  tone?: "default" | "glass";
   title: string;
   titleClassName?: string;
   titleVisuallyHidden?: boolean;

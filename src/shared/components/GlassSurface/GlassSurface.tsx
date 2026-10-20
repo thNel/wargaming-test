@@ -1,5 +1,5 @@
 import { createElement, type ElementType } from "react";
-import classNames from "classnames";
+import cn from "classnames";
 
 import type { GlassSurfaceProps } from "./GlassSurface.types";
 import styles from "./GlassSurface.module.css";
@@ -15,6 +15,6 @@ export function GlassSurface<T extends ElementType = "div">({
 
   return createElement(element, {
     ...props,
-    className: classNames(styles.surface, modeClassName, className),
+    className: cn(styles.surface, modeClassName, className),
   });
 }

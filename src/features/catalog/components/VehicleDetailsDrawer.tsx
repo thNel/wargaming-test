@@ -56,30 +56,32 @@ export function VehicleDetailsDrawer({ locale, onClose, vehicle }: VehicleDetail
       onClose={onClose}
       open
       size="wide"
-      tone="ocean"
+      tone="glass"
       title={name}
       titleClassName={styles.drawerTitle}
     >
       <div className={styles.details}>
         <div aria-hidden="true" className={styles.hero}>
-          <div className={styles.sky} />
-          <div className={styles.sea} />
-          {artwork && (
-            <div className={styles.shipMotion}>
-              <Image
-                alt=""
-                className={styles.shipImage}
-                fit="contain"
-                h="100%"
-                loading="eager"
-                sizes="(max-width: 700px) 100vw, 36rem"
-                src={artwork}
-                srcSet={artworkSrcSet}
-                w="100%"
-              />
-            </div>
-          )}
-          <div className={styles.seaFront} />
+          <div className={styles.scene}>
+            <div className={styles.sky} />
+            <div className={styles.sea} />
+            {artwork && (
+              <div className={styles.shipMotion}>
+                <Image
+                  alt=""
+                  className={styles.shipImage}
+                  fit="contain"
+                  h="100%"
+                  loading="eager"
+                  sizes="(max-width: 700px) 100vw, 36rem"
+                  src={artwork}
+                  srcSet={artworkSrcSet}
+                  w="100%"
+                />
+              </div>
+            )}
+            <div className={styles.seaFront} />
+          </div>
         </div>
 
         <dl className={styles.facts}>
