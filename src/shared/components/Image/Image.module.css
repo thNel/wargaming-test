@@ -5,7 +5,6 @@
   overflow: hidden;
   border-radius: 3px;
   aspect-ratio: 16 / 9;
-  background-color: #081c2a;
 }
 
 .imageContent {
@@ -53,7 +52,6 @@
   display: grid;
   place-items: center;
   color: var(--color-muted, #91a5b5);
-  background-color: rgb(4 17 27 / 76%);
 }
 
 .fallbackIcon {

@@ -18,5 +18,15 @@
   "specialVehicleClass": "Special {{className}}",
   "specialSubmarineClass": "Special {{className}}",
   "vehicleListLabel": "Fleet catalog",
-  "retry": "Retry"
+  "retry": "Retry",
+  "shipDetailsTitle": "{{name}} details",
+  "closeShipDetails": "Close ship details",
+  "shipDetailsTier": "Tier",
+  "shipDetailsNation": "Nation",
+  "shipDetailsClass": "Class",
+  "shipDetailsStatus": "Type",
+  "shipStatusPremium": "Premium",
+  "shipStatusSpecial": "Special",
+  "shipStatusResearchable": "Researchable",
+  "shipDescriptionHeading": "About this ship"
 }

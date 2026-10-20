@@ -18,5 +18,15 @@
   "specialVehicleClass": "Özel {{className}}",
   "specialSubmarineClass": "Özel {{className}}",
   "vehicleListLabel": "Filo kataloğu",
-  "retry": "Yeniden dene"
+  "retry": "Yeniden dene",
+  "shipDetailsTitle": "{{name}} bilgileri",
+  "closeShipDetails": "Gemi bilgilerini kapat",
+  "shipDetailsTier": "Seviye",
+  "shipDetailsNation": "Ülke",
+  "shipDetailsClass": "Sınıf",
+  "shipDetailsStatus": "Tür",
+  "shipStatusPremium": "Premium",
+  "shipStatusSpecial": "Özel",
+  "shipStatusResearchable": "Araştırılabilir",
+  "shipDescriptionHeading": "Gemi hakkında"
 }

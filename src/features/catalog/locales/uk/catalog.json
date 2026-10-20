@@ -18,5 +18,15 @@
   "specialVehicleClass": "Особливий {{className}}",
   "specialSubmarineClass": "Особливий {{className}}",
   "vehicleListLabel": "Каталог флоту",
-  "retry": "Повторити"
+  "retry": "Повторити",
+  "shipDetailsTitle": "{{name}} — інформація про корабель",
+  "closeShipDetails": "Закрити інформацію про корабель",
+  "shipDetailsTier": "Рівень",
+  "shipDetailsNation": "Нація",
+  "shipDetailsClass": "Клас",
+  "shipDetailsStatus": "Тип",
+  "shipStatusPremium": "Преміум",
+  "shipStatusSpecial": "Особливий",
+  "shipStatusResearchable": "Досліджуваний",
+  "shipDescriptionHeading": "Про корабель"
 }

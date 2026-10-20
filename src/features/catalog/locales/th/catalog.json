@@ -18,5 +18,15 @@
   "specialVehicleClass": "{{className}} พิเศษ",
   "specialSubmarineClass": "{{className}} พิเศษ",
   "vehicleListLabel": "แคตตาล็อกกองเรือ",
-  "retry": "ลองอีกครั้ง"
+  "retry": "ลองอีกครั้ง",
+  "shipDetailsTitle": "ข้อมูล {{name}}",
+  "closeShipDetails": "ปิดข้อมูลเรือ",
+  "shipDetailsTier": "ระดับ",
+  "shipDetailsNation": "ชาติ",
+  "shipDetailsClass": "ประเภท",
+  "shipDetailsStatus": "ชนิด",
+  "shipStatusPremium": "พรีเมียม",
+  "shipStatusSpecial": "พิเศษ",
+  "shipStatusResearchable": "วิจัยได้",
+  "shipDescriptionHeading": "เกี่ยวกับเรือลำนี้"
 }

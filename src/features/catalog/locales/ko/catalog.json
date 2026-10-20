@@ -18,5 +18,15 @@
   "specialVehicleClass": "특별 {{className}}",
   "specialSubmarineClass": "특별 {{className}}",
   "vehicleListLabel": "함대 카탈로그",
-  "retry": "다시 시도"
+  "retry": "다시 시도",
+  "shipDetailsTitle": "{{name}} 정보",
+  "closeShipDetails": "함선 정보 닫기",
+  "shipDetailsTier": "단계",
+  "shipDetailsNation": "국가",
+  "shipDetailsClass": "함종",
+  "shipDetailsStatus": "유형",
+  "shipStatusPremium": "프리미엄",
+  "shipStatusSpecial": "특별",
+  "shipStatusResearchable": "연구 가능",
+  "shipDescriptionHeading": "함선 정보"
 }

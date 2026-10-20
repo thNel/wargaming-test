@@ -19,5 +19,9 @@ export type DrawerProps = NativeDialogProps & {
   onClose: () => void;
   open: boolean;
   placement?: "left" | "right";
+  size?: "default" | "wide";
+  tone?: "default" | "ocean";
   title: string;
+  titleClassName?: string;
+  titleVisuallyHidden?: boolean;
 };

@@ -18,5 +18,15 @@
   "specialVehicleClass": "特殊{{className}}",
   "specialSubmarineClass": "特殊{{className}}",
   "vehicleListLabel": "艦隊目錄",
-  "retry": "重試"
+  "retry": "重試",
+  "shipDetailsTitle": "{{name}}詳細資料",
+  "closeShipDetails": "關閉艦艇詳細資料",
+  "shipDetailsTier": "階級",
+  "shipDetailsNation": "國家",
+  "shipDetailsClass": "艦種",
+  "shipDetailsStatus": "類型",
+  "shipStatusPremium": "加值",
+  "shipStatusSpecial": "特殊",
+  "shipStatusResearchable": "可研發",
+  "shipDescriptionHeading": "艦艇介紹"
 }

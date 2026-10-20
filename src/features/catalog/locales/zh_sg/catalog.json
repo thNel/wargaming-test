@@ -18,5 +18,15 @@
   "specialVehicleClass": "特种{{className}}",
   "specialSubmarineClass": "特种{{className}}",
   "vehicleListLabel": "舰队目录",
-  "retry": "重试"
+  "retry": "重试",
+  "shipDetailsTitle": "{{name}}详情",
+  "closeShipDetails": "关闭舰艇详情",
+  "shipDetailsTier": "等级",
+  "shipDetailsNation": "国家",
+  "shipDetailsClass": "类型",
+  "shipDetailsStatus": "类别",
+  "shipStatusPremium": "金币",
+  "shipStatusSpecial": "特种",
+  "shipStatusResearchable": "可研发",
+  "shipDescriptionHeading": "舰艇介绍"
 }

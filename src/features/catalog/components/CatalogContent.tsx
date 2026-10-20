@@ -9,7 +9,13 @@ import { VehicleCard } from "./VehicleCard";
 import type { CatalogContentProps } from "./CatalogContent.types";
 import styles from "./CatalogContent.module.css";
 
-export function CatalogContent({ locale, onRetry, status, vehicles }: CatalogContentProps) {
+export function CatalogContent({
+  locale,
+  onRetry,
+  onVehicleSelect,
+  status,
+  vehicles,
+}: CatalogContentProps) {
   const { t } = useTranslation("catalog");
   const { columnCount, listElementRef, measureRef, paddingBottom, paddingTop, rows } =
     useVirtualizedCatalogRows(vehicles.length);
@@ -74,6 +80,7 @@ export function CatalogContent({ locale, onRetry, status, vehicles }: CatalogCon
               key={vehicle.id}
               locale={locale}
               measureRef={startIndex + columnIndex === rows[0]?.startIndex ? measureRef : undefined}
+              onSelect={onVehicleSelect}
               vehicle={vehicle}
             />
           ))}

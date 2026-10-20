@@ -18,5 +18,15 @@
   "specialVehicleClass": "{{className}} specjalny",
   "specialSubmarineClass": "Specjalny {{className}}",
   "vehicleListLabel": "Katalog floty",
-  "retry": "Spróbuj ponownie"
+  "retry": "Spróbuj ponownie",
+  "shipDetailsTitle": "Informacje o okręcie {{name}}",
+  "closeShipDetails": "Zamknij informacje o okręcie",
+  "shipDetailsTier": "Poziom",
+  "shipDetailsNation": "Nacja",
+  "shipDetailsClass": "Klasa",
+  "shipDetailsStatus": "Typ",
+  "shipStatusPremium": "Premium",
+  "shipStatusSpecial": "Specjalny",
+  "shipStatusResearchable": "Możliwy do zbadania",
+  "shipDescriptionHeading": "O tym okręcie"
 }

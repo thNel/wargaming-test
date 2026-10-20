@@ -18,5 +18,15 @@
   "specialVehicleClass": "Speciale {{className}}",
   "specialSubmarineClass": "Speciale {{className}}",
   "vehicleListLabel": "Vlootcatalogus",
-  "retry": "Opnieuw proberen"
+  "retry": "Opnieuw proberen",
+  "shipDetailsTitle": "Informatie over {{name}}",
+  "closeShipDetails": "Scheepsinformatie sluiten",
+  "shipDetailsTier": "Niveau",
+  "shipDetailsNation": "Natie",
+  "shipDetailsClass": "Klasse",
+  "shipDetailsStatus": "Type",
+  "shipStatusPremium": "Premium",
+  "shipStatusSpecial": "Speciaal",
+  "shipStatusResearchable": "Onderzoekbaar",
+  "shipDescriptionHeading": "Over dit schip"
 }

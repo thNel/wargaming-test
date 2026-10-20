@@ -18,5 +18,15 @@
   "specialVehicleClass": "特別{{className}}",
   "specialSubmarineClass": "特別{{className}}",
   "vehicleListLabel": "艦隊カタログ",
-  "retry": "再試行"
+  "retry": "再試行",
+  "shipDetailsTitle": "{{name}}の詳細",
+  "closeShipDetails": "艦艇の詳細を閉じる",
+  "shipDetailsTier": "Tier",
+  "shipDetailsNation": "国家",
+  "shipDetailsClass": "艦種",
+  "shipDetailsStatus": "種類",
+  "shipStatusPremium": "プレミアム",
+  "shipStatusSpecial": "特別",
+  "shipStatusResearchable": "技術ツリー",
+  "shipDescriptionHeading": "艦艇の概要"
 }

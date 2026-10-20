@@ -18,5 +18,15 @@
   "specialVehicleClass": "Speciální {{className}}",
   "specialSubmarineClass": "Speciální {{className}}",
   "vehicleListLabel": "Katalog flotily",
-  "retry": "Zkusit znovu"
+  "retry": "Zkusit znovu",
+  "shipDetailsTitle": "{{name}} — informace o lodi",
+  "closeShipDetails": "Zavřít informace o lodi",
+  "shipDetailsTier": "Úroveň",
+  "shipDetailsNation": "Národ",
+  "shipDetailsClass": "Třída",
+  "shipDetailsStatus": "Typ",
+  "shipStatusPremium": "Prémiová",
+  "shipStatusSpecial": "Speciální",
+  "shipStatusResearchable": "Výzkumná",
+  "shipDescriptionHeading": "O lodi"
 }

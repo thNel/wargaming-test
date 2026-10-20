@@ -18,5 +18,15 @@
   "specialVehicleClass": "{{className}} spécial",
   "specialSubmarineClass": "{{className}} spécial",
   "vehicleListLabel": "Catalogue de la flotte",
-  "retry": "Réessayer"
+  "retry": "Réessayer",
+  "shipDetailsTitle": "Infos sur {{name}}",
+  "closeShipDetails": "Fermer les infos du navire",
+  "shipDetailsTier": "Niveau",
+  "shipDetailsNation": "Nation",
+  "shipDetailsClass": "Classe",
+  "shipDetailsStatus": "Type",
+  "shipStatusPremium": "Premium",
+  "shipStatusSpecial": "Spécial",
+  "shipStatusResearchable": "Recherchable",
+  "shipDescriptionHeading": "À propos de ce navire"
 }

@@ -11,7 +11,11 @@ export function Drawer({
   onClose,
   open,
   placement = "right",
+  size = "default",
+  tone = "default",
   title,
+  titleClassName,
+  titleVisuallyHidden = false,
   ...dialogProps
 }: DrawerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -72,13 +76,26 @@ export function Drawer({
       {...dialogProps}
       ref={dialogRef}
       aria-label={title}
-      className={classNames(styles.drawer, className)}
+      className={classNames(
+        styles.drawer,
+        className,
+        size === "wide" && styles.wide,
+        tone === "ocean" && styles.ocean,
+      )}
       data-placement={placement}
       onCancel={handleCancel}
       onClick={handleBackdropClick}
     >
-      <header className={styles.header}>
-        <div className={styles.title}>{title}</div>
+      <header className={classNames(styles.header, titleVisuallyHidden && styles.headerCloseOnly)}>
+        <div
+          className={classNames(
+            styles.title,
+            titleClassName,
+            titleVisuallyHidden && styles.visuallyHidden,
+          )}
+        >
+          {title}
+        </div>
         <button
           aria-label={closeLabel}
           className={styles.closeButton}

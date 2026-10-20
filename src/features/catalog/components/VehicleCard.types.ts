@@ -4,5 +4,6 @@ import type { CatalogVehicle } from "@/store/catalog/catalog.types";
 export interface VehicleCardProps {
   locale: SupportedLocale;
   measureRef?: (element: HTMLLIElement | null) => void;
+  onSelect?: (vehicle: CatalogVehicle) => void;
   vehicle: CatalogVehicle;
 }
