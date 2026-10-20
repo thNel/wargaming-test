@@ -51,9 +51,20 @@ export function Drawer({
     }
 
     const rootElement = document.documentElement;
+    const bodyElement = document.body;
     const previousOverflow = rootElement.style.overflow;
+    const previousPaddingInlineEnd = bodyElement.style.paddingInlineEnd;
 
     if (open) {
+      const scrollbarWidth = window.innerWidth - rootElement.clientWidth;
+
+      if (scrollbarWidth > 0) {
+        const bodyPaddingInlineEnd = Number.parseFloat(
+          window.getComputedStyle(bodyElement).paddingInlineEnd,
+        );
+        bodyElement.style.paddingInlineEnd = `${bodyPaddingInlineEnd + scrollbarWidth}px`;
+      }
+
       rootElement.style.overflow = "hidden";
     }
 
@@ -66,6 +77,7 @@ export function Drawer({
     return () => {
       if (open) {
         rootElement.style.overflow = previousOverflow;
+        bodyElement.style.paddingInlineEnd = previousPaddingInlineEnd;
       }
     };
   }, [open]);
