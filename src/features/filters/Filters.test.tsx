@@ -132,7 +132,9 @@ describe("Filters", () => {
       await user.click(within(group).getByRole("button", { name: "Retry" }));
 
       expect(await within(group).findByRole("checkbox", { name: option })).toBe(checkbox);
-      expect(within(group).queryByRole("alert")).not.toBeInTheDocument();
+      await waitFor(() => {
+        expect(within(group).queryByRole("alert")).not.toBeInTheDocument();
+      });
       expect(requestedEndpoints.filter((requested) => requested === endpoint)).toHaveLength(2);
       expect(requestedEndpoints.filter((requested) => requested === "media_path")).toHaveLength(1);
     },
