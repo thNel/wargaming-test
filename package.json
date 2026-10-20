@@ -9,7 +9,7 @@
     "build": "tsc -b && vite build",
     "postbuild": "node scripts/remove-production-mocks.mjs",
     "build:mock": "tsc -b && vite build --mode mock",
-    "test": "vitest run",
+    "test": "vitest run && node --test server/api-proxy.test.mjs",
     "test:e2e": "playwright test",
     "mocks:images": "node scripts/download-vortex-mock-images.mjs",
     "lint": "eslint .",

@@ -1,0 +1,18 @@
+wows.thnel.com {
+	root * /var/www/thNel.com/wows
+	encode zstd gzip
+
+	@api path /api /api/*
+	handle @api {
+		reverse_proxy 127.0.0.1:8787
+	}
+
+	handle {
+		try_files {path} /index.html
+		file_server
+	}
+}
+
+www.wows.thnel.com {
+	redir https://wows.thnel.com{uri} permanent
+}
